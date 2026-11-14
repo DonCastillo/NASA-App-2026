@@ -21,6 +21,7 @@ import os
 import re
 import sys
 import urllib.request
+from urllib.parse import urljoin, urlparse
 from html.parser import HTMLParser
 
 UA = "Mozilla/5.0 (compatible; article-extractor)"
@@ -81,7 +82,43 @@ def list_sections(index_html, sections):
 
 
 # ---------------------------------------------------------------- article body
-SKIP_CLASSES = ("hds-card-carousel", "hds-related-articles", "wp-block-spacer", "hds-sidebar", "hds-social", "screen-reader")
+SKIP_CLASSES = ("hds-card-carousel", "hds-related-articles", "wp-block-spacer", "hds-sidebar", "hds-social", "screen-reader",
+                # Canada.ca / CSA (WET template)
+                "pagedetails", "wb-inv", "hidden-print", "input-group")
+SKIP_IDS = {"filters"}
+
+# Per-site templates. "start" finds the article container; "headings" maps HTML
+# heading tags to Markdown levels; "stop_headings" end the article body (links
+# under them are still collected for --follow).
+PROFILES = {
+    "nasa": {
+        "start": lambda tag, cls, a: tag == "div" and bool({"hds-entry-content", "entry-content"} & set(cls.split())),
+        # page h2 is the article title; article sections use h1 -> map to ##
+        "headings": {"h1": 2, "h2": 1, "h3": 3, "h4": 4, "h5": 5, "h6": 6},
+        "stop_headings": {"related content"},
+        "container": "div.hds-entry-content or div.entry-content",
+    },
+    "csa": {
+        "start": lambda tag, cls, a: tag == "main",
+        "headings": {"h1": 1, "h2": 2, "h3": 3, "h4": 4, "h5": 5, "h6": 6},
+        "stop_headings": {"explore further", "follow us"},
+        "end_comment": "FIN DU CONTENU",   # WET template marks the end of page content
+        "container": "<main>",
+    },
+}
+
+
+def absolute(base, href):
+    """Resolve relative links; leave absolute ones exactly as written."""
+    return href if re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", href) else urljoin(base, href)
+
+
+def profile_for(url):
+    host = urlparse(url).netloc.lower()
+    if host.endswith("asc-csa.gc.ca") or host.endswith("canada.ca"):
+        return "csa"
+    return "nasa"
+
 BLOCK_TAGS = {"p", "div", "section", "figure", "figcaption", "blockquote", "ul", "ol", "li",
               "h1", "h2", "h3", "h4", "h5", "h6", "table", "tr"}
 VOID_TAGS = {"img", "br", "hr", "meta", "link", "input", "source", "wbr"}
@@ -90,8 +127,13 @@ VOID_TAGS = {"img", "br", "hr", "meta", "link", "input", "source", "wbr"}
 class BodyParser(HTMLParser):
     """Converts the article content container to Markdown."""
 
-    def __init__(self):
+    def __init__(self, base_url="", profile="nasa"):
         super().__init__(convert_charrefs=True)
+        self.base_url = base_url
+        self.profile = PROFILES[profile]
+        self.stopped = False      # past a stop heading: no output, still collect links
+        self.links = []           # (absolute url, text) for every link in the container
+        self.heading_start = 0
         self.depth = 0            # depth inside content container (0 = outside)
         self.skip_depth = 0       # >0 while inside a skipped subtree
         self.done = False
@@ -157,8 +199,11 @@ class BodyParser(HTMLParser):
         a = dict(attrs)
         cls = a.get("class") or ""
         if self.depth == 0:
-            if tag == "div" and ({"hds-entry-content", "entry-content"} & set(cls.split())):
+            if self.profile["start"](tag, cls, a):
                 self.depth = 1
+            return
+        if tag == "footer":
+            self.done = True
             return
         if tag not in VOID_TAGS:
             self.depth += 1
@@ -166,7 +211,12 @@ class BodyParser(HTMLParser):
             if tag not in VOID_TAGS:
                 self.skip_depth += 1
             return
-        if tag in ("script", "style", "svg", "button", "noscript", "iframe") or any(c in cls for c in SKIP_CLASSES):
+        if tag == "a" and a.get("href") and self.stopped:
+            self.links.append((absolute(self.base_url, a["href"]), ""))
+        if self.stopped:
+            return
+        if (tag in ("script", "style", "svg", "button", "noscript", "iframe", "input", "label")
+                or any(c in cls for c in SKIP_CLASSES) or a.get("id") in SKIP_IDS):
             if "hds-card-carousel" in cls:
                 # "Related Content" marks the end of the article body
                 self.done = True
@@ -178,8 +228,8 @@ class BodyParser(HTMLParser):
         if tag in ("h1", "h2", "h3", "h4", "h5", "h6"):
             self.block_break()
             self.heading = tag
-            # page h2 is the article title; article sections use h1 -> map to ##
-            level = {"h1": 2, "h2": 1, "h3": 3, "h4": 4, "h5": 5, "h6": 6}[tag]
+            self.heading_start = len(self.out)
+            level = self.profile["headings"][tag]
             self.out.append("#" * level + " ")
         elif tag == "p":
             self.block_break()
@@ -204,11 +254,12 @@ class BodyParser(HTMLParser):
             self.emit("  \n")
         elif tag == "a":
             if a.get("href") and self.href is None:
-                self.href = a["href"]
+                self.href = absolute(self.base_url, a["href"])
                 self.link_text = []
         elif tag == "img":
             src = (a.get("src") or "").split("?")[0]
             if src:
+                src = absolute(self.base_url, src)
                 self.block_break()
                 self.out.append(f"![{a.get('alt', '')}]({src})")
         elif tag == "figcaption":
@@ -229,8 +280,15 @@ class BodyParser(HTMLParser):
             if tag not in VOID_TAGS:
                 self.skip_depth -= 1
             return
+        if self.stopped:
+            return
         if tag in ("h1", "h2", "h3", "h4", "h5", "h6"):
             self.heading = None
+            text = re.sub(r"[#\s]+", " ", "".join(self.out[self.heading_start:])).strip().lower()
+            if text in self.profile["stop_headings"]:
+                del self.out[self.heading_start:]
+                self.stopped = True
+                return
             self.block_break()
         elif tag in ("ul", "ol"):
             if self.list_stack:
@@ -245,6 +303,7 @@ class BodyParser(HTMLParser):
             text = raw.strip()
             href = self.href
             self.href = None
+            self.links.append((href, text))
             if text:
                 # keep spaces that sat inside the <a> tag outside the brackets
                 lead = " " if raw[:1].isspace() else ""
@@ -263,7 +322,7 @@ class BodyParser(HTMLParser):
             self.block_break()
 
     def handle_data(self, data):
-        if self.done or self.depth == 0 or self.skip_depth:
+        if self.done or self.depth == 0 or self.skip_depth or self.stopped:
             return
         text = re.sub(r"\s+", " ", data)
         if not text.strip():
@@ -276,6 +335,11 @@ class BodyParser(HTMLParser):
             self.pending = ""
             text = text.lstrip()
         self.emit(text)
+
+    def handle_comment(self, data):
+        end = self.profile.get("end_comment")
+        if end and self.depth and end in data:
+            self.done = True
 
     def flush_pending(self):
         if self.pending:
@@ -295,20 +359,41 @@ class BodyParser(HTMLParser):
             ln = ln.rstrip() + ("  " if hard else "")
             lines.append(ln)
         md = "\n".join(lines)
+        md = re.sub(r"^(#{1,6})\s+", r"\1 ", md, flags=re.M)
+        md = re.sub(r"^#{1,6}\s*$", "", md, flags=re.M)      # empty headings
+        md = re.sub(r"^(\s*)-\s*$", "", md, flags=re.M)      # empty list items
+        md = re.sub(r"^(\s*(?:-|\d+\.)) {2,}(?=\S)", r"\1 ", md, flags=re.M)
         md = re.sub(r"\n{3,}", "\n\n", md)
         return md.strip() + "\n"
+
+
+def flatten_csa_cards(page):
+    """CSA listing pages wrap each item in <article><a><figure>…<h3>Title</h3>…</figure></a>.
+    Rewrite each card as '<a href>Title</a> (label)' so it becomes one list item."""
+    def card(m):
+        href, inner = m.group(1), m.group(2)
+        t = re.search(r"<h[2-6][^>]*>(.*?)</h[2-6]>", inner, re.S)
+        if not t:
+            return m.group(0)
+        label = re.search(r"<small>(.*?)</small>", inner, re.S)
+        lab = f" ({strip_tags(label.group(1))})" if label else ""
+        return f'<a href="{href}">{strip_tags(t.group(1))}</a>{lab}'
+    return re.sub(r"<article[^>]*>\s*<a\s[^>]*href=\"([^\"]+)\"[^>]*>(.*?)</a>\s*</article>", card, page, flags=re.S)
 
 
 def extract_article(url):
     page = fetch(url)
     m = re.search(r"<title>(.*?)</title>", page, re.S)
     title = strip_tags(m.group(1)) if m else url
-    title = re.sub(r"\s*[-–|]\s*NASA\s*$", "", title)
-    p = BodyParser()
+    title = re.sub(r"\s*[-–|]\s*(NASA|Canadian Space Agency)\s*$", "", title)
+    prof = profile_for(url)
+    if prof == "csa":
+        page = flatten_csa_cards(page)
+    p = BodyParser(url, prof)
     p.feed(page)
     body = p.markdown()
     if not body.strip():
-        raise RuntimeError(f"no article body found at {url} (no div.hds-entry-content or div.entry-content)")
+        raise RuntimeError(f"no article body found at {url} (no {PROFILES[prof]['container']})")
     # drop the leading H1 duplicate of the title; front matter carries it
     # (the page's title heading may follow a lead image, so drop the first H1
     # if it appears before any section heading)
@@ -328,7 +413,7 @@ def extract_article(url):
             body = body[: m.start()] + body[m.end():]
             if len(heading) > len(title) and t in h:
                 title = heading
-    return title, body
+    return title, body, p.links
 
 
 def slugify(s):
@@ -340,12 +425,30 @@ def yaml_str(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+def article_links(page_url, links):
+    """Links from an article worth following: same site, HTML pages, not media/search."""
+    host = urlparse(page_url).netloc
+    out, seen = [], {page_url.split("#")[0]}
+    for href, _ in links:
+        u = href.split("#")[0]
+        pu = urlparse(u)
+        if pu.scheme not in ("http", "https") or pu.netloc != host or u in seen:
+            continue
+        if re.search(r"\.(jpe?g|png|gif|pdf|xml|mp4|zip)$", pu.path, re.I):
+            continue
+        if re.search(r"/(multimedia|search|wp-content|rss)/", pu.path) or pu.path in ("", "/"):
+            continue
+        seen.add(u)
+        out.append(u)
+    return out
+
+
 def write_article(out_dir, url, section, force):
-    title, body = extract_article(url)
+    title, body, links = extract_article(url)
     path = os.path.join(out_dir, slugify(title) + ".md")
     if os.path.exists(path) and not force:
         print(f"skip (exists): {path}")
-        return path
+        return title, links
     fm = ["---", f"title: {yaml_str(title)}", "topics: []  # TODO: fill with keywords",
           'summary: ""  # TODO: fill with a 2-4 sentence summary', f"source: {url}"]
     if section:
@@ -354,7 +457,7 @@ def write_article(out_dir, url, section, force):
     with open(path, "w") as f:
         f.write("\n".join(fm) + "\n\n" + body)
     print(f"wrote: {path}")
-    return path
+    return title, links
 
 
 def main():
@@ -369,6 +472,8 @@ def main():
     e.add_argument("--url", action="append", default=[])
     e.add_argument("--out", required=True)
     e.add_argument("--force", action="store_true")
+    e.add_argument("--follow", action="store_true",
+                   help="also extract same-site articles linked from each extracted article (one level)")
     args = ap.parse_args()
 
     if args.cmd == "list":
@@ -387,10 +492,24 @@ def main():
             print(f"warning: no articles found under section {s!r}", file=sys.stderr)
         jobs += [(sec, href) for sec, _, href in found]
     failures = 0
+    done = set()
+    followed = []
     for sec, url in jobs:
+        done.add(url)
+        try:
+            title, links = write_article(args.out, url, sec, args.force)
+            if args.follow:
+                followed += [(f"Linked from: {title}", u) for u in article_links(url, links)]
+        except Exception as ex:  # keep going; report at end
+            failures += 1
+            print(f"error: {url}: {ex}", file=sys.stderr)
+    for sec, url in followed:
+        if url in done:
+            continue
+        done.add(url)
         try:
             write_article(args.out, url, sec, args.force)
-        except Exception as ex:  # keep going; report at end
+        except Exception as ex:
             failures += 1
             print(f"error: {url}: {ex}", file=sys.stderr)
     if failures:
