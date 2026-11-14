@@ -1,0 +1,29 @@
+---
+title: "Risk of Spaceflight Associated Neuro-ocular Syndrome (SANS)"
+topics: ["SANS", "neuro-ocular syndrome", "vision", "optic nerve swelling", "fluid shift", "cerebrospinal fluid", "retina", "brain", "head-down tilt bed rest", "nutritional supplements"]
+summary: "Weightlessness shifts blood and cerebrospinal fluid toward the head, which can cause optic nerve swelling, retinal folds, flattening of the back of the eye and brain swelling, together called SANS. Effects range from mild to clinically significant, and the risk grows with mission length. NASA is studying nutritional supplements, mechanical countermeasures to reverse fluid shifts and head-down-tilt bed rest analogs. About 70% of ISS astronauts show some swelling at the back of the eye."
+source: https://www.nasa.gov/reference/risk-of-spaceflight-associated-neuro-ocular-syndrome-sans/
+section: "Risks Involving Human Physiology"
+---
+
+![Visual Impairment Intracranial Pressure (VIIP) Syndrome was identified in 2005. It is currently NASA’s leading spaceflight-related health risk, and is more predominant among men than women in space. Here, NASA astronaut Karen Nyberg of NASA uses a fundoscope to image her eye while in orbit.](https://www.nasa.gov/wp-content/uploads/2023/09/iss036e006520.jpg)
+
+*NASA astronaut Karen Nyberg uses a fundoscope to image her eye while in orbit. Using this tool to examine the retina helps scientists track how the spaceflight environment affects the human eye. Credit: NASA*
+
+## What are the top risks?
+
+Chronic weightlessness can cause [bodily fluids](https://www.nasa.gov/image-article/what-spaceflight-associated-neuro-ocular-syndrome/) such as blood and cerebrospinal fluid to move toward the head, which can lead to optic nerve swelling, folds in the retina, flattening of the back of the eye, and swelling in the brain. This collection of eye and brain changes is called “spaceflight associated neuro-ocular syndrome,” or SANS. Some astronauts only experience mild changes in space, while others have clinically significant outcomes. The long-term health outcome from these changes is unknown but actively being investigated. The risk of developing SANS is higher during longer-duration missions and remains a top research priority for scientists ahead of a Mars mission.
+
+## What can be done about it?
+
+NASA scientists are investigating potential ways to prevent or treat SANS, including nutritional supplements that could protect the eyes and mechanical interventions that may help reverse headward fluid shifts. They’re also gaining insights from Earth-based studies that replicate the physiological effects of floating in microgravity by requiring participants to lie in bed with a six-degree [head-down tilt](https://www.nasa.gov/hrp/bed-rest-faqs/) for weeks or months at a time.
+
+## Did you know?
+
+Approximately [70 percent](https://www.nasa.gov/image-article/what-spaceflight-associated-neuro-ocular-syndrome/) of astronauts aboard the International Space Station experience some swelling in the back of their eyes.
+
+*Formal risk description:* [Risk of Spaceflight Associated Neuro-ocular Syndrome (SANS)](https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=105)
+
+*Research in support of this risk: [Latest evidence](https://humanresearchroadmap.nasa.gov/evidence/)*
+
+*Explore more: [Human System Risk Board resources](https://www.nasa.gov/directorates/esdmd/hhp/risk-of-spaceflight-associated-neuro-ocular-syndrome/)*
