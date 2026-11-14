@@ -65,10 +65,16 @@ Scripts are in `scripts/` next to this file and use only the Python standard lib
 4. **Verify** before reporting back:
    - The file count matches the number of articles listed in step 1.
    - No body contains leftover HTML (`<`), "Related Content" or "Read More".
-   - Spot-check one file against the live page to confirm the body is complete. Each NASA HRP risk page has the sections "What are the top risks?", "What can be done about it?" and "Did you know?".
+   - Spot-check one file against the live page to confirm the body is complete. Expected structure by page type:
+     - HRP risk pages: "What are the top risks?", "What can be done about it?", "Did you know?"
+     - HRP research/investigation pages: "Description", "Impact", then a formal project title line
+     - News articles: plain paragraphs, ending with the standard HRP boilerplate paragraph
 
 ## Notes
 
-- The extractor reads the article from `div.hds-entry-content`, the NASA.gov WordPress template. If a page has no such container, the script reports `no article body found`. Inspect that page's HTML and adjust `BodyParser` rather than hand-copying the text.
-- Section matching expects the section names as headings, with article links (`/reference/...`) beneath them, until the next `Risks ...` / `Discover More` heading. Other index layouts may need the stop rule in `list_sections` adjusted.
+- If the user names a page but no sections, run `list` with the page's H2 headings (inspect `<main>`) and confirm which ones to use. Skip site-wide H2s such as "Discover More Topics From NASA" and "HRP Overview".
+- The extractor reads the article body from `div.hds-entry-content` (reference pages) or `div.entry-content` (news articles). If a page has neither, the script reports `no article body found`. Inspect that page's HTML and adjust `BodyParser` rather than hand-copying the text.
+- A section runs from its heading to the next heading at the same or higher level. Every nasa.gov link inside it is collected and titled by the nearest sub-heading, so news articles under `/missions/` or `/humans-in-space/` are included too.
+- The title comes from the page `<title>`. If the body's first heading is a fuller version of it (e.g. "Human Research Program Omics Archive" vs "Omics archive"), that heading is used instead and removed from the body. Either way, the file name is the slug of the final title.
+- To check script changes, re-extract into a scratch folder and compare bodies against the existing files with Python. Don't strip front matter with chained `sed '1,/^---$/d'` commands: the first one already removes the whole front matter, and a second one deletes the body.
 - Don't reword or summarize inside the body. The summary belongs only in the front matter.

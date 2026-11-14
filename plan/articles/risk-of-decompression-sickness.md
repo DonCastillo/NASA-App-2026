@@ -34,4 +34,4 @@ Even flying in an airplane puts a person at risk of decompression sickness due t
 
 *Research in support of this risk: [Latest evidence](https://humanresearchroadmap.nasa.gov/evidence/)*
 
-*Explore more: [Human System](https://www.nasa.gov/directorates/esdmd/hhp/behavioral-health-risk/)[Risk Board resources](https://www.nasa.gov/directorates/esdmd/hhp/risk-of-decompression-sickness/)*
+*Explore more: [Human System](https://www.nasa.gov/directorates/esdmd/hhp/behavioral-health-risk/) [Risk Board resources](https://www.nasa.gov/directorates/esdmd/hhp/risk-of-decompression-sickness/)*

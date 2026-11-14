@@ -40,41 +40,48 @@ def strip_tags(s):
 def list_sections(index_html, sections):
     """Return [(section, title, url)] for article links under each section heading.
 
-    Walks headings in document order; a section runs until the next heading whose
-    text starts with "Risks " / "Discover More" or any heading at the same level
-    that is one of the other wanted sections.
+    Walks headings in document order; a section runs until the next heading at the
+    same or a higher level (e.g. the next <h2> after an <h2> section). Every
+    NASA.gov article link inside the section is collected, titled by the nearest
+    sub-heading above it (e.g. the <h3> card title).
     """
-    wanted = {s.lower(): s for s in sections}
+    wanted = {html.unescape(s).lower(): s for s in sections}
+    i, j = index_html.find("<main"), index_html.find("</main>")
+    if i != -1 and j != -1:
+        index_html = index_html[i:j]
     tokens = re.finditer(
         r"<h([1-6])[^>]*>(.*?)</h\1>|<a\s[^>]*href=\"([^\"]+)\"[^>]*>(.*?)</a>",
         index_html,
         re.S,
     )
-    current = None
+    current, current_level = None, 0
     sub_title = None
     out, seen = [], set()
     for m in tokens:
         if m.group(1):
+            level = int(m.group(1))
             text = strip_tags(m.group(2))
-            low = text.lower()
-            if low in wanted:
-                current, sub_title = wanted[low], None
-            elif low.startswith("risks ") or low.startswith("discover more") or low.startswith("national aeronautics"):
+            if not text:
+                continue
+            if text.lower() in wanted:
+                current, current_level, sub_title = wanted[text.lower()], level, None
+            elif current and level <= current_level:
                 current = None
             elif current:
                 sub_title = text
         elif current:
             href = m.group(3)
-            if "/reference/" in href or "/hrp/" in href and href.rstrip("/").count("/") > 3:
-                if href in seen:
-                    continue
-                seen.add(href)
-                out.append((current, sub_title or strip_tags(m.group(4)), href))
+            if href.startswith("/"):
+                href = "https://www.nasa.gov" + href
+            if not re.match(r"https://www\.nasa\.gov/.+", href) or href in seen:
+                continue
+            seen.add(href)
+            out.append((current, sub_title or strip_tags(m.group(4)), href))
     return out
 
 
 # ---------------------------------------------------------------- article body
-SKIP_CLASSES = ("hds-card-carousel", "wp-block-spacer", "hds-sidebar", "hds-social", "screen-reader")
+SKIP_CLASSES = ("hds-card-carousel", "hds-related-articles", "wp-block-spacer", "hds-sidebar", "hds-social", "screen-reader")
 BLOCK_TAGS = {"p", "div", "section", "figure", "figcaption", "blockquote", "ul", "ol", "li",
               "h1", "h2", "h3", "h4", "h5", "h6", "table", "tr"}
 VOID_TAGS = {"img", "br", "hr", "meta", "link", "input", "source", "wbr"}
@@ -95,6 +102,7 @@ class BodyParser(HTMLParser):
         self.in_caption = False
         self.heading = None
         self.pending = ""       # opening emphasis markers waiting for text
+        self.em_depth = {}      # open count per emphasis marker
         self.caption = []
 
     # helpers
@@ -110,11 +118,21 @@ class BodyParser(HTMLParser):
         return bool(self.heading or self.in_caption or self.href is not None)
 
     def open_em(self, marker):
-        if not self.no_emphasis():
+        if self.no_emphasis():
+            return
+        # nested same-kind tags (<em><em>…</em></em>) emit a single marker pair
+        self.em_depth[marker] = self.em_depth.get(marker, 0) + 1
+        if self.em_depth[marker] == 1:
             self.pending += marker
 
     def close_em(self, marker):
         if self.no_emphasis():
+            return
+        depth = self.em_depth.get(marker, 0)
+        if depth == 0:
+            return
+        self.em_depth[marker] = depth - 1
+        if depth > 1:
             return
         if self.pending.endswith(marker):   # empty emphasis: drop it
             self.pending = self.pending[: -len(marker)]
@@ -139,7 +157,7 @@ class BodyParser(HTMLParser):
         a = dict(attrs)
         cls = a.get("class") or ""
         if self.depth == 0:
-            if tag == "div" and "hds-entry-content" in cls.split():
+            if tag == "div" and ({"hds-entry-content", "entry-content"} & set(cls.split())):
                 self.depth = 1
             return
         if tag not in VOID_TAGS:
@@ -223,12 +241,17 @@ class BodyParser(HTMLParser):
         elif tag in ("em", "i"):
             self.close_em("*")
         elif tag == "a" and self.href is not None:
-            text = "".join(self.link_text).strip()
+            raw = "".join(self.link_text)
+            text = raw.strip()
             href = self.href
             self.href = None
             if text:
+                # keep spaces that sat inside the <a> tag outside the brackets
+                lead = " " if raw[:1].isspace() else ""
+                trail = " " if raw[-1:].isspace() else ""
+                self.out.append(lead)
                 self.flush_pending()
-                self.out.append(f"[{text}]({href})")
+                self.out.append(f"[{text}]({href}){trail}")
         elif tag == "figcaption":
             self.in_caption = False
             text = re.sub(r"\s+", " ", "".join(self.caption)).strip()
@@ -285,7 +308,7 @@ def extract_article(url):
     p.feed(page)
     body = p.markdown()
     if not body.strip():
-        raise RuntimeError(f"no article body found at {url} (no div.hds-entry-content)")
+        raise RuntimeError(f"no article body found at {url} (no div.hds-entry-content or div.entry-content)")
     # drop the leading H1 duplicate of the title; front matter carries it
     # (the page's title heading may follow a lead image, so drop the first H1
     # if it appears before any section heading)
@@ -293,6 +316,18 @@ def extract_article(url):
     first_sec = re.search(r"^## ", body, re.M)
     if m and (not first_sec or m.start() < first_sec.start()):
         body = body[: m.start()] + body[m.end():]
+    # reference pages use an H1 (rendered "##") for the title instead; drop the
+    # first heading of any level if it repeats the title. If that heading is the
+    # fuller name (e.g. "Human Research Program Omics Archive" vs <title>
+    # "Omics archive"), use it as the title.
+    m = re.search(r"^#{1,6} ([^\n]*)\n+", body, re.M)
+    if m:
+        heading = m.group(1).strip()
+        h, t = heading.lower(), title.lower()
+        if h == t or t in h or h in t:
+            body = body[: m.start()] + body[m.end():]
+            if len(heading) > len(title) and t in h:
+                title = heading
     return title, body
 
 

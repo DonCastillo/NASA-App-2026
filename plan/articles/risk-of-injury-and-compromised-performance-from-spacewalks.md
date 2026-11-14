@@ -22,7 +22,7 @@ NASA engineers are also working to improve the design of spacesuits so they will
 
 ## Did you know?
 
-NASA astronauts James Voss and Susan Helms hold the record for the single [longest spacewalk on March 12, 2001.](https://www.nasa.gov/history/space-station-20th-spacewalking-history/#:~:text=On%20March%2010%2C%202001%2C%20Expedition,the%20longest%20EVA%20in%20history.)It lasted 8 hours and 56 minutes.
+NASA astronauts James Voss and Susan Helms hold the record for the single [longest spacewalk on March 12, 2001.](https://www.nasa.gov/history/space-station-20th-spacewalking-history/#:~:text=On%20March%2010%2C%202001%2C%20Expedition,the%20longest%20EVA%20in%20history.) It lasted 8 hours and 56 minutes.
 
 *Formal risk description:* [Risk of mission impacting injury and compromised performance and long-term health effects due to EVA operations](https://humanresearchroadmap.nasa.gov/Risks/risk.aspx?i=84)
 
