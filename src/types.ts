@@ -47,7 +47,13 @@ export type IndicatorId = string
 export type InputType =
   'number' | 'numberPair' | 'severity' | 'rating' | 'yesNo' | 'checklist' | 'calculated'
 
-/** When an indicator is asked (plan/body-systems.md → Check-in design → Tiers) */
+/**
+ * When an indicator is asked (plan/body-systems.md → Check-in design → Tiers)
+ * - core:     every morning (tier 1)
+ * - followUp: only when a trigger opens it (tier 2)
+ * - weekly:   once a week (tier 3)
+ * - auto:     calculated, sent in from outside, or asked only after an event (tier 4)
+ */
 export type CheckInTier = 'core' | 'followUp' | 'weekly' | 'auto'
 
 /** Where an indicator comes from (plan/health-indicators.md) */
@@ -126,6 +132,9 @@ export type Indicator = {
   streak?: StreakRule
   /** Values outside this range get a "please check the reading" prompt */
   plausible?: { min: number; max: number }
+  /** Button words for severity / rating scales when the defaults don't fit, lowest value first
+   *  (defaults: None · Mild · Moderate · Severe and Bad · Low · OK · Good · Great) */
+  scaleLabels?: string[]
   /** Options for checklist inputs */
   options?: ChecklistOption[]
   /** Steps shown in "How do I measure this?" */
