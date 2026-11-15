@@ -11,7 +11,7 @@ export default function CheckIn() {
   return (
     <PagePlaceholder title="Check-in" phase="Phase 5">
       <p className="mt-4">
-        Mode: <code className="font-mono text-sky-400">{mode}</code>
+        Mode: <code className="reading text-accent">{mode}</code>
       </p>
     </PagePlaceholder>
   )

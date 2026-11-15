@@ -11,7 +11,7 @@ export default function PagePlaceholder({ title, phase, children }: Props) {
   return (
     <section className="p-8">
       <h1 className="text-2xl font-semibold">{title}</h1>
-      <p className="mt-2 text-slate-400">Placeholder — built in {phase}.</p>
+      <p className="mt-2 text-text-muted">Placeholder — built in {phase}.</p>
       {children}
     </section>
   )

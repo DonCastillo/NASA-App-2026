@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router'
+import Logo from './Logo'
 
-// Shared frame around every page. Temporary bare nav for Phase 0.2;
+// Shared frame around every page. Temporary bare nav for Phase 0;
 // the real header, side nav and bottom nav are built in Phase 3.1–3.2.
 const links = [
   { to: '/', label: 'Body Map' },
@@ -12,14 +13,17 @@ const links = [
 
 export default function AppLayout() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200">
-      <nav className="flex gap-4 border-b border-slate-800 px-8 py-3 text-sm">
+    <div className="min-h-screen">
+      <nav className="flex items-center gap-6 border-b border-space-700 bg-space-900 px-8 py-3 text-sm">
+        <Logo />
         {links.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}
             end
-            className={({ isActive }) => (isActive ? 'text-sky-400' : 'text-slate-400')}
+            className={({ isActive }) =>
+              isActive ? 'font-medium text-accent' : 'text-text-muted hover:text-text'
+            }
           >
             {link.label}
           </NavLink>

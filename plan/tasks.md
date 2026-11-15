@@ -55,13 +55,13 @@ Rules that keep it simple:
 
 ### 0.3 First deploy
 - [x] Choose GitHub Pages or Netlify → GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`)
-- [ ] Deploy the placeholder app; open every route on the public URL
+- [x] Deploy the placeholder app; open every route on the public URL → https://doncastillo.github.io/NASA-App-2026/
 
 ### 0.4 Theme ([branding.md](branding.md))
-- [ ] Tailwind tokens: colors (`space-*`, `text`, `text-muted`, `accent`, `ok`, `warn`, `alert`, `alert-text`, `none`), fonts (Inter, JetBrains Mono), radii (8 / 12 px)
-- [ ] Base styles: `space-950` background, `text` color, Inter body, tabular-number mono class for readings
-- [ ] Global focus ring (2 px `accent`, 2 px offset) and `prefers-reduced-motion` handling
-- [ ] Logo SVG component (orbit ring + silhouette + cyan pin) and favicon
+- [x] Tailwind tokens: colors (`space-*`, `text`, `text-muted`, `accent`, `ok`, `warn`, `alert`, `alert-text`, `none`), fonts (Inter, JetBrains Mono), radii (8 / 12 px)
+- [x] Base styles: `space-950` background, `text` color, Inter body, tabular-number mono class for readings
+- [x] Global focus ring (2 px `accent`, 2 px offset) and `prefers-reduced-motion` handling
+- [x] Logo SVG component (orbit ring + silhouette + cyan pin) and favicon
 
 **Done when:** an empty app with 6 routes builds, tests run, uses the dark theme, and it's live at a public URL.
 

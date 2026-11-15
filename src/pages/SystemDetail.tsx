@@ -8,7 +8,7 @@ export default function SystemDetail() {
   return (
     <PagePlaceholder title="System detail" phase="Phase 4">
       <p className="mt-4">
-        System: <code className="font-mono text-sky-400">{id}</code>
+        System: <code className="reading text-accent">{id}</code>
       </p>
     </PagePlaceholder>
   )
