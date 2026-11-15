@@ -248,9 +248,9 @@ Rules that keep it simple:
 - [x] "How do I measure this?" shows the steps (inline for now; becomes overlay C in 5.5)
 
 ### 5.4 Summary screen
-- [ ] Systems whose status changed, each with its first action and a link to System detail
-- [ ] New tasks created (e.g. "Recheck temperature in 4–6 h"), also sent to the 🔔 list
-- [ ] Check-in duration; "Back to Body Map" with pins animating to new colors
+- [x] Systems whose status changed, each with its first action and a link to System detail
+- [x] New tasks created (e.g. "Recheck temperature in 4–6 h"); intervals in `src/data/rechecks.ts` (the 🔔 list picks them up in 6.1)
+- [x] Check-in duration; "Back to Body Map" with pins animating to new colors
 
 ### 5.5 Overlay C — How to measure
 - [ ] Reusable overlay: steps, tips, a common mistake, why it matters in space (from `systems.ts`)

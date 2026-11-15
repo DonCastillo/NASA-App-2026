@@ -70,7 +70,7 @@ describe('check-in page', () => {
     await user.type(screen.getByRole('textbox', { name: /Anything else to note/ }), 'All good')
     await user.click(screen.getByRole('button', { name: 'Finish' }))
 
-    expect(screen.getByRole('heading', { name: 'Check-in saved' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Check-in complete' })).toBeInTheDocument()
     const saved = selectDataset(store.getState()).checkIns.at(-1)!
     const value = (id: string) => saved.readings.find((r) => r.indicatorId === id)?.value
     expect(value('sleepHours')).toBe(7.5)
@@ -155,5 +155,45 @@ describe('check-in page', () => {
     await user.click(screen.getByRole('button', { name: 'Next' }))
     await user.click(screen.getByRole('button', { name: 'Back' }))
     expect(screen.getByRole('textbox', { name: 'Sleep duration' })).toHaveValue('8.0')
+  })
+
+  it('ends with a summary of what changed, what to do and what to recheck', async () => {
+    // A clock that moves on 1 min 48 s between starting and finishing
+    let clock = NOW.getTime()
+    const store = createAppStore({ storage: null, today: NOW, now: () => new Date(clock) })
+    asMe(store)
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/', '/check-in?task=recheck-bodyTemperature'],
+      initialIndex: 1,
+    })
+    render(
+      <AppStoreContext value={store}>
+        <RouterProvider router={router} />
+      </AppStoreContext>,
+    )
+    const user = userEvent.setup()
+    await user.type(screen.getByRole('textbox', { name: 'Body temperature' }), '38.4')
+    await user.click(screen.getByRole('button', { name: 'Next' }))
+    // 38.4 °C opens the immune checklist and the fever medicine question
+    await user.click(screen.getByRole('button', { name: 'Cold sore' }))
+    await user.click(screen.getByRole('button', { name: 'Next' }))
+    await user.click(screen.getByRole('button', { name: 'No' }))
+    clock += 108_000
+    await user.click(screen.getByRole('button', { name: 'Finish' }))
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Check-in complete' })).toBeInTheDocument()
+    expect(screen.getByText('1 min 48 s')).toBeInTheDocument()
+    const changes = screen.getByRole('heading', { name: 'Changes' }).parentElement!
+    expect(changes).toHaveTextContent('Immune system: Not recorded → Act')
+    expect(changes).toHaveTextContent('→ Run the onboard infection protocol.')
+    expect(screen.getByRole('link', { name: 'See what to do' })).toHaveAttribute(
+      'href',
+      '/system/immune',
+    )
+    expect(changes).toHaveTextContent('All other systems unchanged (7)')
+    expect(screen.getByText('Recheck body temperature in 4–6 h')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('link', { name: 'Back to Body Map' }))
+    expect(router.state.location.pathname).toBe('/')
   })
 })

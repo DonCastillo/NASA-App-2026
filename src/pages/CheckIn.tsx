@@ -1,6 +1,7 @@
-import { ArrowLeft, CheckCircle2, X } from 'lucide-react'
+import { ArrowLeft, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
+import CheckInSummary from '../components/checkin/CheckInSummary'
 import QuestionInput from '../components/checkin/QuestionInput'
 import MeasureSteps from '../components/MeasureSteps'
 import { SYSTEMS } from '../data/systems'
@@ -21,6 +22,7 @@ import {
 } from '../lib/triggers'
 import { selectDataset, selectDraft, selectHealth, selectMission } from '../state/selectors'
 import { useAppStore } from '../state/useAppStore'
+import type { Health } from '../lib/health'
 import type { CheckInDraft, ReadingValue } from '../types'
 
 // The check-in page (plan/site-map.md → Check-in, plan/tasks.md 5.3).
@@ -63,7 +65,8 @@ export default function CheckIn() {
   )
   const [warning, setWarning] = useState<string>()
   const [showMeasure, setShowMeasure] = useState(false)
-  const [done, setDone] = useState(false)
+  // Set on Finish: the health picture before saving, to show what changed
+  const [done, setDone] = useState<{ before: Health; durationMs: number }>()
 
   const ctx: CheckInContext = {
     mode,
@@ -103,8 +106,9 @@ export default function CheckIn() {
   const finish = (answers: Answers) => {
     const finalCtx = { ...ctx, now: now() }
     const finalQuestions = buildQuestions(finalCtx, answers)
+    const before = health
     addCheckIn(buildCheckIn(finalCtx, finalQuestions, answers, draft.id, draft.startedAt))
-    setDone(true)
+    setDone({ before, durationMs: finalCtx.now.getTime() - new Date(draft.startedAt).getTime() })
   }
 
   /** Move on with this answer (or finish after the last question) */
@@ -132,19 +136,8 @@ export default function CheckIn() {
     indicator?.input === 'checklist'
 
   if (done) {
-    return (
-      <section className="mx-auto flex max-w-md flex-col items-center gap-4 p-8 text-center">
-        <CheckCircle2 size={40} strokeWidth={1.5} className="text-ok" aria-hidden />
-        <h1 className="text-2xl font-semibold">Check-in saved</h1>
-        <p className="text-sm text-text-muted">Your body map is up to date.</p>
-        <Link
-          to="/"
-          className="flex h-11 items-center rounded-control bg-accent px-5 font-semibold text-space-950 hover:bg-accent-hover"
-        >
-          Back to Body Map
-        </Link>
-      </section>
-    )
+    // `health` is now the picture after saving the check-in
+    return <CheckInSummary before={done.before} after={health} durationMs={done.durationMs} />
   }
 
   return (
