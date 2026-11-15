@@ -143,28 +143,23 @@ export default function CheckIn() {
 
   return (
     <section className="mx-auto flex max-w-xl flex-col gap-5 p-4 md:p-8">
-      {/* Top bar: back, title, progress, close */}
-      <div className="flex items-center gap-2 text-[13px] text-text-muted">
-        <button
-          type="button"
-          onClick={() => update(draft.answers, index - 1)}
-          disabled={index === 0}
-          className="inline-flex h-9 items-center gap-1 rounded-control px-2 hover:text-text disabled:invisible"
-        >
-          <ArrowLeft size={16} strokeWidth={1.5} aria-hidden /> Back
-        </button>
-        <h1 className="flex-1 text-center text-sm font-semibold text-text">{checkInTitle(mode)}</h1>
-        <span className="reading" aria-live="polite">
-          {index + 1} of {questions.length}
-        </span>
-        <button
-          type="button"
-          aria-label="Close check-in (your answers are kept)"
-          onClick={() => navigate('/')}
-          className="grid size-9 place-items-center rounded-control hover:text-text"
-        >
-          <X size={18} strokeWidth={1.5} aria-hidden />
-        </button>
+      {/* Top bar: title (centered), progress, close. Back sits next to Next below. */}
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-[13px] text-text-muted">
+        <span aria-hidden />
+        <h1 className="text-center text-sm font-semibold text-text">{checkInTitle(mode)}</h1>
+        <div className="flex items-center justify-end gap-2">
+          <span className="reading" aria-live="polite">
+            {index + 1} of {questions.length}
+          </span>
+          <button
+            type="button"
+            aria-label="Close check-in (your answers are kept)"
+            onClick={() => navigate('/')}
+            className="grid size-9 place-items-center rounded-control hover:text-text"
+          >
+            <X size={18} strokeWidth={1.5} aria-hidden />
+          </button>
+        </div>
       </div>
       <div
         role="progressbar"
@@ -266,18 +261,26 @@ export default function CheckIn() {
         </div>
       )}
 
-      {/* Actions */}
+      {/* Actions: "Same as yesterday" (centered) above Back · Next, then Skip */}
       <div className="mt-2 flex flex-col gap-2">
+        {last && question.kind === 'indicator' && (
+          <button
+            type="button"
+            onClick={() => advance(last.value)}
+            className="h-10 self-center rounded-control border border-space-700 px-5 text-sm font-semibold text-text hover:bg-space-800"
+          >
+            Same as yesterday
+          </button>
+        )}
         <div className="flex gap-2">
-          {last && question.kind === 'indicator' && (
-            <button
-              type="button"
-              onClick={() => advance(last.value)}
-              className="h-11 flex-1 rounded-control border border-space-700 px-4 font-semibold text-text hover:bg-space-800"
-            >
-              Same as yesterday
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => update(draft.answers, index - 1)}
+            disabled={index === 0}
+            className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-control border border-space-700 px-4 font-semibold text-text hover:bg-space-800 disabled:opacity-45 disabled:hover:bg-transparent"
+          >
+            <ArrowLeft size={18} strokeWidth={1.5} aria-hidden /> Back
+          </button>
           <button
             type="button"
             onClick={onNext}
