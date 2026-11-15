@@ -120,12 +120,12 @@ Rules that keep it simple:
 - [x] Daily history from day 1 up to a set current day per mission (ISS day 120 of 180, Artemis day 20 of 30, Mars day 150 of 210)
 
 ### 2.2 Encode article trends in the seed
-- [ ] Bone density −1–1.5%/month; strength and aerobic fitness falling 10–12% by mission end
-- [ ] Neutron dose ~150 µSv/day on ISS, scaled up for Artemis and Mars
-- [ ] Sleep disruption and mood dips
-- [ ] Gradual SANS onset in one crew member
-- [ ] One immune episode (cold sore + fever) for a demo red alert
-- [ ] Some events (spacewalk, landing) and countermeasure answers so chart markers show
+- [x] Bone density −1–1.5%/month; strength and aerobic fitness falling 10–12% by mission end (strength seeded per crew member; bone loss is calculated in 2.3, not seeded)
+- [x] Neutron dose ~150 µSv/day on ISS, scaled up for Artemis and Mars
+- [x] Sleep disruption and mood dips
+- [x] Gradual SANS onset in one crew member
+- [x] One immune episode (cold sore + fever) for a demo red alert
+- [x] Some events (spacewalk, landing) and countermeasure answers so chart markers show
 
 ### 2.3 Derived values (`src/lib/derived.ts`)
 - [ ] Mission day and progress from start date and mission length
