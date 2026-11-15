@@ -297,6 +297,21 @@ export type CountermeasureQuestion = {
   group: CountermeasureGroup
   /** Plain description of when it is asked; the rule itself lives in src/lib/triggers.ts */
   askedWhen: string
+  /** How often it typically comes up, e.g. "Occasionally (symptom days)" */
+  frequency: string
+  /** Routine questions: only asked if the profile lists one of these pick-list ids */
+  onlyIfProfileHas?: string[]
+  /** Article slugs; empty when the basis is general practice */
+  sources: string[]
+}
+
+/** One item in the "Regular supplements / medications" pick list in setup */
+export type SupplementOption = {
+  id: string
+  /** e.g. "Daily B vitamin" */
+  label: string
+  kind: 'supplement' | 'medication'
+  schedule: 'daily' | 'weekly'
   sources: string[]
 }
 
@@ -320,6 +335,19 @@ export type CheckIn = {
 }
 
 export type MissionEventType = 'spacewalk' | 'landing' | 'gravityTransition'
+
+/** Content for one event type in the "Log event" overlay (src/data/events.ts) */
+export type EventTypeDef = {
+  id: MissionEventType
+  /** e.g. "Landing / docking" */
+  label: string
+  /** One line shown under the option */
+  description: string
+  /** Indicators to check after the event (queued as a task) */
+  followUpIndicators: IndicatorId[]
+  /** Countermeasure questions to ask before the event, when it's logged ahead of time */
+  beforeEventQuestions: string[]
+}
 
 /** Something logged with the "Log event" button */
 export type MissionEvent = {

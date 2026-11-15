@@ -90,9 +90,9 @@ Rules that keep it simple:
 - [x] Escalation wording per status per mission ([Escalation by mission](body-systems.md#escalation-by-mission))
 
 ### 1.4 `src/data/` supporting content
-- [ ] Countermeasure and medication questions (10), with trigger and frequency ([body-systems.md](body-systems.md#countermeasure-and-medication-questions))
-- [ ] Supplement / medication pick list for the profile
-- [ ] Event types: spacewalk, landing/docking, gravity transition
+- [x] Countermeasure and medication questions (10), with trigger and frequency ([body-systems.md](body-systems.md#countermeasure-and-medication-questions))
+- [x] Supplement / medication pick list for the profile
+- [x] Event types: spacewalk, landing/docking, gravity transition
 
 ### 1.5 `src/lib/status.ts` — scoring rules
 - [ ] `scoreIndicator(indicator, value, baseline?)` → status, for each input type
