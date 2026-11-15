@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
 import Guidance from '../components/detail/Guidance'
+import IndicatorCards from '../components/detail/IndicatorCards'
 import SidePanel from '../components/SidePanel'
 import StatusChip from '../components/StatusChip'
 import { SYSTEMS } from '../data/systems'
@@ -16,6 +17,7 @@ export default function SystemDetail() {
   const location = useLocation()
   const health = useAppStore(selectHealth)
   const mission = useAppStore(selectMission)
+  const today = useAppStore((s) => s.today)
   const system = SYSTEMS.find((s) => s.id === id)
 
   // Back to where the user came from; if the panel was opened directly (refresh, shared link),
@@ -49,8 +51,13 @@ export default function SystemDetail() {
         />
       </div>
 
+      {/* 3. Indicator cards (amber and red first) */}
+      <div className="border-b border-space-700">
+        <IndicatorCards system={system} health={health} today={today} />
+      </div>
+
       <p className="px-5 py-4 text-sm text-text-muted">
-        Indicators, trends and background come in the next steps.
+        Trends and background come in the next steps.
       </p>
     </SidePanel>
   )

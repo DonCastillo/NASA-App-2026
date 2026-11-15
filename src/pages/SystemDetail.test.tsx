@@ -78,10 +78,12 @@ describe('System detail: status and guidance', () => {
     )
     return screen.getByRole('dialog')
   }
+  /** The panel header, where the status chip sits */
+  const header = (dialog: HTMLElement) => dialog.querySelector('header') as HTMLElement
 
   it('shows the status chip, the reason in plain words, actions and the Mars escalation', () => {
     const dialog = renderDetail('/system/eyes') // Cmdr. Vega on Mars, day 150 of 210
-    expect(within(dialog).getByText('Act')).toBeInTheDocument()
+    expect(within(header(dialog)).getByText('Act')).toBeInTheDocument()
     expect(dialog).toHaveTextContent('Near-vision self-check: 2 lines worse than baseline')
     expect(dialog).toHaveTextContent(
       'Request an eye exam (onboard ultrasound or imaging) and escalate.',
@@ -102,7 +104,7 @@ describe('System detail: status and guidance', () => {
 
   it('keeps green calm: "Keep your routine" plus one tip, no escalation', () => {
     const dialog = renderDetail('/system/heart')
-    expect(within(dialog).getByText('OK')).toBeInTheDocument()
+    expect(within(header(dialog)).getByText('OK')).toBeInTheDocument()
     expect(dialog).toHaveTextContent('All recorded indicators are in range.')
     expect(dialog).toHaveTextContent('Keep your routine.')
     expect(dialog).toHaveTextContent('Tip: Keep exercising and eating the planned diet.')
@@ -114,7 +116,7 @@ describe('System detail: status and guidance', () => {
 
   it('offers to check a system that has nothing recorded', () => {
     const dialog = renderDetail('/system/balance')
-    expect(within(dialog).getByText('Not recorded')).toBeInTheDocument()
+    expect(within(header(dialog)).getByText('Not recorded')).toBeInTheDocument()
     expect(within(dialog).getByRole('link', { name: 'Check it now' })).toHaveAttribute(
       'href',
       '/check-in?system=balance',

@@ -202,9 +202,9 @@ Rules that keep it simple:
 - [x] Green state: "Keep your routine" plus one prevention tip
 
 ### 4.3 Indicator cards (`IndicatorCard`)
-- [ ] Latest value, status, change vs baseline, time recorded
-- [ ] "Not recorded" for skipped items
-- [ ] Amber and red cards first
+- [x] Latest value, status, change vs baseline, time recorded
+- [x] "Not recorded" for skipped items ("Not asked recently" for follow-ups that weren't triggered, with when it was last recorded)
+- [x] Amber and red cards first
 
 ### 4.4 Trend charts (`TrendChart`)
 - [ ] One small Recharts line chart per indicator from history

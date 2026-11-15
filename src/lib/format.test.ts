@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { SYSTEMS } from '../data/systems'
 import type { IndicatorId } from '../types'
-import { describeReading, formatDelay, formatNumber, formatReading } from './format'
+import {
+  describeChange,
+  describeReading,
+  formatDelay,
+  formatNumber,
+  formatReading,
+  formatWhen,
+} from './format'
 
 const indicator = (id: IndicatorId) =>
   SYSTEMS.flatMap((system) => system.indicators).find((i) => i.id === id)!
@@ -60,5 +67,31 @@ describe('describeReading', () => {
   it('falls back to the plain reading without a reference or for plain indicators', () => {
     expect(describeReading(indicator('nearVision'), 8)).toBe('8 lines')
     expect(describeReading(indicator('bodyTemperature'), 38.2, 37)).toBe('38.2 °C')
+  })
+})
+
+describe('formatWhen', () => {
+  const today = new Date(2026, 10, 15, 9, 0)
+  it.each([
+    [new Date(2026, 10, 15, 7, 10), 'today 07:10'],
+    [new Date(2026, 10, 14, 7, 10), 'yesterday'],
+    [new Date(2026, 10, 12, 7, 10), '3 days ago'],
+  ])('%s → %s', (at, expected) => {
+    expect(formatWhen(at.toISOString(), today)).toBe(expected)
+  })
+})
+
+describe('describeChange', () => {
+  it('compares a reading with its setup baseline', () => {
+    expect(describeChange(indicator('bloodPressure'), [122, 75], [118, 76])).toBe(
+      '+4/−1 mmHg vs baseline',
+    )
+    expect(describeChange(indicator('sleepHours'), 6.7, 7.3)).toBe('−0.6 h vs baseline')
+    expect(describeChange(indicator('restingHeartRate'), 58, 58)).toBe('±0 bpm vs baseline')
+  })
+
+  it('returns nothing without a baseline or a value', () => {
+    expect(describeChange(indicator('bodyTemperature'), 36.6, undefined)).toBeUndefined()
+    expect(describeChange(indicator('sleepHours'), null, 7)).toBeUndefined()
   })
 })

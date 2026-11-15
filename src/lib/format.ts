@@ -1,3 +1,4 @@
+import { differenceInCalendarDays, format } from 'date-fns'
 import { RATING_LABELS, SEVERITY_LABELS } from '../data/scales'
 import type { Indicator, ReadingValue } from '../types'
 
@@ -96,4 +97,34 @@ export function describeReading(
     default:
       return formatReading(indicator, value)
   }
+}
+
+/** When a reading was taken, relative to today: "today 07:10", "yesterday", "3 days ago" */
+export function formatWhen(recordedAt: string, today: Date): string {
+  const at = new Date(recordedAt)
+  const days = differenceInCalendarDays(today, at)
+  if (days <= 0) return `today ${format(at, 'HH:mm')}`
+  if (days === 1) return 'yesterday'
+  return `${days} days ago`
+}
+
+/**
+ * Difference from a baseline entered in setup, e.g. "+4/−1 mmHg vs baseline", "−0.6 h vs baseline".
+ * `baseline` is one number, or two for a number pair (blood pressure). Undefined if not comparable.
+ */
+export function describeChange(
+  indicator: Indicator,
+  value: ReadingValue | undefined,
+  baseline: number | [number, number] | undefined,
+): string | undefined {
+  if (baseline === undefined || value === null || value === undefined) return undefined
+  const unit = indicator.unit ? ` ${indicator.unit}` : ''
+  const diff = (a: number, b: number) => signed(Math.round((a - b) * 10) / 10)
+  if (Array.isArray(baseline) && Array.isArray(value) && typeof value[0] === 'number') {
+    return `${diff(value[0], baseline[0])}/${diff(value[1] as number, baseline[1])}${unit} vs baseline`
+  }
+  if (typeof baseline === 'number' && typeof value === 'number') {
+    return `${diff(value, baseline)}${unit} vs baseline`
+  }
+  return undefined
 }
