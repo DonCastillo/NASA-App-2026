@@ -191,8 +191,8 @@ Rules that keep it simple:
 ## Phase 4 — System detail (≈4 h)
 
 ### 4.1 Panel container
-- [ ] Side panel sliding in from the right on desktop (Body Map stays behind); full page on phone
-- [ ] Same `/system/:id` route; ✕ and browser Back close it; refresh keeps it open; unknown id → home
+- [x] Side panel sliding in from the right on desktop (Body Map stays behind); full page on phone
+- [x] Same `/system/:id` route; ✕ and browser Back close it; refresh keeps it open; unknown id → home
 
 ### 4.2 Status and guidance
 - [ ] Status header: system name, status (color + icon + word), reason sentence from `statusReason()`
@@ -322,6 +322,7 @@ Rules that keep it simple:
 ### 7.5 Accessibility and responsive pass
 - [ ] Every status uses color + icon + word; check contrast against the [branding.md](branding.md) table
 - [ ] Keyboard-only walk through every page and overlay; visible focus
+- [ ] Keep focus inside open panels and overlays (System detail, menus, overlays B–D) and return it on close
 - [ ] Labels for inputs, pins and buttons
 - [ ] Test at phone, tablet and desktop widths
 

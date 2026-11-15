@@ -1,15 +1,32 @@
-import { useParams } from 'react-router'
-import PagePlaceholder from '../components/PagePlaceholder'
+import { useCallback } from 'react'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
+import SidePanel from '../components/SidePanel'
+import { SYSTEMS } from '../data/systems'
 
-// One body system's status, guidance, indicators and trends. Route: /system/:id
+// System detail (plan/site-map.md → System detail, plan/tasks.md 4.1). Route: /system/:id
+// A child route of the Body Map, so the map stays visible behind the panel on desktop.
+// Contents (status, guidance, indicators, trends, background) are filled in 4.2–4.5.
 export default function SystemDetail() {
-  // :id is the system slug from the URL, e.g. "immune" in /system/immune
   const { id } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const system = SYSTEMS.find((s) => s.id === id)
+
+  // Back to where the user came from; if the panel was opened directly (refresh, shared link),
+  // there is no in-app history, so go to the Body Map instead of leaving the app
+  const close = useCallback(() => {
+    if (location.key === 'default') navigate('/', { replace: true })
+    else navigate(-1)
+  }, [location.key, navigate])
+
+  if (!system) return <Navigate to="/" replace />
+
   return (
-    <PagePlaceholder title="System detail" phase="Phase 4">
-      <p className="mt-4">
-        System: <code className="reading text-accent">{id}</code>
-      </p>
-    </PagePlaceholder>
+    <SidePanel title={system.name} onClose={close}>
+      <div className="p-5 text-sm text-text-muted">
+        <p>{system.whatItDoes}</p>
+        <p className="mt-4">Status, guidance, indicators and trends come in the next steps.</p>
+      </div>
+    </SidePanel>
   )
 }

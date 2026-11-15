@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import BodyFigure from '../components/body/BodyFigure'
 import AlertsStrip from '../components/home/AlertsStrip'
 import DailyCheckInButton from '../components/home/DailyCheckInButton'
@@ -44,6 +44,8 @@ export default function BodyMap() {
           </div>
         </div>
       </div>
+      {/* System detail opens here as a panel (route /system/:id) */}
+      <Outlet />
     </section>
   )
 }

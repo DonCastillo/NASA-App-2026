@@ -14,8 +14,12 @@ export const routes: RouteObject[] = [
     path: '/',
     element: <AppLayout />,
     children: [
-      { index: true, element: <BodyMap /> },
-      { path: 'system/:id', element: <SystemDetail /> },
+      // The Body Map stays rendered behind System detail, which opens as a panel in its <Outlet />
+      {
+        path: '',
+        element: <BodyMap />,
+        children: [{ path: 'system/:id', element: <SystemDetail /> }],
+      },
       { path: 'check-in', element: <CheckIn /> },
       { path: 'routine', element: <Routine /> },
       { path: 'setup', element: <Setup /> },

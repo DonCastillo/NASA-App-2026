@@ -14,7 +14,6 @@ function renderAt(path: string) {
 describe('routes', () => {
   it.each([
     ['/', 'Body Map'],
-    ['/system/immune', 'System detail'],
     ['/check-in', 'Check-in'],
     ['/routine', 'Routine'],
     ['/setup', 'Crew & mission setup'],
@@ -24,9 +23,17 @@ describe('routes', () => {
     expect(screen.getByRole('heading', { level: 1, name: title })).toBeInTheDocument()
   })
 
-  it('passes the system slug to System detail', () => {
+  it('opens System detail as a panel over the Body Map, for the system in the address', () => {
     renderAt('/system/immune')
-    expect(screen.getByText('immune')).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Immune system' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Body Map' })).toBeInTheDocument()
+  })
+
+  it('sends an unknown system back to the Body Map', async () => {
+    const router = renderAt('/system/liver')
+    expect(await screen.findByRole('heading', { level: 1, name: 'Body Map' })).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe('/')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
   it('reads the check-in mode from the query string', () => {

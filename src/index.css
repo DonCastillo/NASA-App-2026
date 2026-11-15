@@ -117,3 +117,19 @@
   opacity: 0;
   animation: body-scan 1.8s ease-in-out 0.4s 1 forwards;
 }
+
+/* System detail panel slides in from the right (plan/branding.md §7: 250 ms) */
+@keyframes panel-slide-in {
+  from {
+    transform: translateX(32px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@utility panel-slide-in {
+  animation: panel-slide-in 250ms ease-out;
+}
