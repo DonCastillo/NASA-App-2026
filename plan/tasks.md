@@ -95,11 +95,11 @@ Rules that keep it simple:
 - [x] Event types: spacewalk, landing/docking, gravity transition
 
 ### 1.5 `src/lib/status.ts` — scoring rules
-- [ ] `scoreIndicator(indicator, value, baseline?)` → status, for each input type
-- [ ] Baseline-relative scoring (% of baseline, lines worse than baseline)
-- [ ] `scoreSystem(readings)` → worst status of its indicators; `none` if nothing recorded
-- [ ] `statusReason()` → the one plain sentence for the System detail header (from the indicator driving the status)
-- [ ] Unit tests: sample readings for every system land in the expected color
+- [x] `scoreIndicator(indicator, value, baseline?)` → status, for each input type
+- [x] Baseline-relative scoring (% of baseline, lines worse than baseline)
+- [x] `scoreSystem(readings)` → worst status of its indicators; `none` if nothing recorded
+- [x] `statusReason()` → the one plain sentence for the System detail header (from the indicator driving the status)
+- [x] Unit tests: sample readings for every system land in the expected color
 
 ### 1.6 `src/lib/trends.ts` — trend rules
 - [ ] "3 amber readings in a row" raises amber
