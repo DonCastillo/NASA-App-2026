@@ -49,9 +49,9 @@ Rules that keep it simple:
 - [x] Install `@fontsource/inter` and `@fontsource/jetbrains-mono`
 
 ### 0.2 Folder structure
-- [ ] Create `src/types.ts`, `src/data/`, `src/lib/`, `src/state/`, `src/pages/`, `src/components/`
-- [ ] Add an empty placeholder component for each of the 6 pages
-- [ ] Wire the 6 routes with hash routing (`/`, `/system/:id`, `/check-in`, `/routine`, `/setup`, `/about`); unknown routes fall back to `/`
+- [x] Create `src/types.ts`, `src/data/`, `src/lib/`, `src/state/`, `src/pages/`, `src/components/`
+- [x] Add an empty placeholder component for each of the 6 pages
+- [x] Wire the 6 routes with hash routing (`/`, `/system/:id`, `/check-in`, `/routine`, `/setup`, `/about`); unknown routes fall back to `/`
 
 ### 0.3 First deploy
 - [ ] Choose GitHub Pages or Netlify
