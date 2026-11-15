@@ -4,7 +4,7 @@ The pages and overlays of the app, what each one shows, and how they connect. Co
 
 ## Summary
 
-**6 pages + 3 overlays.** We keep the page count small on purpose: the body map is home, and nearly everything is one tap from it.
+**6 pages + 4 overlays.** We keep the page count small on purpose: the body map is home, and nearly everything is one tap from it.
 
 | # | Page | Route | Purpose | Built in |
 |---|---|---|---|---|
@@ -20,6 +20,7 @@ The pages and overlays of the app, what each one shows, and how they connect. Co
 | A. Welcome | First visit | Explain the app in 3 short cards; choose "Explore demo crew" or "Set up my profile" |
 | B. Log event | Header button on every page | One tap to log a spacewalk, landing/docking or gravity transition, with an optional note |
 | C. How to measure | "How do I measure this?" links | Steps and tips for one indicator, from `systems.ts` |
+| D. Guided tour | After Welcome on first visit; "Take the tour again" on About | 6-step walkthrough of the home page |
 
 Routes use hash routing (`/#/system/heart`) so the app works on GitHub Pages or Netlify without server config.
 
@@ -288,12 +289,42 @@ For first-time users and judges.
 - **Sources:** NASA Human Research Program and CSA articles
 - **Disclaimer:** demo software; thresholds are illustrative, not medical advice
 - **Reset demo data** button
+- **Take the tour again** button (replays overlay D)
 
 ## Overlays
 
 - **A. Welcome:** 3 cards ("Tap a system, see your status" · "A 2-minute daily check-in" · "Guidance that adapts to your distance from Earth"), then "Explore demo crew" or "Set up my profile". Shown once; reopen from About.
 - **B. Log event:** event type (spacewalk · landing/docking · gravity transition), time (default now), optional note. Saving it queues the matching follow-ups (balance, motion sickness, dosimeter readout, pre-landing questions) in the 🔔 dropdown and on the Routine page.
 - **C. How to measure:** steps, tips, a common mistake, and why the measurement matters in space, for one indicator.
+- **D. Guided tour:** starts right after Welcome on the first visit. The screen dims, one element is highlighted at a time, and a small tooltip explains it with Next / Skip and "n of 6".
+
+  | Step | Highlights | Tooltip |
+  |---|---|---|
+  | 1 | Body figure pins | "Each pin is a body system. The color shows its status: green, amber or red." |
+  | 2 | One pin (e.g. Immune) | "Tap a pin to see readings, trends and what to do." |
+  | 3 | Start daily check-in button | "Your 2-minute daily check-in. Most answers are one tap." |
+  | 4 | 🔔 Bell | "Pending tasks appear here, most important first." |
+  | 5 | Log event | "Log a spacewalk or landing. The app will ask the right follow-up checks." |
+  | 6 | Mission ▾ | "Switch missions to see how guidance changes with distance from Earth." |
+
+  ```
+  ┌───────────────────────────────────────────────┐
+  │░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ┌──────┐ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │ 🔔 3 │ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ └──┬───┘ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░ ┌───────────────┴───┐ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░ │ Pending tasks     │ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░ │ appear here.      │ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░ │ 4 of 6  Skip Next │ ░░│
+  │░░░░░░░░░░░░░░░░░░░░░ └───────────────────┘ ░░│
+  └───────────────────────────────────────────────┘
+  ```
+
+  - **Skippable** at any step; shown only on the first visit; replay from About
+  - **Uses the demo crew** so pins show real colors, including amber and red
+  - **Accessible:** Esc skips, Enter goes to Next; tooltip text is readable by screen readers
+  - **First-time hints** (shown once each, no tour): first check-in — "Tap an answer to move on. You can skip anything."; first System detail — "Start with 'What to do now'. Details are below."
+  - **Build:** a small custom component (highlight box + tooltip), no library
 
 ## Not separate pages (and why)
 

@@ -60,7 +60,9 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Pages and routes are 
 **Done when:** skipping a task shows it as overdue, and completing it clears it.
 
 ## Phase 7 — Polish & submission (≈4 h)
-- [ ] First-run explainer / onboarding
+- [ ] First-run onboarding: Welcome overlay (3 cards, "Explore demo crew" / "Set up my profile")
+- [ ] Guided tour (6 steps: pins, one pin, daily check-in button, 🔔 bell, Log event, Mission ▾) — skippable, first visit only, "Take the tour again" on About, keyboard accessible; see [site-map.md](site-map.md#overlays)
+- [ ] First-time hints on the first check-in and first System detail
 - [ ] Accessibility pass (contrast, keyboard navigation, labels) and responsive layout
 - [ ] Final deploy; update README with "Getting started" and "Tech stack"
 - [ ] Record the demo video; write the project submission following the Project Submission Guide
