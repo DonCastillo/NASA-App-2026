@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 import CheckInSummary from '../components/checkin/CheckInSummary'
 import QuestionInput from '../components/checkin/QuestionInput'
-import MeasureSteps from '../components/MeasureSteps'
+import MeasureOverlay from '../components/MeasureOverlay'
 import { SYSTEMS } from '../data/systems'
 import {
   checkInTitle,
@@ -251,16 +251,14 @@ export default function CheckIn() {
         <div>
           <button
             type="button"
-            aria-expanded={showMeasure}
-            onClick={() => setShowMeasure((v) => !v)}
+            aria-haspopup="dialog"
+            onClick={() => setShowMeasure(true)}
             className="text-sm font-medium text-accent underline-offset-2 hover:underline"
           >
             How do I measure this?
           </button>
           {showMeasure && (
-            <div className="mt-2 rounded-control bg-space-800 px-4 py-3">
-              <MeasureSteps indicator={indicator} />
-            </div>
+            <MeasureOverlay indicator={indicator} onClose={() => setShowMeasure(false)} />
           )}
         </div>
       )}

@@ -44,6 +44,8 @@ export const heart: SystemDef = {
         'Wrap the cuff on your upper arm, at heart level.',
         'Enter both numbers: the top (systolic) and the bottom (diastolic).',
       ],
+      commonMistake:
+        'Measuring right after exercise or caffeine, or with the cuff below heart level.',
       sourceType: 'direct',
       sources: ['challenge-statement', 'risk-of-cardiovascular-adaptations', 'venous-haemostasis'],
     },
@@ -69,6 +71,7 @@ export const heart: SystemDef = {
         'Measure on waking, before getting up.',
         'Use your wearable, or count your pulse at the wrist for a full 60 seconds.',
       ],
+      commonMistake: 'Counting for only 15 seconds and multiplying: count the full minute.',
       sourceType: 'direct',
       sources: ['challenge-statement'],
     },

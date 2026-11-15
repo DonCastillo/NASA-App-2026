@@ -1,6 +1,8 @@
 import { Bell, Plus } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 import CrewMenu from './CrewMenu'
+import LogEventOverlay from './LogEventOverlay'
 import Logo from './Logo'
 import MissionDay from './MissionDay'
 import MissionMenu from './MissionMenu'
@@ -8,8 +10,9 @@ import MissionMenu from './MissionMenu'
 // The header on every page (plan/site-map.md → Navigation, plan/tasks.md 3.2):
 //   BodyMap · Crew ▾ · Mission ▾ · Day 150/210 · 14 min delay · 🔔 · [Log event]
 // On phones: bell and Log event are icons only, and mission + day move to a second line.
-// The bell (Phase 6) and Log event (Phase 5) are placeholders for now.
+// The bell is a placeholder until Phase 6.
 export default function Header() {
+  const [logging, setLogging] = useState(false)
   return (
     <header className="sticky top-0 z-20 border-b border-space-700 bg-space-900">
       <div className="flex items-center gap-3 px-4 py-2.5 md:gap-4 md:px-6">
@@ -32,9 +35,10 @@ export default function Header() {
         </button>
         <button
           type="button"
-          aria-label="Log event (coming soon)"
-          disabled
-          className="inline-flex h-10 items-center gap-2 rounded-control border border-space-700 px-2.5 text-sm font-semibold text-text disabled:opacity-60 md:px-3.5"
+          aria-label="Log event"
+          aria-haspopup="dialog"
+          onClick={() => setLogging(true)}
+          className="inline-flex h-10 items-center gap-2 rounded-control border border-space-700 px-2.5 text-sm font-semibold text-text transition-colors duration-150 hover:bg-space-800 md:px-3.5"
         >
           <Plus size={18} strokeWidth={1.5} aria-hidden />
           <span className="hidden md:inline">Log event</span>
@@ -47,6 +51,7 @@ export default function Header() {
           <MissionDay />
         </div>
       </div>
+      {logging && <LogEventOverlay onClose={() => setLogging(false)} />}
     </header>
   )
 }

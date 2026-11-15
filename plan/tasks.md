@@ -253,20 +253,20 @@ Rules that keep it simple:
 - [x] Check-in duration; "Back to Body Map" with pins animating to new colors
 
 ### 5.5 Overlay C — How to measure
-- [ ] Reusable overlay: steps, tips, a common mistake, why it matters in space (from `systems.ts`)
-- [ ] Keyboard: Esc closes; focus returns to the link
+- [x] Reusable overlay: steps, tips, a common mistake, why it matters in space (from `systems.ts`)
+- [x] Keyboard: Esc closes; focus returns to the link
 
 ### 5.6 Overlay B — Log event
-- [ ] Event type (spacewalk · landing/docking · gravity transition), time (default now), optional note
-- [ ] Saving queues follow-ups: balance, motion sickness, dizziness, post-spacewalk dosimeter readout
-- [ ] Upcoming landing queues pre-landing questions (fluid loading, compression garments)
+- [x] Event type (spacewalk · landing/docking · gravity transition), time (default now), optional note
+- [x] Saving queues follow-ups: balance, motion sickness, dizziness, post-spacewalk dosimeter readout (the check-in engine reads logged events; the 🔔 list shows them in 6.1)
+- [x] Upcoming landing queues pre-landing questions (fluid loading, compression garments)
 
 ### 5.7 Setup page (`/setup`)
-- [ ] Step 1 Profile: display name, age, sex, height, preflight body mass, supplements/medications pick list
-- [ ] Step 2 Preflight baselines with "Don't know" (falls back to the first 7 days)
-- [ ] Step 3 Mission: profile, start date, length (pre-filled from the mission, editable), with `lengthCovers` shown next to the length
-- [ ] Every step skippable; Finish switches to the new profile and opens the Body Map
-- [ ] Edit mode pre-fills the current profile; "Delete profile" with a confirmation step
+- [x] Step 1 Profile: display name, age, sex, height, preflight body mass, supplements/medications pick list
+- [x] Step 2 Preflight baselines with "Don't know" (falls back to the first 7 days)
+- [x] Step 3 Mission: profile, start date, length (pre-filled from the mission, editable), with `lengthCovers` shown next to the length
+- [x] Every step skippable; Finish switches to the new profile and opens the Body Map
+- [x] Edit mode pre-fills the current profile; "Delete profile" with a confirmation step
 
 **Done when:** a normal-day check-in takes about 2 minutes, answering "yes, headache" opens the right follow-up, and an out-of-range value turns the matching pin amber or red with guidance.
 

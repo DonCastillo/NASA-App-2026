@@ -39,6 +39,7 @@ export const immune: SystemDef = {
         'Measure at rest, before exercise or a hot drink.',
         'Use the oral or forehead thermometer and wait for the beep.',
       ],
+      commonMistake: 'Measuring right after a hot drink or exercise.',
       sourceType: 'direct',
       sources: ['challenge-statement'],
     },

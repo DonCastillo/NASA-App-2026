@@ -87,6 +87,7 @@ export const balance: SystemDef = {
         'Stand near a wall or handhold, with a crewmate close by after landing.',
         'Lift one foot, close your eyes and start the timer. Stop when you put the foot down or open your eyes.',
       ],
+      commonMistake: 'Testing alone right after landing: keep a crewmate close by.',
       sourceType: 'direct',
       sources: [
         'simulating-manual-piloting-for-moon-landings',

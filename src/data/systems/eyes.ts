@@ -38,6 +38,7 @@ export const eyes: SystemDef = {
         'Cover one eye and read down to the smallest line you can read clearly. Repeat with the other eye.',
         'Enter the number of the smallest line your weaker eye can read.',
       ],
+      commonMistake: 'Holding the card closer or farther than the marked distance.',
       sourceType: 'proxy',
       sources: ['risk-of-spaceflight-associated-neuro-ocular-syndrome-sans', 'cipher'],
     },

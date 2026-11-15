@@ -141,6 +141,8 @@ export type Indicator = {
   options?: ChecklistOption[]
   /** Steps shown in "How do I measure this?" */
   howToMeasure: string[]
+  /** A common measuring mistake to avoid (general measurement practice) */
+  commonMistake?: string
   sourceType: SourceType
   /** Article slugs in plan/articles/ (and 'challenge-statement') */
   sources: string[]

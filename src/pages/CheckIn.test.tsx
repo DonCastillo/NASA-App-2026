@@ -117,12 +117,20 @@ describe('check-in page', () => {
     expect(question()).not.toBe("What's your body temperature?")
   })
 
-  it('shows how to measure on request', async () => {
+  it('opens "How to measure" as an overlay that closes with Esc and returns focus', async () => {
     const { user } = renderCheckIn('/check-in?task=recheck-bodyTemperature', asMe)
-    const toggle = screen.getByRole('button', { name: 'How do I measure this?' })
-    expect(toggle).toHaveAttribute('aria-expanded', 'false')
-    await user.click(toggle)
-    expect(screen.getByText('Measure at rest, before exercise or a hot drink.')).toBeInTheDocument()
+    const link = screen.getByRole('button', { name: 'How do I measure this?' })
+    await user.click(link)
+    const overlay = screen.getByRole('dialog', { name: 'Body temperature' })
+    expect(overlay).toHaveFocus()
+    expect(overlay).toHaveTextContent('Measure at rest, before exercise or a hot drink.')
+    expect(overlay).toHaveTextContent(
+      'Common mistake: Measuring right after a hot drink or exercise.',
+    )
+    expect(overlay).toHaveTextContent('Why it matters in space')
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(link).toHaveFocus()
   })
 
   it('keeps answers in a draft and resumes them later; "Start over" clears it', async () => {

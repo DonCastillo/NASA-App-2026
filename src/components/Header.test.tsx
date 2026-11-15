@@ -50,10 +50,10 @@ describe('header', () => {
     ).toHaveAttribute('aria-valuenow', '150')
   })
 
-  it('has the bell and Log event placeholders', () => {
+  it('has the bell placeholder and a working Log event button', () => {
     renderApp()
     expect(screen.getByRole('button', { name: /Notifications/ })).toBeDisabled()
-    expect(screen.getByRole('button', { name: /Log event/ })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Log event' })).toBeEnabled()
   })
 })
 

@@ -38,6 +38,7 @@ export const radiation: SystemDef = {
         'Read the total dose on your personal dosimeter, in mSv.',
         'Read it weekly and after every spacewalk.',
       ],
+      commonMistake: 'Forgetting to read the dosimeter after a spacewalk.',
       sourceType: 'direct',
       sources: [
         'little-transistor-records-radiation-levels',

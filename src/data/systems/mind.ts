@@ -36,6 +36,7 @@ export const mind: SystemDef = {
         'Read last night’s sleep from your wearable, or estimate from when you fell asleep and woke up.',
         'Count only time asleep, not time resting in your sleep station.',
       ],
+      commonMistake: 'Counting time resting in your sleep station instead of time asleep.',
       sourceType: 'direct',
       sources: ['challenge-statement', 'archer', 'standard-measures'],
     },
