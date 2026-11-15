@@ -1,6 +1,7 @@
-import { Bell, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
+import BellMenu from './BellMenu'
 import CrewMenu from './CrewMenu'
 import LogEventOverlay from './LogEventOverlay'
 import Logo from './Logo'
@@ -10,7 +11,6 @@ import MissionMenu from './MissionMenu'
 // The header on every page (plan/site-map.md → Navigation, plan/tasks.md 3.2):
 //   BodyMap · Crew ▾ · Mission ▾ · Day 150/210 · 14 min delay · 🔔 · [Log event]
 // On phones: bell and Log event are icons only, and mission + day move to a second line.
-// The bell is a placeholder until Phase 6.
 export default function Header() {
   const [logging, setLogging] = useState(false)
   return (
@@ -25,14 +25,7 @@ export default function Header() {
           <MissionDay />
         </div>
         <div className="flex-1" />
-        <button
-          type="button"
-          aria-label="Notifications (coming soon)"
-          disabled
-          className="grid size-10 place-items-center rounded-control border border-space-700 text-text-muted disabled:opacity-60"
-        >
-          <Bell size={20} strokeWidth={1.5} aria-hidden />
-        </button>
+        <BellMenu />
         <button
           type="button"
           aria-label="Log event"

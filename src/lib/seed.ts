@@ -7,6 +7,7 @@ import {
   type DemoEvent,
 } from '../data/demoCrew'
 import { MISSIONS } from '../data/missions'
+import { BONE_MEDICATION_SLOT, WEEKLY_SLOTS } from '../data/schedule'
 import type {
   CheckIn,
   CountermeasureAnswer,
@@ -31,17 +32,6 @@ export type DemoDataset = {
   events: MissionEvent[]
 }
 
-/** Weekly items, spread across the week: mission day % 7 → indicator */
-const WEEKLY_DAY: Record<string, number> = {
-  nearVision: 1,
-  strengthTest: 2,
-  bodyMass: 3,
-  bloodGlucose: 4,
-  cumulativeDose: 5,
-  crewRelations: 6,
-}
-/** Bone medication is answered once a week, on this weekday */
-const BONE_MEDICATION_DAY = 0
 /** Extra dosimeter dose from one spacewalk, in mSv (spacewalk doses are much higher than inside) */
 const SPACEWALK_EXTRA_MILLISV = 1.5
 
@@ -162,30 +152,30 @@ function simulateDay(
   if (mood <= 3) values.stress = clamp(round(random.normal(3.4, 0.5)), 1, 5)
 
   // ── Weekly items (tier 3) on their day of the week ──
-  if (weekday === WEEKLY_DAY.nearVision || (sansOnset && isToday)) {
+  if (weekday === WEEKLY_SLOTS.nearVision || (sansOnset && isToday)) {
     // SANS: one line worse from onset, two lines worse near the end of the demo history
     const linesWorse = !sansOnset ? 0 : progress >= 0.85 ? 2 : 1
     values.nearVision = (b.nearVisionLines ?? 10) - linesWorse
   }
-  if (weekday === WEEKLY_DAY.strengthTest) {
+  if (weekday === WEEKLY_SLOTS.strengthTest) {
     // Strength falls through the mission (articles: 10–12% on average by the end)
     const expected = (b.strengthScore ?? 60) * (1 - crew.strengthLossByEnd * missionFraction)
     values.strengthTest = round(random.normal(expected, 0.8))
   }
-  if (weekday === WEEKLY_DAY.bodyMass) {
+  if (weekday === WEEKLY_SLOTS.bodyMass) {
     values.bodyMass = round(
       random.normal((crew.preflightBodyMassKg ?? 70) * (1 - 0.01 * missionFraction), 0.3),
       1,
     )
   }
-  if (weekday === WEEKLY_DAY.bloodGlucose) values.bloodGlucose = round(random.normal(88, 5))
-  if (weekday === WEEKLY_DAY.crewRelations) {
+  if (weekday === WEEKLY_SLOTS.bloodGlucose) values.bloodGlucose = round(random.normal(88, 5))
+  if (weekday === WEEKLY_SLOTS.crewRelations) {
     values.crewRelations = clamp(round(random.normal(4.4, 0.5)), 1, 5)
   }
 
   // ── Radiation: the mission's daily rate (ISS ≈ 500 µSv/day from the 150 µSv/day neutron figure),
   //    plus extra dose from each spacewalk. Read weekly and the day after a spacewalk. ──
-  if (weekday === WEEKLY_DAY.cumulativeDose || eventYesterday?.type === 'spacewalk') {
+  if (weekday === WEEKLY_SLOTS.cumulativeDose || eventYesterday?.type === 'spacewalk') {
     const spacewalks = myEvents.filter((e) => e.type === 'spacewalk' && e.day < day).length
     const expectedMilliSv =
       (MISSIONS[missionId].radiationPerDayMicroSv * day) / 1000 +
@@ -222,7 +212,7 @@ function simulateDay(
   if (crew.supplements.includes('bVitamin')) {
     answers.dailySupplements = random.chance(0.08) ? 'Missed today' : 'Yes'
   }
-  if (crew.supplements.includes('boneMedication') && weekday === BONE_MEDICATION_DAY) {
+  if (crew.supplements.includes('boneMedication') && weekday === BONE_MEDICATION_SLOT) {
     answers.boneMedication = 'Yes'
   }
 

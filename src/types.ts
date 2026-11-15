@@ -398,7 +398,11 @@ export type MissionEvent = {
 
 export type TaskKind = 'dailyCheckIn' | 'weekly' | 'recheck' | 'postEvent' | 'preLanding'
 
-export type TaskState = 'due' | 'overdue' | 'done'
+/** How urgent a recheck is (the status of the reading that triggered it) */
+export type TaskUrgency = 'red' | 'amber'
+
+/** upcoming = not due yet (e.g. a recheck in 3 h) · due · overdue · done */
+export type TaskState = 'upcoming' | 'due' | 'overdue' | 'done'
 
 export type Task = {
   id: string
@@ -411,6 +415,12 @@ export type Task = {
   /** ISO date-time */
   dueAt: string
   state: TaskState
-  /** Lower comes first: red recheck → post-event → daily check-in → overdue weekly → weekly due */
+  /** Lower comes first: red recheck → post-event → daily check-in → amber recheck → weekly */
   priority: number
+  /** Rechecks only: red or amber */
+  urgency?: TaskUrgency
+  /** ISO date-time when it was done */
+  doneAt?: string
+  /** Where the task is done, e.g. "/check-in?task=recheck-bodyTemperature" */
+  link: string
 }

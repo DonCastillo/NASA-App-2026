@@ -5,6 +5,9 @@ import { describe, expect, it } from 'vitest'
 import { routes } from '../routes'
 import Nav from './Nav'
 
+// Nav links may include a due-count badge (e.g. "Routine3" or "3Routine"); compare the labels only
+const label = (link: HTMLElement) => link.textContent?.replace(/\d+/g, '')
+
 function renderAt(path: string) {
   render(<RouterProvider router={createMemoryRouter(routes, { initialEntries: [path] })} />)
 }
@@ -16,9 +19,7 @@ describe('app shell', () => {
     const navs = screen.getAllByRole('navigation', { name: 'Main' })
     expect(navs).toHaveLength(2) // side (desktop) + bottom (phone); CSS shows one at a time
     for (const nav of navs) {
-      const labels = within(nav)
-        .getAllByRole('link')
-        .map((link) => link.textContent)
+      const labels = within(nav).getAllByRole('link').map(label)
       expect(labels).toEqual(['Body Map', 'Check-in', 'Routine', 'About'])
     }
   })
@@ -26,7 +27,7 @@ describe('app shell', () => {
   it('marks the current page’s tab as active in both navs', () => {
     renderAt('/routine')
     const active = screen.getAllByRole('link', { current: 'page' })
-    expect(active.map((link) => link.textContent)).toEqual(['Routine', 'Routine'])
+    expect(active.map(label)).toEqual(['Routine', 'Routine'])
   })
 
   it('keeps Body Map active only on the home page', () => {

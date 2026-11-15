@@ -17,7 +17,7 @@ const NAV_ITEMS: NavItem[] = [
 
 type Props = {
   variant: 'side' | 'bottom'
-  /** Due-task counts shown as a badge, e.g. { '/check-in': 1 } (filled in Phase 6) */
+  /** Due-task counts shown as a badge, e.g. { '/check-in': 1 } (from useTasks) */
   badges?: Partial<Record<NavPath, number>>
 }
 

@@ -12,7 +12,14 @@ type Props = {
   children: (close: () => void) => ReactNode
   align?: 'left' | 'right'
   className?: string
+  /** Replaces the default button style (e.g. the 🔔 icon button) */
+  buttonClassName?: string
+  /** Show the ▾ chevron after the label (default true) */
+  chevron?: boolean
 }
+
+const BUTTON_CLASS =
+  'inline-flex h-9 items-center gap-1.5 rounded-control border border-space-700 px-3 text-sm text-text transition-colors duration-150 hover:bg-space-800'
 
 export default function Menu({
   label,
@@ -20,6 +27,8 @@ export default function Menu({
   children,
   align = 'left',
   className = '',
+  buttonClassName = BUTTON_CLASS,
+  chevron = true,
 }: Props) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -66,10 +75,10 @@ export default function Menu({
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-9 items-center gap-1.5 rounded-control border border-space-700 px-3 text-sm text-text transition-colors duration-150 hover:bg-space-800"
+        className={buttonClassName}
       >
         {label}
-        <ChevronDown size={16} strokeWidth={1.5} aria-hidden />
+        {chevron && <ChevronDown size={16} strokeWidth={1.5} aria-hidden />}
       </button>
       {open && (
         <div

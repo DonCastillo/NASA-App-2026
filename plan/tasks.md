@@ -275,24 +275,24 @@ Rules that keep it simple:
 ## Phase 6 — Routine and notifications (≈2 h)
 
 ### 6.1 Scheduler (`src/lib/scheduler.ts`)
-- [ ] Generate tasks from the check-in tiers: daily core (morning), weekly items spread across the week
-- [ ] Event-driven tasks (post-landing, post-spacewalk, pre-landing)
-- [ ] Recheck tasks from amber/red actions (e.g. temperature in 4–6 h, BP within 1 h)
-- [ ] Task states: due, overdue, done; skipped items return in the next prompt
-- [ ] Priority order: red recheck → post-event → daily check-in → overdue weekly → weekly due today
-- [ ] Unit tests
+- [x] Generate tasks from the check-in tiers: daily core (morning), weekly items spread across the week
+- [x] Event-driven tasks (post-landing, post-spacewalk, pre-landing)
+- [x] Recheck tasks from amber/red actions (e.g. temperature in 4–6 h, BP within 1 h)
+- [x] Task states: due, overdue, done; skipped items return in the next prompt
+- [x] Priority order: red recheck → post-event → daily check-in → overdue weekly → weekly due today
+- [x] Unit tests
 
 ### 6.2 🔔 Notification dropdown
-- [ ] Count badge; bell turns amber when overdue, red when a red recheck is due; no badge when empty
-- [ ] Task list in priority order; tapping a task opens `/check-in?task=…`
-- [ ] Empty state: "✓ All done for today · next: tomorrow 07:00"
-- [ ] "See full routine →" link
+- [x] Count badge; bell turns amber when overdue, red when a red recheck is due; no badge when empty
+- [x] Task list in priority order; tapping a task opens `/check-in?task=…`
+- [x] Empty state: "✓ All done for today · next: tomorrow 07:00"
+- [x] "See full routine →" link
 
 ### 6.3 Routine page (`/routine`)
-- [ ] Today: due, overdue and done tasks, each opening the matching check-in
-- [ ] This week: upcoming weekly tasks by day
-- [ ] Completion count for the week
-- [ ] Badges on the Check-in and Routine nav tabs
+- [x] Today: due, overdue and done tasks, each opening the matching check-in
+- [x] This week: upcoming weekly tasks by day
+- [x] Completion count for the week
+- [x] Badges on the Check-in and Routine nav tabs
 
 **Done when:** skipping a task shows it as overdue, completing it clears it, and the bell and Routine page always agree.
 
