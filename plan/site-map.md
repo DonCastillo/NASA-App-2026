@@ -181,12 +181,85 @@ Example: Immune system, red.
 
 ### 3. Check-in — `/check-in`
 
-One question per screen, tap-first ([Check-in design](body-systems.md#check-in-design-fast-low-effort)).
+Where the user enters health data: one question per screen, tap-first, about 2 minutes on a normal day ([Check-in design](body-systems.md#check-in-design-fast-low-effort)).
 
-- **Steps:** Daily core → triggered follow-ups → countermeasure questions (if triggered) → weekly items (if due) → note → summary
-- **Variants by link:** `/check-in` (daily), `/check-in?system=eyes` (one system), `/check-in?task=vision-weekly` (one routine task)
-- **Controls:** progress bar, Back, Skip, "Same as yesterday", pre-filled numbers with −/+ steppers
-- **Summary screen** (last step): what changed, any new amber/red systems with their first action, and "Back to Body Map"
+**Ways in**
+
+| Started from | Asks | Link |
+|---|---|---|
+| "Start daily check-in" button or Check-in tab | The full daily check-in | `/check-in` |
+| "Check this system now" in System detail | Only that system's questions | `/check-in?system=eyes` |
+| A task in the 🔔 dropdown or on Routine | Only that task | `/check-in?task=vision-weekly` |
+
+**Flow**
+
+1. **Daily core (7):** blood pressure, heart rate, temperature, sleep hours, mood, exercise minutes, "Any symptoms today?"
+2. **Follow-ups (only if triggered):** symptoms = yes → symptom tap list; low mood → stress and sleep quality; amber/red reading → rest of that system's questions
+3. **Countermeasure questions (only if triggered):** e.g. motion sickness medicine after dizziness
+4. **Weekly items (only if due today):** e.g. vision chart, body mass
+5. **Note (optional):** one free-text box
+6. **Summary**
+
+On a good day: 7 questions, then the summary.
+
+**Question screen**
+
+```
+┌──────────────────────────────────────────┐
+│ ← Back      Daily check-in      3 of 7   │
+│ ▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░                │
+│                                          │
+│   What's your body temperature?          │
+│                                          │
+│          [ − ]   36.6 °C   [ + ]         │
+│          (yesterday: 36.6)               │
+│                                          │
+│   How do I measure this?                 │
+│                                          │
+│   [ Same as yesterday ]   [  Next  ]     │
+│                  Skip                    │
+└──────────────────────────────────────────┘
+```
+
+Scale questions use big buttons:
+
+```
+   How is your mood today?
+   [😞 Bad] [🙁 Low] [😐 OK] [🙂 Good] [😄 Great]
+```
+
+**What makes it fast**
+- **One plain question per screen**, with a progress bar ("3 of 7")
+- **Numbers pre-filled** with yesterday's value and −/+ steppers; an unchanged reading is one tap
+- **"Same as yesterday"** confirms and moves on
+- **Tapping a scale answer** moves to the next question automatically
+- **Skip** always allowed; the item shows as "not recorded", not red
+- **"How do I measure this?"** opens overlay C only when tapped
+- **Back** changes an earlier answer
+- **Plausibility check** for unlikely numbers (e.g. "45 °C? Please check the reading")
+- **Progress saved** if the user leaves mid-way
+
+**Summary screen (last step)**
+
+```
+┌──────────────────────────────────────────┐
+│ ✓ Check-in complete · 1 min 48 s         │
+│                                          │
+│ Changes                                  │
+│ ✖ Immune → RED   Temperature 38.2 °C     │
+│   → Run the onboard infection protocol   │
+│     [ See what to do ]                   │
+│ ✓ All other systems unchanged            │
+│                                          │
+│ Next: Recheck temperature in 4–6 h 🔔    │
+│                                          │
+│          [ Back to Body Map ]            │
+└──────────────────────────────────────────┘
+```
+
+- **Changes:** any system whose status changed, its first action and a link to its System detail
+- **Next:** any new task (e.g. a recheck), also added to the 🔔 dropdown
+- **Back to Body Map:** pins update with a short transition so the user sees the effect of their answers
 
 ### 4. Routine — `/routine`
 
