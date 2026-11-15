@@ -187,12 +187,23 @@ export type CommsDelay =
   /** Grows from ~0 at departure to maxSeconds at the end of the mission (Mars transit) */
   | { kind: 'growing'; maxSeconds: number }
 
+/**
+ * What the mission length covers.
+ * - stay:      time at a destination (ISS: the stay on the station)
+ * - roundTrip: there and back (Artemis: Earth → Moon → Earth)
+ * - oneWay:    the outbound journey only (Mars transit: Earth → Mars)
+ */
+export type MissionTrip = 'stay' | 'roundTrip' | 'oneWay'
+
 export type MissionProfile = {
   id: MissionProfileId
   /** e.g. "Mars transit" */
   name: string
   /** Pre-filled mission length; editable in setup (180 / 30 / 210) */
   defaultLengthDays: number
+  trip: MissionTrip
+  /** Shown next to the length in setup and the mission switcher, e.g. "One way: Earth → Mars" */
+  lengthCovers: string
   commsDelay: CommsDelay
   /** Typical daily radiation dose on this mission, in µSv/day */
   radiationPerDayMicroSv: number

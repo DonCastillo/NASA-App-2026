@@ -84,7 +84,7 @@ Rules that keep it simple:
 - [x] Check: 8 systems, 28 indicators, each with a source type (direct / proxy / added) matching [health-indicators.md](health-indicators.md)
 
 ### 1.3 `src/data/missions.ts`
-- [ ] ISS, Artemis lunar, Mars transit with default length (180 / 30 / 210 days)
+- [x] ISS, Artemis lunar, Mars transit with default length (180 / 30 / 210 days)
 - [ ] Comms delay: fixed for ISS and Artemis; a function of mission day for Mars transit (~0 → ~20 min)
 - [ ] Radiation daily rate and built-in dose budget per mission
 - [ ] Escalation wording per status per mission ([Escalation by mission](body-systems.md#escalation-by-mission))
@@ -161,7 +161,7 @@ Rules that keep it simple:
 ### 3.2 Header
 - [ ] App name and Crew ▾ menu: demo crew, user profiles, "+ Add crew member", "Edit profile" → `/setup`
 - [ ] Switching crew changes only whose data is shown (no data lost)
-- [ ] Mission ▾ switcher (ISS / Artemis lunar / Mars transit)
+- [ ] Mission ▾ switcher (ISS / Artemis lunar / Mars transit), each option showing what its length covers (`lengthCovers`, e.g. "One way: Earth → Mars")
 - [ ] Mission day out of length, progress bar and comms delay (e.g. "Day 47/210 · 4 min delay")
 - [ ] 🔔 bell placeholder and [Log event] button (wired in Phases 5–6)
 - [ ] Phone layout: bell and Log event as icons; mission and day on one short line
@@ -262,7 +262,7 @@ Rules that keep it simple:
 ### 5.7 Setup page (`/setup`)
 - [ ] Step 1 Profile: display name, age, sex, height, preflight body mass, supplements/medications pick list
 - [ ] Step 2 Preflight baselines with "Don't know" (falls back to the first 7 days)
-- [ ] Step 3 Mission: profile, start date, length (pre-filled from the mission, editable)
+- [ ] Step 3 Mission: profile, start date, length (pre-filled from the mission, editable), with `lengthCovers` shown next to the length
 - [ ] Every step skippable; Finish switches to the new profile and opens the Body Map
 - [ ] Edit mode pre-fills the current profile; "Delete profile" with a confirmation step
 

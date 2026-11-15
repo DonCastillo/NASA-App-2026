@@ -58,7 +58,7 @@ Routes use hash routing (`/#/system/heart`) so the app works on GitHub Pages or 
 ```
 
 - **Crew ▾** switches between saved profiles (the demo has 3 seeded crew).
-- **Mission ▾** switches ISS / Artemis lunar / Mars transit. This changes escalation wording and radiation rates.
+- **Mission ▾** switches ISS / Artemis lunar / Mars transit. This changes escalation wording and radiation rates. Each option says what its length covers: "Stay on the station", "Round trip: Earth → Moon → Earth", "One way: Earth → Mars".
 - **🔔 Notifications** lists pending tasks (see below).
 - Setup is reached from Welcome, from the Crew menu ("Edit profile" / "Add crew member"), and from About ("Reset demo data").
 
@@ -280,7 +280,7 @@ A short form in 3 steps, each one skippable. Optional for the demo.
 
 1. **Profile:** display name, age, sex, height, preflight body mass, regular supplements / medications
 2. **Preflight baselines:** resting BP and heart rate, strength test, near-vision score, balance time, typical sleep hours. "Don't know" → use the first 7 days of check-ins
-3. **Mission:** mission profile, start date and mission length (pre-filled from the profile, editable)
+3. **Mission:** mission profile, start date and mission length (pre-filled from the profile, editable). Next to the length, a short line says what it covers, e.g. "One way: Earth → Mars"
 
 Also hosts "Add crew member" and "Edit profile".
 
