@@ -97,14 +97,18 @@ The first thing judges and users see. Must answer "How am I doing?" in under 5 s
 
 - **Header:** crew member, mission profile, mission day out of mission length, with a progress bar, and comms delay (e.g. "Day 47 of 210 · Mars transit · 4 min comms delay")
 - **Readiness summary:** counts of green / amber / red systems and one line on the most urgent item
-- **Body figure (SVG) with callout pins:** a simple front-facing outline. Each of the 8 systems is a labeled pin with a line pointing to its body part, spread around the figure so pins are easy to tap even where body parts are close together (eyes, brain, inner ear)
-  - Pins: Eyes → Eyes & brain (SANS) · Top of head → Mind & sleep · Ear → Balance & orientation · Left chest → Heart & circulation · Torso/lymph nodes → Immune · Abdomen → Metabolism & nutrition · Spine/hips/legs → Bones & muscles · ☢ badge beside the figure → Radiation (whole body)
-  - **Status on each pin:** green / amber / red color, plus an icon (✓ / ⚠ / ✖) and short label, never color alone. Red pins pulse gently
+- **Body figure (SVG) with callout pins:** a natural front-facing silhouette with faint organ hints inside. Each of the 8 systems is a labeled pin in one of two aligned columns, with a callout line to its organ, so pins are easy to tap even where body parts are close together (eyes, brain, inner ear). Full visual spec: [branding.md](branding.md#5-body-figure); approved look: [branding-sample.html](branding-sample.html)
+  - Left column: Mind & sleep → brain · Eyes & brain (SANS) → eyes · Immune → lymph nodes (neck, armpits, groin) · Bones & muscles → spine and leg bones
+  - Right column: Balance & orientation → inner ear · Heart & circulation → heart · Metabolism & nutrition → stomach · Radiation → ☢ gauge ring showing % of the mission dose budget, with a dashed line to the body (whole body)
+  - **Status on each pin:** green / amber / red color, plus an icon (✓ / ⚠ / ✖), and a label with the reading and status word (e.g. "Immune · 38.2 °C · Act"), never color alone. Red pins pulse gently
+  - **Organs light up:** amber and red organs glow in their status color, so the user sees where the problem is
   - **Hover** (desktop): tooltip with system, status and latest change (e.g. "Immune · Red · Fever 38.2 °C")
   - **Tap / click:** opens System detail (side panel on desktop, full page on phone)
-  - **Linked to the system list:** hovering a list row highlights its pin, and the reverse
+  - **Linked to the system list:** hovering a list row highlights its pin, organ and line, and the reverse; other pins dim
   - **Keyboard:** Tab moves through pins, Enter opens them
   - **After a check-in:** pin colors change with a short transition so the user sees the effect of their answers
+  - **On load:** one soft cyan scan line sweeps down the body (skipped when reduced motion is on)
+  - **Phone:** pin labels show the name only; readings are in the system list
 - **System list** beside the figure (or below it on phone): the same 8 systems as rows with status, latest change and a trend arrow. This is the keyboard and screen-reader path.
 - **Daily check-in button:** a single "Start daily check-in (~2 min)" button, shown only until today's check-in is done. All other pending tasks are in the 🔔 dropdown
 - **Alerts strip:** any red system, or an active solar particle event, with its first action
@@ -113,12 +117,12 @@ The first thing judges and users see. Must answer "How am I doing?" in under 5 s
 ┌────────────────────────────────────────────────────────────┐
 │ BodyMap  Cmdr. Vega ▾  Mars transit ▾  Day 47/210  🔔3 [Log]  │
 ├───────────────────────┬────────────────────────────────────┤
-│                       │ 6 green · 1 amber · 1 red          │
-│        ( o )  ← eyes  │ ⚠ Immune: fever 38.2 °C — see what │
-│       /|♥|\   ← heart │   to do                            │
-│        | |            │ ────────────────────────────────── │
-│       /   \           │ ● Heart & circulation   ✓  →       │
-│   [☢ radiation badge] │ ● Eyes & brain          ⚠  ↗       │
+│ ✓ Mind ──╮  ╭── ✓ Bal │ 6 green · 1 amber · 1 red          │
+│ ⚠ Eyes ──( o )        │ ⚠ Immune: fever 38.2 °C — see what │
+│          /|♥|\─ ✓ Hrt │   to do                            │
+│ ✖ Imm ──/ | \── ✓ Met │ ────────────────────────────────── │
+│          /   \        │ ● Heart & circulation   ✓  →       │
+│ ✓ Bones ─┘    └─ ◔ ☢  │ ● Eyes & brain          ⚠  ↗       │
 │                       │ ● Immune                ✖  ↑       │
 │                       │ …                                  │
 │                       │                                    │

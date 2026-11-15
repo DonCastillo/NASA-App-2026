@@ -75,12 +75,33 @@ The look and feel of BodyMap. Every component uses the tokens below; no ad-hoc c
 
 ## 5. Body figure
 
-- **Outline:** thin line, `text-muted`, 1.5 px stroke, no fill
-- **Pins:** filled status circles with a soft outer glow (the status color at 30% opacity). The selected or hovered pin gets an `accent` ring
-- **Red pins:** pulse slowly (about 2 s per cycle), the only looping animation in the app
-- **Callout lines:** 1 px `space-700`
-- **Labels:** 12 px Inter. The reading next to a label uses mono
-- **Radiation badge:** rounded square with the ☢ icon, in its status color
+The approved visual is the Body map section of [branding-sample.html](branding-sample.html).
+
+- **Silhouette:** a front-facing, natural human outline. It has a rounded head with ears, a neck, sloped shoulders, arms held slightly away from the body with hands and a thumb, a natural waist and hips, knees, calves and feet. Drawn as one smooth SVG path with a 1.5 px `text-muted` stroke and a vertical `accent` gradient fill (16% at the top fading to 5%)
+- **Organ hints:** low-opacity lines (`text-muted` at 35%) showing where each system lives:
+
+  | System | Organ hint |
+  |---|---|
+  | Mind & sleep | Brain (two lobes) inside the head |
+  | Eyes & brain | Two eyes |
+  | Balance | Inner ear, inside the right ear |
+  | Heart | Heart, left chest |
+  | Immune | Lymph nodes at the neck, armpits and groin |
+  | Metabolism | Stomach |
+  | Bones & muscles | Dashed spine, pelvis, leg bones |
+
+  - Amber or red organs light up in their status color, with a 15–45% tinted fill
+  - Hover or focus turns the organ `accent` with a soft glow
+- **Pins:**
+  - Layout: two aligned columns. On the left: Mind & sleep, Eyes & brain, Immune, Bones & muscles. On the right: Balance, Heart, Metabolism, Radiation
+  - Style: a filled status circle (r 13) with a status icon (✓ / ⚠ / ✖) and a soft glow (the status color at 28% opacity)
+  - Red pins pulse slowly (about 2 s per cycle), the only looping animation in the app
+  - The selected or hovered pin gets an `accent` ring, and the other pins dim to 40%
+- **Pin labels:** the name in 13 px Inter 600, plus a second line with the reading in mono and the status word in its status color (e.g. "38.2 °C · Act"). Below 760 px, only the name shows
+- **Callout lines:** 1 px `space-700`, running out from the pin and then angling to the organ, with no crossings. Each line ends in a small `text-muted` dot on the organ. The line turns `accent` on hover
+- **Radiation gauge:** a ring (r 15, 4 px track in `space-700`) that fills in the status color to show the % of the mission dose budget used, with ☢ in the center. A dashed callout line connects it to the body
+- **Scan sweep:** on page load, one soft `accent` line sweeps down the body once (about 1.8 s). It's turned off under `prefers-reduced-motion`
+- **Linking:** hovering or focusing a system row highlights the matching pin, organ and callout line, and the reverse
 
 ## 6. Components
 
