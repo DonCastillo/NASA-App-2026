@@ -180,9 +180,9 @@ Rules that keep it simple:
 - [x] Rows open `/system/:id` (keyboard and screen-reader path)
 
 ### 3.5 Home extras
-- [ ] Readiness summary: green / amber / red counts and the most urgent item
-- [ ] Alerts strip: red systems and an active solar particle event, each with its first action
-- [ ] "Start daily check-in (~2 min)" button, shown only until today's check-in is done
+- [x] Readiness summary: green / amber / red counts and the most urgent item
+- [x] Alerts strip: red systems and an active solar particle event, each with its first action
+- [x] "Start daily check-in (~2 min)" button, shown only until today's check-in is done; afterwards a "done" note with "Check in again" (the demo seed includes this morning's check-in)
 
 **Done when:** clicking any pin or row opens that system, colors reflect the seeded data, and switching crew or mission updates everything.
 

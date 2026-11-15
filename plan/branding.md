@@ -24,6 +24,7 @@ The look and feel of BodyMap. Every component uses the tokens below; no ad-hoc c
 | `text` | `#E2E8F0` | Main text |
 | `text-muted` | `#94A3B8` | Secondary text, labels, body outline |
 | `accent` | `#38BDF8` | Links, focus ring, active nav, primary buttons, selection |
+| `accent-hover` | `#7DD3FC` | Primary button hover |
 | `ok` | `#22C55E` | Green status |
 | `warn` | `#F59E0B` | Amber status |
 | `alert` | `#EF4444` | Red status: fills, pins, chart bands |

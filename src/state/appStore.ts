@@ -60,6 +60,7 @@ export function createAppStore({
   today = new Date(),
 }: AppStoreOptions = {}) {
   const stored = loadData(storage)
+  console.log('Loaded stored data', stored)
   const known = (id?: string) =>
     id !== undefined && (DEMO_IDS.includes(id) || stored.profiles.some((p) => p.id === id))
 

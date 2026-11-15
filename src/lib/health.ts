@@ -71,6 +71,8 @@ export type Health = {
   mostUrgent?: { systemId: SystemId; status: Status; reason: string }
   dose: DoseSummary
   projections: Projections
+  /** A completed daily check-in exists for today */
+  checkInDoneToday: boolean
 }
 
 /**
@@ -186,5 +188,11 @@ export function computeHealth(dataset: Dataset, mission: MissionProfile, today: 
     mostUrgent,
     dose,
     projections: projections(profile.mission, mission, boneLoss, dose, today),
+    checkInDoneToday: checkIns.some(
+      (checkIn) =>
+        checkIn.mode.kind === 'daily' &&
+        checkIn.completedAt !== undefined &&
+        differenceInCalendarDays(today, new Date(checkIn.startedAt)) === 0,
+    ),
   }
 }

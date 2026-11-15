@@ -26,6 +26,7 @@
   --color-text: #e2e8f0;
   --color-text-muted: #94a3b8;
   --color-accent: #38bdf8;
+  --color-accent-hover: #7dd3fc; /* primary button hover */
 
   /* Health status (only for health status, always with an icon + word) */
   --color-ok: #22c55e;
