@@ -43,6 +43,25 @@ describe('systems content', () => {
     expect(new Set(spots).size).toBe(spots.length)
   })
 
+  it('lays out the pins as in plan/branding.md §5', () => {
+    const column = (side: 'left' | 'right') =>
+      SYSTEMS.filter((system) => system.pin.side === side)
+        .sort((a, b) => a.pin.order - b.pin.order)
+        .map((system) => `${system.id}:${system.pin.label}`)
+    expect(column('left')).toEqual([
+      'mind:Mind & sleep',
+      'eyes:Eyes & brain',
+      'immune:Immune',
+      'bones:Bones & muscles',
+    ])
+    expect(column('right')).toEqual([
+      'balance:Balance',
+      'heart:Heart',
+      'metabolism:Metabolism',
+      'radiation:Radiation',
+    ])
+  })
+
   it('cites only sources that exist in plan/', () => {
     for (const system of SYSTEMS) {
       for (const source of [...system.sources, ...system.indicators.flatMap((i) => i.sources)]) {

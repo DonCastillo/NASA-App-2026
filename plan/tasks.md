@@ -80,7 +80,7 @@ Rules that keep it simple:
 - [x] Add Eyes & brain, Bones & muscles
 - [x] Add Immune, Metabolism & nutrition
 - [x] Add Mind & sleep, Balance & orientation, Radiation
-- [ ] Add the body-map pin position and label for each system
+- [x] Add the body-map pin position and label for each system
 - [ ] Check: 8 systems, 28 indicators, each with a source type (direct / proxy / added) matching [health-indicators.md](health-indicators.md)
 
 ### 1.3 `src/data/missions.ts`
