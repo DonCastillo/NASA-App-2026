@@ -122,4 +122,12 @@ describe('System detail: status and guidance', () => {
       '/check-in?system=balance',
     )
   })
+
+  it('ends with a button to check this system now', () => {
+    const dialog = renderDetail('/system/mind')
+    expect(within(dialog).getByRole('link', { name: 'Check this system now' })).toHaveAttribute(
+      'href',
+      '/check-in?system=mind',
+    )
+  })
 })

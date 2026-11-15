@@ -174,6 +174,14 @@ export type SystemDef = {
   sources: string[]
 }
 
+/** A background source shown under "Sources" in System detail */
+export type ArticleRef = {
+  title: string
+  /** Original NASA / CSA page; absent for sources without a public page */
+  url?: string
+  agency: 'NASA' | 'CSA'
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Missions
 // ─────────────────────────────────────────────────────────────────────────────

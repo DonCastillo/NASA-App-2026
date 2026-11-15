@@ -214,10 +214,10 @@ Rules that keep it simple:
 - [x] Non-number indicators (scales, yes/no, checklist) shown as simple dot or bar timelines
 
 ### 4.5 Background sections
-- [ ] Collapsible "Why this changes in space"
-- [ ] Collapsible "How to measure" (same content as overlay C)
-- [ ] Collapsible "Sources" linking to the original article pages
-- [ ] "Check this system now" → `/check-in?system=<id>`
+- [x] Collapsible "Why this changes in space"
+- [x] Collapsible "How to measure" (same content as overlay C)
+- [x] Collapsible "Sources" linking to the original article pages
+- [x] "Check this system now" → `/check-in?system=<id>`
 
 **Done when:** every system's panel is filled entirely from `systems.ts` and `missions.ts`, with no hard-coded health text in components.
 

@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router'
+import Background from '../components/detail/Background'
 import Guidance from '../components/detail/Guidance'
 import IndicatorCards from '../components/detail/IndicatorCards'
 import Trends from '../components/detail/Trends'
@@ -11,7 +12,7 @@ import { useAppStore } from '../state/useAppStore'
 
 // System detail (plan/site-map.md → System detail). Route: /system/:id
 // A child route of the Body Map, so the map stays visible behind the panel on desktop.
-// Order: status → what to do → evidence (4.3–4.4) → background (4.5).
+// Order: status → what to do → evidence (cards, trends) → background → check this system now.
 export default function SystemDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -63,7 +64,18 @@ export default function SystemDetail() {
         <Trends system={system} health={health} dataset={dataset} today={today} />
       </div>
 
-      <p className="px-5 py-4 text-sm text-text-muted">Background comes in the next step.</p>
+      {/* 5–7. Background, collapsed: why it changes in space, how to measure, sources */}
+      <Background system={system} />
+
+      {/* 8. Recheck this system */}
+      <div className="p-5">
+        <Link
+          to={`/check-in?system=${system.id}`}
+          className="flex h-11 w-full items-center justify-center rounded-control border border-space-700 text-[15px] font-semibold text-text transition-colors duration-150 hover:bg-space-800"
+        >
+          Check this system now
+        </Link>
+      </div>
     </SidePanel>
   )
 }
