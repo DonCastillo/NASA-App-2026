@@ -78,7 +78,7 @@ Rules that keep it simple:
 ### 1.2 `src/data/systems.ts` — one system at a time
 - [x] Add Heart & circulation fully (4 indicators, thresholds, how to measure, why in space, actions per status, sources) as the template
 - [x] Add Eyes & brain, Bones & muscles
-- [ ] Add Immune, Metabolism & nutrition
+- [x] Add Immune, Metabolism & nutrition
 - [ ] Add Mind & sleep, Balance & orientation, Radiation
 - [ ] Add the body-map pin position and label for each system
 - [ ] Check: 8 systems, 28 indicators, each with a source type (direct / proxy / added) matching [health-indicators.md](health-indicators.md)
