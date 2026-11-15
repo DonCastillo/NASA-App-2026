@@ -15,7 +15,7 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen">
       <nav className="flex items-center gap-6 border-b border-space-700 bg-space-900 px-8 py-3 text-sm">
-        <Logo />
+        <Logo animated />
         {links.map((link) => (
           <NavLink
             key={link.to}

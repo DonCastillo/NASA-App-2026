@@ -95,7 +95,7 @@ The approved visual is the Body map section of [branding-sample.html](branding-s
 - **Pins:**
   - Layout: two aligned columns. On the left: Mind & sleep, Eyes & brain, Immune, Bones & muscles. On the right: Balance, Heart, Metabolism, Radiation
   - Style: a filled status circle (r 13) with a status icon (✓ / ⚠ / ✖) and a soft glow (the status color at 28% opacity)
-  - Red pins pulse slowly (about 2 s per cycle), the only looping animation in the app
+  - Red pins pulse slowly (about 2 s per cycle). Apart from the header logo's orbiting pin, this is the only looping animation in the app
   - The selected or hovered pin gets an `accent` ring, and the other pins dim to 40%
 - **Pin labels:** the name in 13 px Inter 600, plus a second line with the reading in mono and the status word in its status color (e.g. "38.2 °C · Act"). Below 760 px, only the name shows
 - **Callout lines:** 1 px `space-700`, running out from the pin and then angling to the organ, with no crossings. Each line ends in a small `text-muted` dot on the organ. The line turns `accent` on hover
@@ -125,24 +125,33 @@ The approved visual is the Body map section of [branding-sample.html](branding-s
 | Hover, focus, button press | 150 ms |
 | Side panel slide, pin color change, overlay fade | 250 ms |
 | Red pin pulse | ~2 s loop |
+| Header logo: pin travelling along the tilted orbit | 6 s loop, linear |
 
-When the user has "reduce motion" turned on in their device settings (`prefers-reduced-motion`), the pulse stops and transitions become instant.
+When the user has "reduce motion" turned on in their device settings (`prefers-reduced-motion`), the pulse and the logo orbit stop, and transitions become instant.
 
 ## 8. Logo and favicon
 
+The approved mark is variant **D · Tilted orbit** in [branding-sample.html](branding-sample.html) (Logo & favicon, and Experiment: outer orbit).
+
 ```
-      .-~~~-.
-    /   ( )   \      ← thin orbit ring
-   |    /|\    ●     ← one cyan "pin" dot on the ring
-    \   / \   /
-      `-...-´
+        .-~~~-.
+   ●  /    O    \     ← cyan pin travelling on the orbit
+    \ |   /|\   | \   ← tilted cyan orbit passing behind the body
+     `-.  / \  .-´    ← thin grey ring
+        `-...-´
    BodyMap
    CREW HEALTH
 ```
 
-- **Mark:** a simple body silhouette inside a thin orbit ring, with one `accent` dot on the ring as a pin
+- **Mark:**
+  - **Body:** the same silhouette as the body diagram (section 5), filled `text`, with a thin edge in the background color, so the orbit appears to pass behind it
+  - **Ring:** a thin `text-muted` circle framing the body
+  - **Orbit:** a tilted ellipse (−25°) in `accent` at 70% opacity, crossing behind the body like a planet's or satellite's path
+  - **Pin:** one `accent` dot on the orbit
+- **Meaning:** a person, in orbit, being monitored, with one point of attention
+- **Animation:** in the app header only, the pin travels along the orbit (6 s loop) and passes behind the body. It is still everywhere else, and in the header too when reduced motion is on
 - **Wordmark:** "BodyMap" in Inter 600, with "CREW HEALTH" below in small caps, `text-muted`
-- **Format:** inline SVG, also used as the favicon. No external image files
+- **Format:** inline SVG. `src/components/Logo.tsx` (with an `animated` option) and `public/favicon.svg` (static, on a `space-950` rounded tile). The body path lives in `src/components/logoFigurePath.ts`. No external image files
 
 ## 9. Accessibility rules
 
