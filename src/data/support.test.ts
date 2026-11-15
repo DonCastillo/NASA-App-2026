@@ -39,6 +39,13 @@ describe('countermeasure questions', () => {
     }
   })
 
+  it('links chart markers only to indicators that exist', () => {
+    for (const q of COUNTERMEASURES) {
+      for (const id of q.relatedIndicators)
+        expect(indicatorIds.has(id), `${q.id} → ${id}`).toBe(true)
+    }
+  })
+
   it('cites only articles that exist', () => {
     for (const q of COUNTERMEASURES) {
       for (const source of q.sources) expect(knownSources.has(source), source).toBe(true)

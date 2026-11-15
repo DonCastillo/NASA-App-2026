@@ -1,32 +1,14 @@
 import { STATUS_DISPLAY } from '../../data/statusDisplay'
 import { describeChange, describeReading, formatReading, formatWhen } from '../../lib/format'
+import { setupBaseline } from '../../lib/derived'
 import type { Health } from '../../lib/health'
 import type { HistoryPoint } from '../../lib/trends'
-import type { Baselines, Indicator, IndicatorId, Status, SystemDef } from '../../types'
+import type { Indicator, Status, SystemDef } from '../../types'
 
 // Indicator cards in System detail (plan/site-map.md → System detail §3, plan/tasks.md 4.3):
 // latest value, status, change vs baseline and when it was recorded. Amber and red come first.
 
 const STATUS_ORDER: Record<Status, number> = { red: 0, amber: 1, green: 2, none: 3 }
-
-/** Baselines from setup for indicators scored on absolute values (relative ones use describeReading) */
-function setupBaseline(
-  id: IndicatorId,
-  baselines: Baselines,
-): number | [number, number] | undefined {
-  switch (id) {
-    case 'bloodPressure':
-      return baselines.restingSystolic !== undefined && baselines.restingDiastolic !== undefined
-        ? [baselines.restingSystolic, baselines.restingDiastolic]
-        : undefined
-    case 'restingHeartRate':
-      return baselines.restingHeartRate
-    case 'sleepHours':
-      return baselines.typicalSleepHours
-    default:
-      return undefined
-  }
-}
 
 /** The newest non-skipped point in a history */
 const lastRecorded = (points: HistoryPoint[] | undefined) =>
@@ -77,10 +59,20 @@ export function IndicatorCard({ indicator, status, raisedBy, health, today }: Ca
           <span style={{ color: display.textColor }} className="font-semibold">
             {word}
           </span>
-          {recorded && last && <> · {formatWhen(last.recordedAt, today)}</>}
+          {recorded && indicator.input === 'calculated' && <> · calculated</>}
+          {recorded && indicator.input !== 'calculated' && last && (
+            <> · {formatWhen(last.recordedAt, today)}</>
+          )}
           {!recorded && last && <> · last recorded {formatWhen(last.recordedAt, today)}</>}
         </p>
-        {raisedBy && <p className="mt-1 text-xs text-text-muted">{raisedBy}</p>}
+        {raisedBy && (
+          <p className="mt-1 text-xs text-text-muted">
+            {/* Trend reasons start with the indicator name, which the card already shows */}
+            {raisedBy.startsWith(`${indicator.name}: `)
+              ? raisedBy.slice(indicator.name.length + 2).replace(/^./, (c) => c.toUpperCase())
+              : raisedBy}
+          </p>
+        )}
       </div>
       <div className="max-w-[45%] shrink-0 text-right">
         <p

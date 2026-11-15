@@ -2,10 +2,11 @@ import { useCallback } from 'react'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
 import Guidance from '../components/detail/Guidance'
 import IndicatorCards from '../components/detail/IndicatorCards'
+import Trends from '../components/detail/Trends'
 import SidePanel from '../components/SidePanel'
 import StatusChip from '../components/StatusChip'
 import { SYSTEMS } from '../data/systems'
-import { selectHealth, selectMission } from '../state/selectors'
+import { selectDataset, selectHealth, selectMission } from '../state/selectors'
 import { useAppStore } from '../state/useAppStore'
 
 // System detail (plan/site-map.md → System detail). Route: /system/:id
@@ -18,6 +19,7 @@ export default function SystemDetail() {
   const health = useAppStore(selectHealth)
   const mission = useAppStore(selectMission)
   const today = useAppStore((s) => s.today)
+  const dataset = useAppStore(selectDataset)
   const system = SYSTEMS.find((s) => s.id === id)
 
   // Back to where the user came from; if the panel was opened directly (refresh, shared link),
@@ -56,9 +58,12 @@ export default function SystemDetail() {
         <IndicatorCards system={system} health={health} today={today} />
       </div>
 
-      <p className="px-5 py-4 text-sm text-text-muted">
-        Trends and background come in the next steps.
-      </p>
+      {/* 4. Trends */}
+      <div className="border-b border-space-700">
+        <Trends system={system} health={health} dataset={dataset} today={today} />
+      </div>
+
+      <p className="px-5 py-4 text-sm text-text-muted">Background comes in the next step.</p>
     </SidePanel>
   )
 }

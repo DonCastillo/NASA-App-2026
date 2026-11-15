@@ -301,6 +301,8 @@ export type CountermeasureQuestion = {
   frequency: string
   /** Routine questions: only asked if the profile lists one of these pick-list ids */
   onlyIfProfileHas?: string[]
+  /** Indicators whose trend chart shows a marker when this was answered "yes" */
+  relatedIndicators: IndicatorId[]
   /** Article slugs; empty when the basis is general practice */
   sources: string[]
 }

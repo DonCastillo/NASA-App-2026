@@ -207,11 +207,11 @@ Rules that keep it simple:
 - [x] Amber and red cards first
 
 ### 4.4 Trend charts (`TrendChart`)
-- [ ] One small Recharts line chart per indicator from history
-- [ ] Green / amber / red background bands and a dashed baseline line
-- [ ] 7 d / 30 d / Mission range buttons
-- [ ] Event markers (spacewalk, landing) and countermeasure markers (thigh cuffs, medication)
-- [ ] Non-number indicators (scales, yes/no, checklist) shown as simple dot or bar timelines
+- [x] One small Recharts line chart per indicator from history
+- [x] Green / amber / red background bands and a dashed baseline line
+- [x] 7 d / 30 d / Mission range buttons
+- [x] Event markers (spacewalk, landing) and countermeasure markers (thigh cuffs, medication)
+- [x] Non-number indicators (scales, yes/no, checklist) shown as simple dot or bar timelines
 
 ### 4.5 Background sections
 - [ ] Collapsible "Why this changes in space"

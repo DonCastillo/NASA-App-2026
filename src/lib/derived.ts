@@ -256,3 +256,25 @@ export function projections(
   }
   return result
 }
+
+/**
+ * The setup baseline for indicators scored on absolute values (blood pressure, heart rate, sleep).
+ * Relative indicators compare with their reference instead (see referencesFor).
+ */
+export function setupBaseline(
+  id: IndicatorId,
+  baselines: Baselines,
+): number | [number, number] | undefined {
+  switch (id) {
+    case 'bloodPressure':
+      return baselines.restingSystolic !== undefined && baselines.restingDiastolic !== undefined
+        ? [baselines.restingSystolic, baselines.restingDiastolic]
+        : undefined
+    case 'restingHeartRate':
+      return baselines.restingHeartRate
+    case 'sleepHours':
+      return baselines.typicalSleepHours
+    default:
+      return undefined
+  }
+}
