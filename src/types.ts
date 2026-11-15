@@ -98,6 +98,8 @@ export type StreakRule = {
   when: ScoredStatus
   /** How many days in a row */
   days: number
+  /** Only count days whose value is below this, e.g. exercise under 60 min (amber also covers 60–89) */
+  below?: number
   /** The status it becomes */
   becomes: ScoredStatus
 }
