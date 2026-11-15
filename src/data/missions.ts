@@ -7,8 +7,7 @@ import type { MissionProfile, MissionProfileId } from '../types'
 // the Moon and Mars figures are general spaceflight knowledge, not from the articles.
 
 // Placeholders filled in by the next steps of plan/tasks.md 1.3:
-//   commsDelay → step 2 · radiationPerDayMicroSv, doseBudgetMilliSv → step 3 · escalation → step 4
-const TODO_DELAY = { kind: 'fixed', seconds: 0 } as const
+//   radiationPerDayMicroSv, doseBudgetMilliSv → step 3 · escalation → step 4
 const TODO_ESCALATION = { green: '', amber: '', red: '' }
 
 export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
@@ -18,7 +17,8 @@ export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
     defaultLengthDays: 180,
     trip: 'stay',
     lengthCovers: 'Stay on the station',
-    commsDelay: TODO_DELAY,
+    // Near real time: under a second via relay satellites
+    commsDelay: { kind: 'fixed', seconds: 0.5 },
     radiationPerDayMicroSv: 0,
     doseBudgetMilliSv: 0,
     resupply: true,
@@ -31,7 +31,8 @@ export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
     defaultLengthDays: 30,
     trip: 'roundTrip',
     lengthCovers: 'Round trip: Earth → Moon → Earth',
-    commsDelay: TODO_DELAY,
+    // Light takes about 1.3 s to cross the Earth–Moon distance
+    commsDelay: { kind: 'fixed', seconds: 1.3 },
     radiationPerDayMicroSv: 0,
     doseBudgetMilliSv: 0,
     resupply: false,
@@ -47,7 +48,9 @@ export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
     defaultLengthDays: 210,
     trip: 'oneWay',
     lengthCovers: 'One way: Earth → Mars',
-    commsDelay: TODO_DELAY,
+    // Grows as the crew gets farther from Earth: ~0 at departure to ~20 min at arrival.
+    // The delay on a given mission day is worked out in src/lib/derived.ts (task 2.3).
+    commsDelay: { kind: 'growing', maxSeconds: 20 * 60 },
     radiationPerDayMicroSv: 0,
     doseBudgetMilliSv: 0,
     resupply: false,

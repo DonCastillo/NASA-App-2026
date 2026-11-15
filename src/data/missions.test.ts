@@ -31,6 +31,18 @@ describe('missions content', () => {
     }
   })
 
+  it('sets the one-way comms delay for each mission', () => {
+    // ISS: near real time (under 1 s)
+    expect(MISSIONS.iss.commsDelay.kind).toBe('fixed')
+    expect(
+      MISSIONS.iss.commsDelay.kind === 'fixed' && MISSIONS.iss.commsDelay.seconds,
+    ).toBeLessThan(1)
+    // Artemis: ~1.3 s
+    expect(MISSIONS.artemis.commsDelay).toEqual({ kind: 'fixed', seconds: 1.3 })
+    // Mars transit: grows to ~20 min by arrival
+    expect(MISSIONS.mars.commsDelay).toEqual({ kind: 'growing', maxSeconds: 1200 })
+  })
+
   it('only allows resupply on the ISS', () => {
     expect(MISSION_LIST.filter((mission) => mission.resupply).map((m) => m.id)).toEqual(['iss'])
   })
