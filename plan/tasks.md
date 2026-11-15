@@ -128,13 +128,13 @@ Rules that keep it simple:
 - [x] Some events (spacewalk, landing) and countermeasure answers so chart markers show
 
 ### 2.3 Derived values (`src/lib/derived.ts`)
-- [ ] Mission day and progress from start date and mission length
-- [ ] Current comms delay from mission and mission day
-- [ ] Estimated bone loss from mission day and exercise compliance
-- [ ] Cumulative dose, % of mission budget, and daily dose rate
-- [ ] Baseline fallback: average of the first 7 days of check-ins when a baseline is missing
-- [ ] End-of-mission projections (bone loss, radiation dose)
-- [ ] Unit tests
+- [x] Mission day and progress from start date and mission length
+- [x] Current comms delay from mission and mission day
+- [x] Estimated bone loss from mission day and exercise compliance
+- [x] Cumulative dose, % of mission budget, and daily dose rate
+- [x] Baseline fallback: average of the first 7 days of check-ins when a baseline is missing
+- [x] End-of-mission projections (bone loss, radiation dose)
+- [x] Unit tests
 
 ### 2.4 Storage (`src/lib/storage.ts`)
 - [ ] One small module wrapping `localStorage` (read, write, versioned key); nothing else touches storage

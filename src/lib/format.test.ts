@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { SYSTEMS } from '../data/systems'
 import type { IndicatorId } from '../types'
-import { formatNumber, formatReading } from './format'
+import { formatDelay, formatNumber, formatReading } from './format'
 
 const indicator = (id: IndicatorId) =>
   SYSTEMS.flatMap((system) => system.indicators).find((i) => i.id === id)!
@@ -28,5 +28,16 @@ describe('formatReading', () => {
     ['sleepHours', null, 'Not recorded'],
   ] as const)('%s %j → %s', (id, value, expected) => {
     expect(formatReading(indicator(id), value as never)).toBe(expected)
+  })
+})
+
+describe('formatDelay', () => {
+  it.each([
+    [0.5, 'under 1 s'],
+    [1.3, '1.3 s'],
+    [268, '4 min'],
+    [1200, '20 min'],
+  ])('%s s → %s', (seconds, expected) => {
+    expect(formatDelay(seconds)).toBe(expected)
   })
 })

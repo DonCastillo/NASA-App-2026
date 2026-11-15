@@ -44,3 +44,10 @@ export function formatReading(indicator: Indicator, value: ReadingValue | undefi
   }
   return withUnit(formatNumber(value), indicator.unit)
 }
+
+/** One-way comms delay as text: "under 1 s", "1.3 s", "4 min" */
+export function formatDelay(seconds: number): string {
+  if (seconds < 1) return 'under 1 s'
+  if (seconds < 60) return `${formatNumber(seconds)} s`
+  return `${Math.round(seconds / 60)} min`
+}
