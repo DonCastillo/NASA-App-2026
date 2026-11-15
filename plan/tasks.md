@@ -54,7 +54,7 @@ Rules that keep it simple:
 - [x] Wire the 6 routes with hash routing (`/`, `/system/:id`, `/check-in`, `/routine`, `/setup`, `/about`); unknown routes fall back to `/`
 
 ### 0.3 First deploy
-- [ ] Choose GitHub Pages or Netlify
+- [x] Choose GitHub Pages or Netlify → GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`)
 - [ ] Deploy the placeholder app; open every route on the public URL
 
 ### 0.4 Theme ([branding.md](branding.md))
