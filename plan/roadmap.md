@@ -43,7 +43,7 @@ The app's value is the mapping **body system → indicators → why it changes i
 
 ### Body-system model
 
-Summary below. The full model — what each system does, how spaceflight affects it, every indicator with unit, how to measure, frequency, green/amber/red thresholds, actions, and escalation by mission — is in [body-systems.md](body-systems.md). The source of each indicator is listed in [health-indicators.md](health-indicators.md).
+Summary below. The full model — what each system does, how spaceflight affects it, every indicator with unit, how to measure, frequency, green/amber/red thresholds, actions, and escalation by mission — is in [body-systems.md](body-systems.md). The source of each indicator is listed in [health-indicators.md](health-indicators.md). The pages of the app are planned in [site-map.md](site-map.md).
 
 | System | Indicators (input) | Key sources in `plan/articles/` |
 |---|---|---|
@@ -58,11 +58,15 @@ Summary below. The full model — what each system does, how spaceflight affects
 
 ### Mission profiles
 
-| Profile | Comms delay (one way) | Environment notes |
-|---|---|---|
-| ISS | Near real time | Inside Earth's magnetosphere; resupply available |
-| Artemis lunar | ~1.3 s | Outside the magnetosphere; gravity transitions (landing, spacewalks) |
-| Mars transit | Up to ~20+ min | No resupply; highest radiation; crew must act autonomously |
+| Profile | Default length | Comms delay (one way) | Environment notes |
+|---|---|---|---|
+| ISS | 180 days | Near real time | Inside Earth's magnetosphere; resupply available |
+| Artemis lunar | 30 days | ~1.3 s | Outside the magnetosphere; gravity transitions (landing, spacewalks) |
+| Mars transit | 210 days (one way) | Grows with distance, from ~0 at departure to ~20 min at arrival | No resupply; highest radiation; crew must act autonomously |
+
+The mission profile fills in a **default length**, which the user can change in setup (e.g. a 1-year ISS mission). With the start date, this gives "Day 47 of 180", a progress bar, end-of-mission projections (bone loss, radiation dose) and, on Mars transit, the current comms delay.
+
+*Default lengths and the Mars delay curve are illustrative demo values. ISS missions in the articles run four to six months (CIPHER covers up to a year); the Moon and Mars figures are general spaceflight knowledge, not from the articles.*
 
 Each profile changes radiation accrual in the seeded data and the wording of escalation guidance (e.g. "call flight surgeon now" on ISS vs "follow onboard protocol, then send report" on Mars transit).
 
@@ -74,7 +78,7 @@ Time boxes assume the hackathon window: Sat Nov 14 afternoon → Sun Nov 15, 11:
 |---|---|---|
 | 0 — Setup | ≈1 h | Empty app builds and is live at a public URL |
 | 1 — Health model | ≈3 h | `systems.ts`, `missions.ts` and status rules score sample readings correctly |
-| 2 — Seed data | ≈2 h | 3 crew × 90 days per mission, with a believable mix of green, amber and red |
+| 2 — Seed data | ≈2 h | 3 crew per mission, with history up to a set day within the mission length, with a believable mix of green, amber and red |
 | 3 — Body map | ≈4 h | Clickable SVG figure colored from the data; crew and mission switchers |
 | 4 — System detail panel | ≈4 h | Indicators, trend charts, explanations and comms-delay-aware guidance, all from `systems.ts` |
 | 5 — Check-in flow | ≈3 h | Out-of-range input turns the matching region amber/red and shows guidance |

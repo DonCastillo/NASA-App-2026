@@ -1,6 +1,6 @@
 # BodyMap: Crew Health — Tasks
 
-Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as they're done.
+Task checklist for each phase in [roadmap.md](roadmap.md). Pages and routes are in [site-map.md](site-map.md). Tick items off as they're done.
 
 ## Phase 0 — Setup (≈1 h)
 - [ ] Scaffold Vite + React + TypeScript; add Tailwind and Recharts
@@ -11,13 +11,13 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 
 ## Phase 1 — Health model (≈3 h)
 - [ ] `src/data/systems.ts`: 8 systems, each with indicators (name, unit, input type, normal/amber/red thresholds), "why this changes in space", "how to measure", actions per status, and article references
-- [ ] `src/data/missions.ts`: 3 profiles (comms delay, radiation rate, resupply, escalation wording)
+- [ ] `src/data/missions.ts`: 3 profiles (default length 180 / 30 / 210 days, comms delay — growing by mission day on Mars transit — radiation rate, resupply, escalation wording)
 - [ ] `src/lib/status.ts`: indicator → green/amber/red; system status = worst of its indicators
 
 **Done when:** a quick unit check scores sample readings into the expected colors.
 
 ## Phase 2 — Seed data (≈2 h)
-- [ ] Deterministic generator: 3 crew members × 90 days per mission profile
+- [ ] Deterministic generator: 3 crew members per mission profile, with daily history from day 1 up to a set "current" day within the mission length (e.g. ISS day 120 of 180, Artemis day 20 of 30, Mars day 150 of 210)
 - [ ] Encode article trends: bone density −1–1.5%/month; strength and aerobic fitness −10–12% by mission end; neutron dose ~150 µSv/day on ISS, scaled up for lunar/Mars; sleep disruption; gradual SANS onset in one crew member; one immune episode (cold sore/fever) for a demo alert
 - [ ] Seeded crew profiles (name, age, sex, height, preflight body mass, regular supplements/medications) and preflight baselines; built-in radiation budget per mission in `missions.ts`
 - [ ] `localStorage` persistence with a "reset demo data" action
@@ -25,7 +25,7 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 **Done when:** each crew member/mission shows a believable mix of green, amber and at least one red.
 
 ## Phase 3 — Body map (≈4 h)
-- [ ] SVG human figure with clickable regions: heart, head/eyes, skeleton/muscles, immune (lymph/torso), gut, brain/mind, inner ear, whole-body radiation badge
+- [ ] SVG human figure with 8 callout pins (eyes, top of head, ear, heart, torso/lymph, abdomen, spine/hips/legs, ☢ radiation badge) — see [site-map.md](site-map.md#1-body-map-home--)
 - [ ] Status colors plus icon/label (not color alone), hover tooltips
 - [ ] Crew-member and mission switchers; overall readiness summary
 
@@ -40,7 +40,7 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 **Done when:** every system's panel is filled entirely from `systems.ts` with no hard-coded text in components.
 
 ## Phase 5 — Check-in flow (≈3 h)
-- [ ] Profile & mission setup screen (optional for demo): profile fields, preflight baselines (fall back to first 7 days), mission profile and start date — see [body-systems.md](body-systems.md#user-profile--context)
+- [ ] Profile & mission setup screen (optional for demo): profile fields, preflight baselines (fall back to first 7 days), mission profile, start date and mission length (pre-filled, editable) — see [body-systems.md](body-systems.md#user-profile--context)
 - [ ] "Log event" (spacewalk, landing/docking, gravity transition), countermeasure/medication questions (triggered, routine and pre-landing — see [body-systems.md](body-systems.md#countermeasure-and-medication-questions)), and a free-text note on check-ins
 - [ ] Tier 1 daily core screen (7 items) with pre-filled values, −/+ steppers and "Same as yesterday"
 - [ ] Tap-to-answer scale buttons (severity 0–3, rating 1–5 with words/faces)
@@ -54,6 +54,7 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 ## Phase 6 — Scheduled prompts (≈2 h)
 - [ ] Mission routine from the check-in tiers: daily core (morning), weekly items spread across the week, event-driven prompts after gravity transitions or spacewalks
 - [ ] Due / overdue list with a link into the right check-in step
+- [ ] Header 🔔 notification dropdown: pending tasks in priority order, count badge, empty state, "See full routine" link — see [site-map.md](site-map.md#notification-bell)
 - [ ] Skipped items return in the next prompt
 
 **Done when:** skipping a task shows it as overdue, and completing it clears it.

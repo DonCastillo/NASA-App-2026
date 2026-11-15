@@ -303,6 +303,7 @@ If a baseline is missing, the app uses the average of the first 7 days of check-
 |---|---|
 | Mission profile (ISS / Artemis lunar / Mars transit) | Escalation wording, radiation rate, resupply |
 | Mission start date | Gives the mission day, which drives the bone-loss estimate, weekly prompts and charts |
+| Mission length (days) | Pre-filled from the mission profile (ISS 180 · Artemis lunar 30 · Mars transit 210), editable. Gives "Day 47 of 180", end-of-mission projections and the Mars comms delay by mission day |
 
 The radiation dose budget is **not** entered by the user. It's a built-in demo value for each mission profile in `missions.ts`, used to score cumulative dose as % of budget. The crew switcher lists the saved profiles for the current mission, so no separate crew list is needed.
 
