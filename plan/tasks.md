@@ -115,9 +115,9 @@ Rules that keep it simple:
 ## Phase 2 — Seed data and storage (≈2 h)
 
 ### 2.1 Seed generator (`src/lib/seed.ts`)
-- [ ] Deterministic random number generator (same seed → same data every load)
-- [ ] 3 demo crew profiles (name, age, sex, height, preflight body mass, supplements/medications) with preflight baselines
-- [ ] Daily history from day 1 up to a set current day per mission (ISS day 120 of 180, Artemis day 20 of 30, Mars day 150 of 210)
+- [x] Deterministic random number generator (same seed → same data every load)
+- [x] 3 demo crew profiles (name, age, sex, height, preflight body mass, supplements/medications) with preflight baselines
+- [x] Daily history from day 1 up to a set current day per mission (ISS day 120 of 180, Artemis day 20 of 30, Mars day 150 of 210)
 
 ### 2.2 Encode article trends in the seed
 - [ ] Bone density −1–1.5%/month; strength and aerobic fitness falling 10–12% by mission end
