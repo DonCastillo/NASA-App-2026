@@ -138,11 +138,12 @@ function systemStatusesToday(data: ReturnType<typeof generateDemoData>) {
 
 describe('storylines (2.2)', () => {
   it.each(MISSION_IDS)(
-    'gives every crew member a mix of green, amber and at least one red on %s',
+    'gives every crew member green, amber and at least one red on %s',
     (missionId) => {
       for (const data of generateDemoCrew(missionId, TODAY)) {
         const statuses = Object.values(systemStatusesToday(data))
         expect(statuses, data.profile.name).toContain('red')
+        expect(statuses, data.profile.name).toContain('amber')
         expect(statuses, data.profile.name).toContain('green')
       }
     },

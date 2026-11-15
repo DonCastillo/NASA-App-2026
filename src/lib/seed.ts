@@ -132,6 +132,8 @@ function simulateDay(
     // The last 3 nights: short sleep, low mood → mood amber 3 days in a row (red), sleep red today
     values.sleepHours = isToday ? 5.4 : round(random.normal(6.2, 0.15), 1)
     values.mood = 3
+    // Tired: today's workout is cut short (60–89 min → amber)
+    if (isToday) values.exerciseMinutes = 70
   }
 
   const sansOnset = crew.story === 'sans' && progress >= 0.55

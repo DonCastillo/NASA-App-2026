@@ -144,9 +144,9 @@ Rules that keep it simple:
 - [x] "Delete profile" removes one user profile and its data
 
 ### 2.5 App store (`src/state/`)
-- [ ] Zustand store: current crew member, current mission, profiles, readings, events, and actions to change them
-- [ ] Selectors: latest reading per indicator, status per system, readiness counts
-- [ ] Load from seed + storage on start; save on every change
+- [x] Zustand store: current crew member, current mission, profiles, readings, events, and actions to change them
+- [x] Selectors: latest reading per indicator, status per system, readiness counts
+- [x] Load from seed + storage on start; save on every change
 
 **Done when:** each crew member/mission shows a believable mix of green, amber and at least one red, and a refresh keeps user entries.
 
@@ -196,6 +196,7 @@ Rules that keep it simple:
 
 ### 4.2 Status and guidance
 - [ ] Status header: system name, status (color + icon + word), reason sentence from `statusReason()`
+- [ ] Reason wording for baseline/budget-relative indicators, e.g. "Near vision: 2 lines worse than baseline" instead of "Near-vision self-check: 8 lines"
 - [ ] "What to do now": actions for the current status
 - [ ] Escalation line worded for the selected mission and current comms delay
 - [ ] Green state: "Keep your routine" plus one prevention tip
