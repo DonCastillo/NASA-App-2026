@@ -20,13 +20,13 @@ A web app for the 2026 NASA Space Apps Challenge, *Create Health Monitoring Soft
 
 ## Stack
 
-Vite + React + TypeScript, Tailwind CSS, Recharts, React Router (hash routing), Vitest. Client-only: data in `localStorage`, no backend, no login.
+Vite + React + TypeScript, Tailwind CSS, Recharts, React Router (hash routing), Zustand (state), date-fns (dates), lucide-react (icons), Vitest. Client-only: data in `localStorage`, no backend, no login.
 
 ## Architecture rules
 
 - `src/data/` holds all health content (`systems.ts`, `missions.ts`). Components never hard-code health text.
 - `src/lib/` holds all logic as pure, unit-tested functions (status, trends, derived values, triggers, scheduler, seed, storage). No React there.
-- `src/state/` is one context + reducer; `src/pages/` and `src/components/` only render.
+- `src/state/` is one Zustand store; `src/pages/` and `src/components/` only render.
 - Demo crew data is generated deterministically on load and never stored. Only user-entered data goes into `localStorage`, through `src/lib/storage.ts` only.
 - System ids are the slugs in [plan/site-map.md](plan/site-map.md#system-slugs); never change them.
 - Thresholds are illustrative demo values; keep the disclaimer.

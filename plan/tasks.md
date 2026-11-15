@@ -28,7 +28,7 @@ How data flows through the app. Every screen reads from the same few modules, so
 | `src/types.ts` | Shared TypeScript types: `SystemId`, `Indicator`, `Reading`, `CheckIn`, `Profile`, `Mission`, `MissionEvent`, `Task`, `Status` |
 | `src/data/` | Static content. No logic |
 | `src/lib/` | Pure functions with unit tests. No React |
-| `src/state/` | One React context + reducer holding the current crew member, mission and data |
+| `src/state/` | One Zustand store holding the current crew member, mission and data |
 | `src/pages/` | One component per route: BodyMap, SystemDetail, CheckIn, Routine, Setup, About |
 | `src/components/` | Reusable pieces: Header, Nav, BodyFigure, Pin, IndicatorCard, TrendChart, ScaleButtons, Stepper, Overlay… |
 
@@ -44,7 +44,7 @@ Rules that keep it simple:
 ### 0.1 Project scaffold
 - [ ] Create the Vite + React + TypeScript project; run it locally
 - [ ] Add Tailwind CSS; confirm one styled element renders
-- [ ] Add Recharts, React Router (hash router) and Vitest
+- [ ] Add Recharts, React Router (hash router), Zustand, date-fns, lucide-react and Vitest
 - [ ] Add ESLint/Prettier defaults and an `npm test` script
 
 ### 0.2 Folder structure
@@ -137,7 +137,7 @@ Rules that keep it simple:
 - [ ] "Delete profile" removes one user profile and its data
 
 ### 2.5 App store (`src/state/`)
-- [ ] Context + reducer: current crew member, current mission, profiles, readings, events
+- [ ] Zustand store: current crew member, current mission, profiles, readings, events, and actions to change them
 - [ ] Selectors: latest reading per indicator, status per system, readiness counts
 - [ ] Load from seed + storage on start; save on every change
 

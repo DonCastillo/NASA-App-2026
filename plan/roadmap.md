@@ -17,7 +17,7 @@ Build a visual self-assessment tool that lets astronauts gather health indicator
 ## Decisions
 
 - **Team:** solo
-- **Stack:** Vite + React + TypeScript, Tailwind CSS, Recharts. Client-only; data in `localStorage`, no backend.
+- **Stack:** Vite + React + TypeScript, Tailwind CSS, Recharts, React Router (hash routing), Zustand (state), date-fns (dates), lucide-react (icons), Vitest (tests). Client-only; data in `localStorage`, no backend.
 - **Data input:** manual guided check-ins + deterministic seeded crew histories.
 - **Disclaimer:** thresholds and guidance are illustrative demo values, not medical advice.
 
