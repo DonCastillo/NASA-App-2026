@@ -70,10 +70,10 @@ Rules that keep it simple:
 ## Phase 1 — Health model (≈3 h)
 
 ### 1.1 Types
-- [ ] `SystemId` union using the slugs from [site-map.md](site-map.md#system-slugs) (`heart`, `eyes`, `bones`, `immune`, `metabolism`, `mind`, `balance`, `radiation`)
-- [ ] `Status` (`green` | `amber` | `red` | `none`), `InputType` (number, number pair, severity 0–3, rating 1–5, yes/no, checklist, calculated)
-- [ ] `Indicator`, `Threshold`, `SystemDef`, `MissionProfile` types
-- [ ] `Profile`, `Baselines`, `Reading`, `CheckIn`, `MissionEvent`, `CountermeasureAnswer`, `Task` types
+- [x] `SystemId` union using the slugs from [site-map.md](site-map.md#system-slugs) (`heart`, `eyes`, `bones`, `immune`, `metabolism`, `mind`, `balance`, `radiation`)
+- [x] `Status` (`green` | `amber` | `red` | `none`), `InputType` (number, number pair, severity 0–3, rating 1–5, yes/no, checklist, calculated)
+- [x] `Indicator`, `Threshold`, `SystemDef`, `MissionProfile` types
+- [x] `Profile`, `Baselines`, `Reading`, `CheckIn`, `MissionEvent`, `CountermeasureAnswer`, `Task` types
 
 ### 1.2 `src/data/systems.ts` — one system at a time
 - [ ] Add Heart & circulation fully (4 indicators, thresholds, how to measure, why in space, actions per status, sources) as the template
