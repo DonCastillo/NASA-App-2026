@@ -47,6 +47,8 @@ export type AppState = {
   deleteProfile: (profileId: string) => void
   resetDemoData: () => void
   updateSettings: (changes: Partial<Settings>) => void
+  /** Remember that a first-time hint was shown, so it isn't shown again */
+  markHintSeen: (hintId: string) => void
   /** Move "today" forward, e.g. when the app stays open past midnight */
   setToday: (today: Date) => void
 }
@@ -57,14 +59,18 @@ export type AppStoreOptions = {
   /** The clock; `today` defaults to its current time */
   now?: () => Date
   today?: Date
+  /** Settings to start with on top of the stored ones (e.g. tests skip the Welcome and the tour) */
+  settings?: Partial<Settings>
 }
 
 export function createAppStore({
   storage = browserStorage(),
   now = () => new Date(),
   today = now(),
+  settings,
 }: AppStoreOptions = {}) {
-  const stored = loadData(storage)
+  const loaded = loadData(storage)
+  const stored = settings ? updateSettings(loaded, settings) : loaded
   console.log('Loaded stored data', stored)
   const known = (id?: string) =>
     id !== undefined && (DEMO_IDS.includes(id) || stored.profiles.some((p) => p.id === id))
@@ -128,6 +134,11 @@ export function createAppStore({
 
       resetDemoData: () => commit(resetDemoData(get().stored, DEMO_IDS)),
       updateSettings: (changes) => commit(updateSettings(get().stored, changes)),
+      markHintSeen: (hintId) => {
+        const { hintsSeen } = get().stored.settings
+        if (hintsSeen.includes(hintId)) return
+        commit(updateSettings(get().stored, { hintsSeen: [...hintsSeen, hintId] }))
+      },
       setToday: (date) => set({ today: date }),
     }
   })

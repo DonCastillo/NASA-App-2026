@@ -1,9 +1,11 @@
 import { X } from 'lucide-react'
 import { type ReactNode, useEffect, useId, useRef } from 'react'
+import { useFocusTrap } from './useFocusTrap'
 
 // A panel over the current page (plan/site-map.md → System detail): slides in from the right on
 // desktop over a dimmed page, and fills the screen on phones. Closes with ✕, Esc or a click on the
-// dimmed area. While open it takes focus and stops the page behind from scrolling.
+// dimmed area. While open it takes focus, keeps Tab inside, and stops the page behind from
+// scrolling; on close, focus returns to what opened it.
 type Props = {
   title: string
   /** Shown next to the title, e.g. a status chip */
@@ -16,8 +18,18 @@ export default function SidePanel({ title, aside, onClose, children }: Props) {
   const titleId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
 
+  useFocusTrap(panelRef)
+
+  // Take focus when opened; give it back to the pin or list row that opened it when closed
   useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null
     panelRef.current?.focus()
+    return () => {
+      if (opener?.isConnected) opener.focus()
+    }
+  }, [])
+
+  useEffect(() => {
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const onKeyDown = (event: KeyboardEvent) => {

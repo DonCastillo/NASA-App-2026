@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router/dom'
 import { describe, expect, it } from 'vitest'
 import { routes } from '../routes'
 import { createAppStore } from '../state/appStore'
+import { ONBOARDED } from '../test/onboarded'
 import { AppStoreContext } from '../state/useAppStore'
 import type { Profile } from '../types'
 
@@ -16,7 +17,7 @@ function renderApp(
   setup?: (store: ReturnType<typeof createAppStore>) => void,
   now = TODAY,
 ) {
-  const store = createAppStore({ storage: null, today: now, now: () => now })
+  const store = createAppStore({ storage: null, settings: ONBOARDED, today: now, now: () => now })
   setup?.(store)
   const router = createMemoryRouter(routes, { initialEntries: [path] })
   render(

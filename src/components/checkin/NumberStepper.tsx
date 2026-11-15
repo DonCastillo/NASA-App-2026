@@ -78,7 +78,7 @@ export default function NumberStepper({
             value={text}
             onChange={(e) => onType(e.target.value)}
             placeholder="–"
-            className={`reading w-[5.5ch] bg-transparent text-center text-text outline-none placeholder:text-text-muted ${
+            className={`reading w-[5.5ch] border-b-2 border-transparent bg-transparent text-center text-text outline-none placeholder:text-text-muted focus:border-accent ${
               size === 'large' ? 'text-4xl' : 'text-2xl'
             }`}
           />

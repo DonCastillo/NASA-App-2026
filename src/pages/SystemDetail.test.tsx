@@ -5,12 +5,13 @@ import { RouterProvider } from 'react-router/dom'
 import { describe, expect, it } from 'vitest'
 import { routes } from '../routes'
 import { createAppStore } from '../state/appStore'
+import { ONBOARDED } from '../test/onboarded'
 import { AppStoreContext } from '../state/useAppStore'
 
 const TODAY = new Date(2026, 10, 15, 9, 0)
 
 function renderApp(entries: string[], index = entries.length - 1) {
-  const store = createAppStore({ storage: null, today: TODAY })
+  const store = createAppStore({ storage: null, settings: ONBOARDED, today: TODAY })
   const router = createMemoryRouter(routes, { initialEntries: entries, initialIndex: index })
   render(
     <AppStoreContext value={store}>
@@ -67,7 +68,7 @@ describe('System detail panel', () => {
 
 describe('System detail: status and guidance', () => {
   function renderDetail(path: string, setup?: (store: ReturnType<typeof createAppStore>) => void) {
-    const store = createAppStore({ storage: null, today: TODAY })
+    const store = createAppStore({ storage: null, settings: ONBOARDED, today: TODAY })
     setup?.(store)
     render(
       <AppStoreContext value={store}>

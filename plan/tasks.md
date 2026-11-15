@@ -301,35 +301,35 @@ Rules that keep it simple:
 ## Phase 7 — Onboarding, About, polish and submission (≈4 h)
 
 ### 7.1 About page (`/about`)
-- [ ] How BodyMap works: status colors, check-in tiers, comms delay and guidance
-- [ ] The 8 systems and 28 indicators with source type (direct / proxy / added)
-- [ ] Sources (NASA HRP and CSA articles) and the disclaimer
-- [ ] "Reset demo data" and "Take the tour again" buttons
+- [x] How BodyMap works: status colors, check-in tiers, comms delay and guidance
+- [x] The 8 systems and 28 indicators with source type (direct / proxy / added)
+- [x] Sources (NASA HRP and CSA articles) and the disclaimer
+- [x] "Reset demo data" and "Take the tour again" buttons
 
 ### 7.2 Overlay A — Welcome
-- [ ] 3 cards; "Explore demo crew" or "Set up my profile"
-- [ ] Shown once on the first visit (flag in storage)
+- [x] 3 cards; "Explore demo crew" or "Set up my profile"
+- [x] Shown once on the first visit (flag in storage)
 
 ### 7.3 Overlay D — Guided tour
-- [ ] Highlight box + tooltip component (dimmed background, "n of 6", Skip, Next)
-- [ ] 6 steps: pins, one pin, daily check-in button, 🔔 bell, Log event, Mission ▾ ([site-map.md](site-map.md#overlays))
-- [ ] Runs after Welcome on the first visit, using the demo crew; replay from About
-- [ ] Keyboard: Esc skips, Enter goes to Next; tooltip readable by screen readers
+- [x] Highlight box + tooltip component (dimmed background, "n of 6", Skip, Next)
+- [x] 6 steps: pins, one pin, daily check-in button, 🔔 bell, Log event, Mission ▾ ([site-map.md](site-map.md#overlays))
+- [x] Runs after Welcome on the first visit, using the demo crew; replay from About
+- [x] Keyboard: Esc skips, Enter goes to Next; tooltip readable by screen readers
 
 ### 7.4 First-time hints
-- [ ] First check-in: "Tap an answer to move on. You can skip anything."
-- [ ] First System detail: "Start with 'What to do now'. Details are below."
+- [x] First check-in: "Tap an answer to move on. You can skip anything."
+- [x] First System detail: "Start with 'What to do now'. Details are below."
 
 ### 7.5 Accessibility and responsive pass
-- [ ] Every status uses color + icon + word; check contrast against the [branding.md](branding.md) table
-- [ ] Keyboard-only walk through every page and overlay; visible focus
-- [ ] Keep focus inside open panels and overlays (System detail, menus, overlays B–D) and return it on close
-- [ ] Labels for inputs, pins and buttons
-- [ ] Test at phone, tablet and desktop widths
+- [x] Every status uses color + icon + word; check contrast against the [branding.md](branding.md) table
+- [x] Keyboard-only walk through every page and overlay; visible focus
+- [x] Keep focus inside open panels and overlays (System detail, menus, overlays B–D) and return it on close
+- [x] Labels for inputs, pins and buttons
+- [x] Test at phone, tablet and desktop widths
 
 ### 7.6 Release
 - [ ] Final deploy; smoke-test every route and the demo story (Immune red → System detail → check-in → summary)
-- [ ] README: "Getting started", "Tech stack" and "Architecture" sections
+- [x] README: "Getting started", "Tech stack" and "Architecture" sections
 - [ ] Record the demo video
 - [ ] Write the project submission following the Project Submission Guide
 

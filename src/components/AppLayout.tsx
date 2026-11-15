@@ -2,6 +2,7 @@ import { Outlet } from 'react-router'
 import { useTasks } from '../state/useTasks'
 import Header from './Header'
 import Nav, { type NavPath } from './Nav'
+import Onboarding from './onboarding/Onboarding'
 
 // The app shell around every page (plan/site-map.md → Navigation, plan/tasks.md 3.1):
 //   header on top · side nav on desktop (≥ md) · bottom nav on phones · the page in between.
@@ -31,6 +32,8 @@ export default function AppLayout() {
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-space-700 bg-space-900 md:hidden">
         <Nav variant="bottom" badges={badges} />
       </div>
+
+      <Onboarding />
     </div>
   )
 }

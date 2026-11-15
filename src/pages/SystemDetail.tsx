@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router'
 import Background from '../components/detail/Background'
+import FirstTimeHint from '../components/onboarding/FirstTimeHint'
 import Guidance from '../components/detail/Guidance'
 import IndicatorCards from '../components/detail/IndicatorCards'
 import Trends from '../components/detail/Trends'
@@ -39,6 +40,10 @@ export default function SystemDetail() {
       aside={<StatusChip status={systemHealth.status} />}
       onClose={close}
     >
+      <div className="px-5 pt-3">
+        <FirstTimeHint id="systemDetail" />
+      </div>
+
       {/* 1. Status: one plain sentence on why */}
       <p className="border-b border-space-700 px-5 py-3 text-sm text-text-muted">
         {systemHealth.reason}

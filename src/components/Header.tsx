@@ -11,6 +11,7 @@ import MissionMenu from './MissionMenu'
 // The header on every page (plan/site-map.md → Navigation, plan/tasks.md 3.2):
 //   BodyMap · Crew ▾ · Mission ▾ · Day 150/210 · 14 min delay · 🔔 · [Log event]
 // On phones: bell and Log event are icons only, and mission + day move to a second line.
+// Log event shows its word from desktop width (lg) up, so the header fits on tablets.
 export default function Header() {
   const [logging, setLogging] = useState(false)
   return (
@@ -21,25 +22,32 @@ export default function Header() {
         </Link>
         <CrewMenu />
         <div className="hidden items-center gap-4 md:flex">
-          <MissionMenu />
+          <div data-tour="mission">
+            <MissionMenu />
+          </div>
           <MissionDay />
         </div>
         <div className="flex-1" />
-        <BellMenu />
+        <div data-tour="bell">
+          <BellMenu />
+        </div>
         <button
           type="button"
           aria-label="Log event"
+          data-tour="log-event"
           aria-haspopup="dialog"
           onClick={() => setLogging(true)}
-          className="inline-flex h-10 items-center gap-2 rounded-control border border-space-700 px-2.5 text-sm font-semibold text-text transition-colors duration-150 hover:bg-space-800 md:px-3.5"
+          className="inline-flex h-10 items-center gap-2 rounded-control border border-space-700 px-2.5 text-sm font-semibold text-text transition-colors duration-150 hover:bg-space-800 lg:px-3.5"
         >
           <Plus size={18} strokeWidth={1.5} aria-hidden />
-          <span className="hidden md:inline">Log event</span>
+          <span className="hidden lg:inline">Log event</span>
         </button>
       </div>
       {/* Phone: mission and day on their own line */}
       <div className="flex items-center gap-3 border-t border-space-700 px-4 py-2 md:hidden">
-        <MissionMenu />
+        <div data-tour="mission">
+          <MissionMenu />
+        </div>
         <div className="flex-1">
           <MissionDay />
         </div>

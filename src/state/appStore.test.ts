@@ -142,6 +142,13 @@ describe('app store: actions save every change', () => {
     expect(Object.keys(saved.drafts)).toEqual(['demo-vega'])
     expect(saved.settings.welcomeSeen).toBe(true)
   })
+
+  it('remembers each first-time hint once', () => {
+    const { storage, store } = newStore()
+    store.getState().markHintSeen('checkIn')
+    store.getState().markHintSeen('checkIn')
+    expect(loadData(storage).settings.hintsSeen).toEqual(['checkIn'])
+  })
 })
 
 describe('selectors are memoized', () => {

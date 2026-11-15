@@ -55,6 +55,7 @@ export default function Pin({
       aria-label={`${system.name}: ${display.word}${health.headline ? `, ${health.headline}` : ''}`}
       aria-describedby={tooltipId}
       data-system={system.id}
+      data-tour={`pin-${system.id}`}
       className="cursor-pointer outline-none transition-opacity duration-150"
       style={{ opacity: dimmed ? 0.4 : 1 }}
       onClick={onOpen}

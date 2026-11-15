@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import { createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { appStore } from './state/useAppStore'
 import { routes } from './routes'
+
+// Skip the first-visit Welcome and tour, which would cover the Body Map
+beforeEach(() => appStore.getState().updateSettings({ welcomeSeen: true, tourSeen: true }))
 
 // Render the app at a given address, without a real browser URL
 function renderAt(path: string) {

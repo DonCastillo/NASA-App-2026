@@ -1,9 +1,10 @@
 import { X } from 'lucide-react'
 import { type ReactNode, useEffect, useId, useRef } from 'react'
+import { useFocusTrap } from './useFocusTrap'
 
 // A centered overlay (plan/site-map.md → Overlays): dimmed backdrop, soft shadow.
 // Closes with ✕, Esc or a click on the backdrop. Takes focus when it opens and gives it back to
-// whatever opened it when it closes.
+// whatever opened it when it closes. Tab stays inside while it is open.
 type Props = {
   title: string
   /** Small label above the title, e.g. "How to measure" */
@@ -16,17 +17,21 @@ export default function Modal({ title, eyebrow, onClose, children }: Props) {
   const titleId = useId()
   const dialogRef = useRef<HTMLDivElement>(null)
 
+  useFocusTrap(dialogRef)
+
+  // Take focus when opened; give it back to the opener when closed
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null
     dialogRef.current?.focus()
+    return () => opener?.focus?.()
+  }, [])
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('keydown', onKeyDown)
-      opener?.focus?.()
-    }
+    return () => document.removeEventListener('keydown', onKeyDown)
   }, [onClose])
 
   return (

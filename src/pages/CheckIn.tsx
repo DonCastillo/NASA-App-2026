@@ -23,6 +23,7 @@ import {
 import { selectDataset, selectDraft, selectHealth, selectMission } from '../state/selectors'
 import { useAppStore } from '../state/useAppStore'
 import type { Health } from '../lib/health'
+import FirstTimeHint from '../components/onboarding/FirstTimeHint'
 import type { CheckInDraft, ReadingValue } from '../types'
 
 // The check-in page (plan/site-map.md → Check-in, plan/tasks.md 5.3).
@@ -178,6 +179,8 @@ export default function CheckIn() {
           style={{ width: `${((index + 1) / questions.length) * 100}%` }}
         />
       </div>
+
+      <FirstTimeHint id="checkIn" />
 
       {resumed && index === draft.index && draft.index > 0 && (
         <p className="rounded-control bg-space-800 px-3 py-2 text-[13px] text-text-muted">

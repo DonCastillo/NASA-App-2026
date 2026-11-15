@@ -8,7 +8,7 @@ export default function MissionDay() {
   const day = Math.max(0, Math.min(progress.day, progress.lengthDays))
 
   return (
-    <div className="flex min-w-[9.5rem] flex-col gap-1 text-[13px]">
+    <div className="flex min-w-[9.5rem] flex-col gap-1 text-[13px] whitespace-nowrap">
       <span>
         <span className="reading">
           Day {day}/{progress.lengthDays}

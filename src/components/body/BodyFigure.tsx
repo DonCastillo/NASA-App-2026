@@ -68,6 +68,7 @@ export default function BodyFigure({ health, onOpen, highlighted, onHighlight }:
         className="block h-auto w-full"
         role="group"
         aria-label="Body systems"
+        data-tour="pins"
       >
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">

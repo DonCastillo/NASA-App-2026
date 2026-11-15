@@ -1,8 +1,10 @@
 import { ChevronDown } from 'lucide-react'
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react'
+import { useFocusTrap } from './useFocusTrap'
 
 // A small dropdown menu: a button that opens a panel of items.
 // Closes on outside click, Esc (focus returns to the button), or when an item calls close().
+// While open, Tab cycles between the button and the items.
 type Props = {
   /** What the button shows, e.g. the selected crew member's name */
   label: ReactNode
@@ -19,7 +21,7 @@ type Props = {
 }
 
 const BUTTON_CLASS =
-  'inline-flex h-9 items-center gap-1.5 rounded-control border border-space-700 px-3 text-sm text-text transition-colors duration-150 hover:bg-space-800'
+  'inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-control border border-space-700 px-3 text-sm text-text transition-colors duration-150 hover:bg-space-800'
 
 export default function Menu({
   label,
@@ -37,6 +39,7 @@ export default function Menu({
   const wasOpenRef = useRef(false)
   const skipFocusRef = useRef(false)
   const panelId = useId()
+  useFocusTrap(rootRef, open)
 
   useEffect(() => {
     if (!open) return

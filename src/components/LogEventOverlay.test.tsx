@@ -5,13 +5,14 @@ import { RouterProvider } from 'react-router/dom'
 import { describe, expect, it } from 'vitest'
 import { routes } from '../routes'
 import { createAppStore } from '../state/appStore'
+import { ONBOARDED } from '../test/onboarded'
 import { selectDataset } from '../state/selectors'
 import { AppStoreContext } from '../state/useAppStore'
 
 const NOW = new Date(2026, 10, 15, 9, 0)
 
 function renderHome(missionId: 'iss' | 'artemis' = 'artemis') {
-  const store = createAppStore({ storage: null, today: NOW, now: () => NOW })
+  const store = createAppStore({ storage: null, settings: ONBOARDED, today: NOW, now: () => NOW })
   store.getState().selectMission(missionId)
   render(
     <AppStoreContext value={store}>
