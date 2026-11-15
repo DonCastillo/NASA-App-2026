@@ -226,11 +226,12 @@ Rules that keep it simple:
 ## Phase 5 — Check-in, setup and events (≈3 h)
 
 ### 5.1 Check-in engine (`src/lib/triggers.ts`)
-- [ ] Build the question list for a mode: daily, `?system=<id>`, `?task=<id>`
-- [ ] Follow-up rules ([Triggers for follow-ups](body-systems.md#triggers-for-follow-ups)): symptoms = yes, mood ≤ 3, sleep < 7 h, temperature ≥ 37.3 °C, any amber/red core reading, gravity transition in the last 24 h
-- [ ] Countermeasure question triggers (after headache, dizziness, amber BP/HR, poor sleep, before landing)
-- [ ] Weekly items added when due; routine supplement questions only if listed in the profile
-- [ ] Unit tests: "yes, headache" opens the headache follow-up and thigh-cuff question
+- [x] Build the question list for a mode: daily, `?system=<id>`, `?task=<id>`
+- [x] Follow-up rules ([Triggers for follow-ups](body-systems.md#triggers-for-follow-ups)): symptoms = yes, mood ≤ 3, sleep < 7 h, temperature ≥ 37.3 °C, any amber/red core reading, gravity transition in the last 24 h
+- [x] Countermeasure question triggers (after headache, dizziness, amber BP/HR, poor sleep, before landing)
+- [x] Weekly items added when due; routine supplement questions only if listed in the profile
+- [x] Unit tests: "yes, headache" opens the headache follow-up and thigh-cuff question
+- [x] Turn answers into a `CheckIn` (`buildCheckIn`): skipped → not recorded, tapped yes/no symptoms → yes
 
 ### 5.2 Question components
 - [ ] Number input with −/+ stepper, pre-filled from yesterday
