@@ -254,6 +254,7 @@ export function generateDemoData(
     checkIns.push({
       id: `${crew.id}-${missionId}-d${day}`,
       profileId: crew.id,
+      missionId,
       mode: { kind: 'daily' },
       startedAt: at,
       completedAt: new Date(started.getTime() + 2 * 60 * 1000).toISOString(),
@@ -268,6 +269,7 @@ export function generateDemoData(
     .map((event) => ({
       id: `${crew.id}-${missionId}-e${event.day}-${event.type}`,
       profileId: crew.id,
+      missionId,
       type: event.type,
       at: setHours(addDays(start, event.day - 1), 14).toISOString(),
       note: event.note,

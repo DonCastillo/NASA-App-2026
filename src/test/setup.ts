@@ -7,3 +7,20 @@ import { afterEach } from 'vitest'
 afterEach(() => {
   cleanup()
 })
+
+// Newer Node versions have an experimental global `localStorage` without working methods, which can
+// hide jsdom's. Install a small in-memory one so tests behave like a real browser.
+if (typeof window.localStorage?.setItem !== 'function') {
+  const items = new Map<string, string>()
+  const memoryStorage: Storage = {
+    get length() {
+      return items.size
+    },
+    clear: () => items.clear(),
+    getItem: (key) => items.get(key) ?? null,
+    key: (index) => [...items.keys()][index] ?? null,
+    removeItem: (key) => void items.delete(key),
+    setItem: (key, value) => void items.set(key, String(value)),
+  }
+  Object.defineProperty(window, 'localStorage', { value: memoryStorage, configurable: true })
+}

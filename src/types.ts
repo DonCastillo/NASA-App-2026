@@ -325,6 +325,8 @@ export type CountermeasureAnswer = {
 export type CheckIn = {
   id: string
   profileId: string
+  /** The mission this check-in belongs to (the demo crew can be viewed on any mission) */
+  missionId?: MissionProfileId
   mode: CheckInMode
   startedAt: string
   /** Missing while the check-in is a saved draft */
@@ -353,6 +355,8 @@ export type EventTypeDef = {
 export type MissionEvent = {
   id: string
   profileId: string
+  /** The mission this event belongs to */
+  missionId?: MissionProfileId
   type: MissionEventType
   /** ISO date-time; in the future for an upcoming landing */
   at: string

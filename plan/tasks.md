@@ -137,11 +137,11 @@ Rules that keep it simple:
 - [x] Unit tests
 
 ### 2.4 Storage (`src/lib/storage.ts`)
-- [ ] One small module wrapping `localStorage` (read, write, versioned key); nothing else touches storage
-- [ ] Save only user-entered data: user profiles, check-ins, events, countermeasure answers, notes, check-in drafts, small settings (selected crew/mission, welcome/tour seen)
-- [ ] Merge user additions on top of generated demo history (for check-ins added to a demo crew member)
-- [ ] "Reset demo data" deletes only additions to demo crew
-- [ ] "Delete profile" removes one user profile and its data
+- [x] One small module wrapping `localStorage` (read, write, versioned key); nothing else touches storage
+- [x] Save only user-entered data: user profiles, check-ins, events, countermeasure answers, notes, check-in drafts, small settings (selected crew/mission, welcome/tour seen)
+- [x] Merge user additions on top of generated demo history (for check-ins added to a demo crew member)
+- [x] "Reset demo data" deletes only additions to demo crew
+- [x] "Delete profile" removes one user profile and its data
 
 ### 2.5 App store (`src/state/`)
 - [ ] Zustand store: current crew member, current mission, profiles, readings, events, and actions to change them
