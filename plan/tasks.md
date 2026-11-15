@@ -39,15 +39,19 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 **Done when:** every system's panel is filled entirely from `systems.ts` with no hard-coded text in components.
 
 ## Phase 5 — Check-in flow (≈3 h)
-- [ ] Guided daily form: BP, HR, glucose, temperature, sleep hours, mood, symptoms
-- [ ] Inline "how to measure" help and input validation (units, plausible ranges)
-- [ ] Submitting re-scores the body map instantly
+- [ ] Tier 1 daily core screen (7 items) with pre-filled values, −/+ steppers and "Same as yesterday"
+- [ ] Tap-to-answer scale buttons (severity 0–3, rating 1–5 with words/faces)
+- [ ] Follow-up rules from [body-systems.md](body-systems.md#triggers-for-follow-ups): symptom tap list, mood/sleep/temperature/amber triggers
+- [ ] Weekly items (tier 3) and automatic values (tier 4: bone-loss estimate, dose rate)
+- [ ] "How do I measure this?" help on demand; validation for plausible ranges; skip = "not recorded"
+- [ ] Submitting re-scores the body map instantly and shows the next action for any amber/red system
 
-**Done when:** entering an out-of-range value turns the matching body region amber or red and shows guidance.
+**Done when:** a normal-day check-in takes about 2 minutes, answering "yes, headache" opens the right follow-up, and an out-of-range value turns the matching body region amber or red with guidance.
 
 ## Phase 6 — Scheduled prompts (≈2 h)
-- [ ] Mission routine: morning vitals (daily), fitness self-test (weekly), dosimeter readout (weekly), vision check (weekly)
-- [ ] Due / overdue list with a link into the right check-in
+- [ ] Mission routine from the check-in tiers: daily core (morning), weekly items spread across the week, event-driven prompts after gravity transitions or spacewalks
+- [ ] Due / overdue list with a link into the right check-in step
+- [ ] Skipped items return in the next prompt
 
 **Done when:** skipping a task shows it as overdue, and completing it clears it.
 

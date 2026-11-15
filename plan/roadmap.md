@@ -43,6 +43,8 @@ The app's value is the mapping **body system → indicators → why it changes i
 
 ### Body-system model
 
+Summary below. The full model — what each system does, how spaceflight affects it, every indicator with unit, how to measure, frequency, green/amber/red thresholds, actions, and escalation by mission — is in [body-systems.md](body-systems.md).
+
 | System | Indicators (input) | Key sources in `plan/articles/` |
 |---|---|---|
 | Heart & circulation | Blood pressure, resting heart rate | risk-of-cardiovascular-adaptations, venous-haemostasis, thigh-cuff |
