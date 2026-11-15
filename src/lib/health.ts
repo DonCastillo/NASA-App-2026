@@ -26,6 +26,7 @@ import {
   projections,
   referencesFor,
 } from './derived'
+import { formatReading } from './format'
 import {
   type IndicatorResult,
   type LatestValues,
@@ -50,6 +51,8 @@ export type SystemHealth = {
   indicators: IndicatorResult[]
   /** Arrow for the system list (from the driving indicator, or the first with data) */
   trend: TrendDirection
+  /** Short current value for the pin label and system list, e.g. "38.2 °C", "31% budget" */
+  headline?: string
 }
 
 export type Health = {
@@ -138,6 +141,14 @@ export function computeHealth(dataset: Dataset, mission: MissionProfile, today: 
     const arrowIndicator =
       system.indicators.find((i) => i.id === result.driverId) ??
       system.indicators.find((i) => latest[i.id] !== undefined)
+    const headline =
+      system.id === 'radiation' &&
+      dose.percentOfBudget !== undefined &&
+      latest.cumulativeDose !== undefined
+        ? `${Math.round(dose.percentOfBudget)}% budget`
+        : arrowIndicator
+          ? formatReading(arrowIndicator, latest[arrowIndicator.id])
+          : undefined
     systems[system.id] = {
       id: system.id,
       status: result.status,
@@ -147,6 +158,7 @@ export function computeHealth(dataset: Dataset, mission: MissionProfile, today: 
       trend: arrowIndicator
         ? trendDirection(arrowIndicator, history[arrowIndicator.id] ?? [])
         : 'flat',
+      headline,
     }
     readiness[result.status]++
   }

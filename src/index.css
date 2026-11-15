@@ -76,3 +76,43 @@
     }
   }
 }
+
+/* ── Body figure animations (plan/branding.md §5, §7) ──
+   Turned off by the reduced-motion rule above, which also covers these. */
+@keyframes pin-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes body-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(480px);
+  }
+}
+
+@utility pin-pulse {
+  animation: pin-pulse 2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@utility body-scan {
+  opacity: 0;
+  animation: body-scan 1.8s ease-in-out 0.4s 1 forwards;
+}

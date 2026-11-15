@@ -167,12 +167,12 @@ Rules that keep it simple:
 - [x] Phone layout: bell and Log event as icons; mission and day on one short line
 
 ### 3.3 Body figure (`BodyFigure`, `Pin`)
-- [ ] Simple front-facing SVG outline
-- [ ] 8 callout pins with lines to body parts, spread so head pins don't overlap; ☢ radiation badge beside the figure
-- [ ] Pin shows status color + icon (✓ / ⚠ / ✖) + short label; `none` shown as grey "not recorded"
-- [ ] Red pins pulse gently; color changes animate after a check-in
-- [ ] Hover tooltip (system · status · latest change)
-- [ ] Click / Enter opens `/system/:id`; Tab moves through pins
+- [x] Simple front-facing SVG outline
+- [x] 8 callout pins with lines to body parts, spread so head pins don't overlap; ☢ radiation badge beside the figure
+- [x] Pin shows status color + icon (✓ / ⚠ / ✖) + short label; `none` shown as grey "not recorded"
+- [x] Red pins pulse gently; color changes animate after a check-in
+- [x] Hover tooltip (system · status · latest change)
+- [x] Click / Enter opens `/system/:id`; Tab moves through pins
 
 ### 3.4 System list
 - [ ] 8 rows with status, latest change and trend arrow
