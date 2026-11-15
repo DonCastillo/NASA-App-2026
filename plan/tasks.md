@@ -155,8 +155,8 @@ Rules that keep it simple:
 ## Phase 3 — App shell and Body Map (≈4 h)
 
 ### 3.1 App shell
-- [ ] Layout: header on top; bottom nav on phone, side nav on desktop (Body Map · Check-in · Routine · About)
-- [ ] Active tab highlight; badge slot on Check-in and Routine
+- [x] Layout: header on top; bottom nav on phone, side nav on desktop (Body Map · Check-in · Routine · About)
+- [x] Active tab highlight; badge slot on Check-in and Routine
 
 ### 3.2 Header
 - [ ] App name and Crew ▾ menu: demo crew, user profiles, "+ Add crew member", "Edit profile" → `/setup`
