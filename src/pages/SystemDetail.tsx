@@ -1,15 +1,21 @@
 import { useCallback } from 'react'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
+import Guidance from '../components/detail/Guidance'
 import SidePanel from '../components/SidePanel'
+import StatusChip from '../components/StatusChip'
 import { SYSTEMS } from '../data/systems'
+import { selectHealth, selectMission } from '../state/selectors'
+import { useAppStore } from '../state/useAppStore'
 
-// System detail (plan/site-map.md → System detail, plan/tasks.md 4.1). Route: /system/:id
+// System detail (plan/site-map.md → System detail). Route: /system/:id
 // A child route of the Body Map, so the map stays visible behind the panel on desktop.
-// Contents (status, guidance, indicators, trends, background) are filled in 4.2–4.5.
+// Order: status → what to do → evidence (4.3–4.4) → background (4.5).
 export default function SystemDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
+  const health = useAppStore(selectHealth)
+  const mission = useAppStore(selectMission)
   const system = SYSTEMS.find((s) => s.id === id)
 
   // Back to where the user came from; if the panel was opened directly (refresh, shared link),
@@ -20,13 +26,32 @@ export default function SystemDetail() {
   }, [location.key, navigate])
 
   if (!system) return <Navigate to="/" replace />
+  const systemHealth = health.systems[system.id]
 
   return (
-    <SidePanel title={system.name} onClose={close}>
-      <div className="p-5 text-sm text-text-muted">
-        <p>{system.whatItDoes}</p>
-        <p className="mt-4">Status, guidance, indicators and trends come in the next steps.</p>
+    <SidePanel
+      title={system.name}
+      aside={<StatusChip status={systemHealth.status} />}
+      onClose={close}
+    >
+      {/* 1. Status: one plain sentence on why */}
+      <p className="border-b border-space-700 px-5 py-3 text-sm text-text-muted">
+        {systemHealth.reason}
+      </p>
+
+      {/* 2. What to do now + escalation for the mission */}
+      <div className="border-b border-space-700">
+        <Guidance
+          system={system}
+          status={systemHealth.status}
+          mission={mission}
+          commsDelaySeconds={health.commsDelaySeconds}
+        />
       </div>
+
+      <p className="px-5 py-4 text-sm text-text-muted">
+        Indicators, trends and background come in the next steps.
+      </p>
     </SidePanel>
   )
 }

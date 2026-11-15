@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
@@ -62,5 +62,62 @@ describe('System detail panel', () => {
     expect(document.body.style.overflow).toBe('hidden')
     await user.click(screen.getByRole('button', { name: 'Close' }))
     expect(document.body.style.overflow).toBe('')
+  })
+})
+
+describe('System detail: status and guidance', () => {
+  function renderDetail(path: string, setup?: (store: ReturnType<typeof createAppStore>) => void) {
+    const store = createAppStore({ storage: null, today: TODAY })
+    setup?.(store)
+    render(
+      <AppStoreContext value={store}>
+        <RouterProvider
+          router={createMemoryRouter(routes, { initialEntries: ['/', path], initialIndex: 1 })}
+        />
+      </AppStoreContext>,
+    )
+    return screen.getByRole('dialog')
+  }
+
+  it('shows the status chip, the reason in plain words, actions and the Mars escalation', () => {
+    const dialog = renderDetail('/system/eyes') // Cmdr. Vega on Mars, day 150 of 210
+    expect(within(dialog).getByText('Act')).toBeInTheDocument()
+    expect(dialog).toHaveTextContent('Near-vision self-check: 2 lines worse than baseline')
+    expect(dialog).toHaveTextContent(
+      'Request an eye exam (onboard ultrasound or imaging) and escalate.',
+    )
+    expect(dialog).toHaveTextContent('Mars transit · 14 min delay:')
+    expect(dialog).toHaveTextContent('Start the onboard protocol first; the CMO leads care.')
+  })
+
+  it('words escalation for the ISS differently', () => {
+    const dialog = renderDetail('/system/immune', (s) => {
+      s.getState().selectProfile('demo-okafor')
+      s.getState().selectMission('iss')
+    })
+    expect(dialog).toHaveTextContent('Run the onboard infection protocol.')
+    expect(dialog).toHaveTextContent('ISS · under 1 s delay:')
+    expect(dialog).toHaveTextContent('Call the flight surgeons now.')
+  })
+
+  it('keeps green calm: "Keep your routine" plus one tip, no escalation', () => {
+    const dialog = renderDetail('/system/heart')
+    expect(within(dialog).getByText('OK')).toBeInTheDocument()
+    expect(dialog).toHaveTextContent('All recorded indicators are in range.')
+    expect(dialog).toHaveTextContent('Keep your routine.')
+    expect(dialog).toHaveTextContent('Tip: Keep exercising and eating the planned diet.')
+    expect(dialog).not.toHaveTextContent('delay:')
+    expect(dialog).toHaveTextContent(
+      'Before landing: fluid loading and lower-body compression garments.',
+    )
+  })
+
+  it('offers to check a system that has nothing recorded', () => {
+    const dialog = renderDetail('/system/balance')
+    expect(within(dialog).getByText('Not recorded')).toBeInTheDocument()
+    expect(within(dialog).getByRole('link', { name: 'Check it now' })).toHaveAttribute(
+      'href',
+      '/check-in?system=balance',
+    )
   })
 })

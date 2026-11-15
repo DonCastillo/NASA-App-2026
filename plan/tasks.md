@@ -195,11 +195,11 @@ Rules that keep it simple:
 - [x] Same `/system/:id` route; ✕ and browser Back close it; refresh keeps it open; unknown id → home
 
 ### 4.2 Status and guidance
-- [ ] Status header: system name, status (color + icon + word), reason sentence from `statusReason()`
-- [ ] Reason wording for baseline/budget-relative indicators, e.g. "Near vision: 2 lines worse than baseline" instead of "Near-vision self-check: 8 lines"
-- [ ] "What to do now": actions for the current status
-- [ ] Escalation line worded for the selected mission and current comms delay
-- [ ] Green state: "Keep your routine" plus one prevention tip
+- [x] Status header: system name, status (color + icon + word), reason sentence from `statusReason()`
+- [x] Reason wording for baseline/budget-relative indicators, e.g. "Near vision: 2 lines worse than baseline" instead of "Near-vision self-check: 8 lines"
+- [x] "What to do now": actions for the current status
+- [x] Escalation line worded for the selected mission and current comms delay
+- [x] Green state: "Keep your routine" plus one prevention tip
 
 ### 4.3 Indicator cards (`IndicatorCard`)
 - [ ] Latest value, status, change vs baseline, time recorded

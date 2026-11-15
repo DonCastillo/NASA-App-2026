@@ -51,3 +51,49 @@ export function formatDelay(seconds: number): string {
   if (seconds < 60) return `${formatNumber(seconds)} s`
   return `${Math.round(seconds / 60)} min`
 }
+
+const signed = (value: number, unit = '') =>
+  `${value > 0 ? '+' : value < 0 ? '−' : '±'}${formatNumber(Math.abs(value))}${unit}`
+
+/**
+ * A reading in words, relative to its reference when the indicator is scored that way, e.g.
+ *   near vision 8 vs baseline 10 → "2 lines worse than baseline"
+ *   strength 34 vs 40            → "85% of baseline"
+ *   body mass 67.2 vs 70         → "−4% vs preflight"
+ *   dose 270 vs budget 500       → "54% of mission budget"
+ *   dose rate 6000 vs 1800       → "3.3× the normal rate"
+ * Without a reference (or for plain indicators) it falls back to formatReading().
+ */
+export function describeReading(
+  indicator: Indicator,
+  value: ReadingValue | undefined,
+  reference?: number,
+): string {
+  const basis = indicator.scoring.kind === 'bands' ? indicator.scoring.basis : undefined
+  if (!basis || typeof value !== 'number' || reference === undefined || reference === 0) {
+    return formatReading(indicator, value)
+  }
+  switch (basis) {
+    case 'changeFromBaseline': {
+      const change = value - reference
+      // "1 line", "2 lines"
+      const plural = indicator.unit ?? ''
+      const unit = Math.abs(change) === 1 && plural.endsWith('s') ? plural.slice(0, -1) : plural
+      if (change === 0) return 'same as baseline'
+      return `${formatNumber(Math.abs(change))} ${unit} ${change < 0 ? 'worse' : 'better'} than baseline`.replace(
+        /\s+/g,
+        ' ',
+      )
+    }
+    case 'percentOfBaseline':
+      return `${Math.round((value / reference) * 100)}% of baseline`
+    case 'percentChangeFromBaseline':
+      return `${signed(Math.round(((value - reference) / reference) * 1000) / 10, '%')} vs preflight`
+    case 'percentOfBudget':
+      return `${Math.round((value / reference) * 100)}% of mission budget`
+    case 'multipleOfBaseline':
+      return `${formatNumber(value / reference)}× the normal rate`
+    default:
+      return formatReading(indicator, value)
+  }
+}

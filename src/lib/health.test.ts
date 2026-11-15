@@ -20,7 +20,7 @@ describe('computeHealth', () => {
     expect(total).toBe(8)
     expect(health.systems.eyes.status).toBe('red')
     // Near vision (2 lines worse, red) comes first in the system, so it drives the sentence
-    expect(health.systems.eyes.reason).toBe('Near-vision self-check: 8 lines')
+    expect(health.systems.eyes.reason).toBe('Near-vision self-check: 2 lines worse than baseline')
     expect(health.mostUrgent).toMatchObject({ status: 'red' })
   })
 

@@ -7,7 +7,7 @@ import type {
   Status,
   SystemDef,
 } from '../types'
-import { formatReading } from './format'
+import { describeReading } from './format'
 
 // Scoring rules: readings in → green / amber / red out (plan/tasks.md 1.5).
 // Pure functions: no React, no storage. Thresholds come from src/data/systems/*.ts.
@@ -226,12 +226,14 @@ export function scoreSystem(
 
 /**
  * The one plain sentence under the system name in System detail, e.g.
- * "Body temperature: 38.2 °C" or "Fever with symptoms".
+ * "Body temperature: 38.2 °C", "Near-vision self-check: 2 lines worse than baseline" or
+ * "Headache with a vision change".
  */
 export function statusReason(
   system: SystemDef,
   result: SystemResult,
   latest: LatestValues,
+  references: References = {},
 ): string {
   if (result.status === 'none') return 'Nothing recorded yet.'
   if (result.status === 'green') return 'All recorded indicators are in range.'
@@ -239,5 +241,5 @@ export function statusReason(
   const indicator = system.indicators.find((i) => i.id === result.driverId)
   if (!driver || !indicator) return ''
   if (driver.raisedBy) return driver.raisedBy
-  return `${indicator.name}: ${formatReading(indicator, latest[indicator.id])}`
+  return `${indicator.name}: ${describeReading(indicator, latest[indicator.id], references[indicator.id])}`
 }

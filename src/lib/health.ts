@@ -154,7 +154,7 @@ export function computeHealth(dataset: Dataset, mission: MissionProfile, today: 
     systems[system.id] = {
       id: system.id,
       status: result.status,
-      reason: statusReason(system, result, latest),
+      reason: statusReason(system, result, latest, references),
       driverId: result.driverId,
       indicators: result.indicators,
       trend: arrowIndicator
