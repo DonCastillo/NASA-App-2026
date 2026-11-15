@@ -33,6 +33,7 @@ export const radiation: SystemDef = {
         ],
       },
       plausible: { min: 0, max: 2000 },
+      step: 0.1,
       howToMeasure: [
         'Read the total dose on your personal dosimeter, in mSv.',
         'Read it weekly and after every spacewalk.',

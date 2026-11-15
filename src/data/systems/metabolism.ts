@@ -59,6 +59,7 @@ export const metabolism: SystemDef = {
         ],
       },
       plausible: { min: 30, max: 200 },
+      step: 0.1,
       howToMeasure: [
         'Use the body mass measurement device, at the same time of day each week.',
         'Measure before eating, in similar clothing each time.',
@@ -105,6 +106,7 @@ export const metabolism: SystemDef = {
         ],
       },
       plausible: { min: 0, max: 100 },
+      step: 5,
       howToMeasure: [
         'Compare what you ate with your planned menu for the day.',
         'Estimate the share you finished, e.g. 100% = everything, 75% = three quarters.',

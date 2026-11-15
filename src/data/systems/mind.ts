@@ -31,6 +31,7 @@ export const mind: SystemDef = {
         ],
       },
       plausible: { min: 0, max: 16 },
+      step: 0.5,
       howToMeasure: [
         'Read last night’s sleep from your wearable, or estimate from when you fell asleep and woke up.',
         'Count only time asleep, not time resting in your sleep station.',

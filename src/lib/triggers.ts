@@ -310,3 +310,23 @@ export function buildCheckIn(
     note,
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Question wording
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** The plain question shown at the top of the screen */
+export function questionText(question: Question): string {
+  switch (question.kind) {
+    case 'indicator':
+      return indicatorById.get(question.indicatorId)?.question ?? ''
+    case 'symptomGate':
+      return 'Any symptoms today?'
+    case 'symptomList':
+      return 'Which symptoms do you have?'
+    case 'countermeasure':
+      return COUNTERMEASURES.find((q) => q.id === question.questionId)?.question ?? ''
+    case 'note':
+      return 'Anything else to note? (optional)'
+  }
+}

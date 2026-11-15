@@ -234,11 +234,11 @@ Rules that keep it simple:
 - [x] Turn answers into a `CheckIn` (`buildCheckIn`): skipped → not recorded, tapped yes/no symptoms → yes
 
 ### 5.2 Question components
-- [ ] Number input with −/+ stepper, pre-filled from yesterday
-- [ ] Blood pressure pair input
-- [ ] Scale buttons: severity 0–3 and rating 1–5 with words/faces; tapping moves on automatically
-- [ ] Yes/no and checklist (symptom tap list)
-- [ ] Free-text note
+- [x] Number input with −/+ stepper, pre-filled from yesterday
+- [x] Blood pressure pair input
+- [x] Scale buttons: severity 0–3 and rating 1–5 with words/faces; tapping moves on automatically
+- [x] Yes/no and checklist (symptom tap list)
+- [x] Free-text note
 
 ### 5.3 Check-in page
 - [ ] One question per screen with progress bar ("3 of 7"), Back, Skip, "Same as yesterday"

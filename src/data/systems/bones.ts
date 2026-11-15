@@ -32,6 +32,7 @@ export const bones: SystemDef = {
       },
       streak: { when: 'amber', days: 3, becomes: 'red', below: 60 },
       plausible: { min: 0, max: 600 },
+      step: 5,
       howToMeasure: [
         'Read the total minutes from the exercise device log.',
         'Count resistive and aerobic sessions together.',

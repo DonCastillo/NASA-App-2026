@@ -132,6 +132,8 @@ export type Indicator = {
   streak?: StreakRule
   /** Values outside this range get a "please check the reading" prompt */
   plausible?: { min: number; max: number }
+  /** −/+ step for number inputs (default 1), e.g. 0.1 for temperature */
+  step?: number
   /** Button words for severity / rating scales when the defaults don't fit, lowest value first
    *  (defaults: None · Mild · Moderate · Severe and Bad · Low · OK · Good · Great) */
   scaleLabels?: string[]

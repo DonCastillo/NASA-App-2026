@@ -34,6 +34,7 @@ export const immune: SystemDef = {
         ],
       },
       plausible: { min: 33, max: 43 },
+      step: 0.1,
       howToMeasure: [
         'Measure at rest, before exercise or a hot drink.',
         'Use the oral or forehead thermometer and wait for the beep.',
