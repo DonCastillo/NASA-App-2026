@@ -159,12 +159,12 @@ Rules that keep it simple:
 - [x] Active tab highlight; badge slot on Check-in and Routine
 
 ### 3.2 Header
-- [ ] App name and Crew ▾ menu: demo crew, user profiles, "+ Add crew member", "Edit profile" → `/setup`
-- [ ] Switching crew changes only whose data is shown (no data lost)
-- [ ] Mission ▾ switcher (ISS / Artemis lunar / Mars transit), each option showing what its length covers (`lengthCovers`, e.g. "One way: Earth → Mars")
-- [ ] Mission day out of length, progress bar and comms delay (e.g. "Day 47/210 · 4 min delay")
-- [ ] 🔔 bell placeholder and [Log event] button (wired in Phases 5–6)
-- [ ] Phone layout: bell and Log event as icons; mission and day on one short line
+- [x] App name and Crew ▾ menu: demo crew, user profiles, "+ Add crew member", "Edit profile" → `/setup`
+- [x] Switching crew changes only whose data is shown (no data lost)
+- [x] Mission ▾ switcher (ISS / Artemis lunar / Mars transit), each option showing what its length covers (`lengthCovers`, e.g. "One way: Earth → Mars")
+- [x] Mission day out of length, progress bar and comms delay (e.g. "Day 47/210 · 4 min delay")
+- [x] 🔔 bell placeholder and [Log event] button (wired in Phases 5–6)
+- [x] Phone layout: bell and Log event as icons; mission and day on one short line
 
 ### 3.3 Body figure (`BodyFigure`, `Pin`)
 - [ ] Simple front-facing SVG outline
