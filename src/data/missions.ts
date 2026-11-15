@@ -14,8 +14,8 @@ import type { MissionProfile, MissionProfileId } from '../types'
 //   mission at the normal rate ends below 80% (red); extra exposure (spacewalks, solar particle events)
 //   is what pushes a crew member into amber or red.
 
-// Placeholder filled in by the next step of plan/tasks.md 1.3: escalation → step 4
-const TODO_ESCALATION = { green: '', amber: '', red: '' }
+// Escalation (plan/body-systems.md → Escalation by mission): who to tell and how fast, by status.
+// The farther from Earth, the more the crew and the CMO (crew medical officer) act on their own.
 
 export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
   iss: {
@@ -30,7 +30,11 @@ export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
     doseBudgetMilliSv: 150,
     resupply: true,
     environment: ['Low Earth orbit, inside Earth’s protective magnetosphere', 'Resupply available'],
-    escalation: TODO_ESCALATION,
+    escalation: {
+      green: 'No escalation needed.',
+      amber: 'Tell the CMO. It goes in the daily report to the ground.',
+      red: 'Call the flight surgeons now.',
+    },
   },
   artemis: {
     id: 'artemis',
@@ -47,7 +51,11 @@ export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
       'Outside Earth’s magnetosphere',
       'Gravity transitions: lunar landing, surface spacewalks, launch and return',
     ],
-    escalation: TODO_ESCALATION,
+    escalation: {
+      green: 'No escalation needed.',
+      amber: 'Tell the CMO. It goes in the daily report.',
+      red: 'Call the flight surgeons, and start the onboard protocol while connecting.',
+    },
   },
   mars: {
     id: 'mars',
@@ -66,7 +74,11 @@ export const MISSIONS: Record<MissionProfileId, MissionProfile> = {
       'No resupply',
       'The crew must act on its own while messages to Earth are delayed',
     ],
-    escalation: TODO_ESCALATION,
+    escalation: {
+      green: 'No escalation needed.',
+      amber: 'The CMO decides. It goes in the next scheduled downlink.',
+      red: 'Start the onboard protocol first; the CMO leads care. Send a report to the flight surgeons and act on their reply when it arrives.',
+    },
   },
 }
 

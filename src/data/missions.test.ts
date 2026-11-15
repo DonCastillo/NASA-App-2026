@@ -63,6 +63,18 @@ describe('missions content', () => {
     }
   })
 
+  it('words escalation for every status, more self-reliant farther from Earth', () => {
+    for (const mission of MISSION_LIST) {
+      for (const status of ['green', 'amber', 'red'] as const) {
+        expect(mission.escalation[status].length, `${mission.id} ${status}`).toBeGreaterThan(0)
+      }
+    }
+    // Red differs by distance: call now on the ISS, act first on Mars
+    expect(MISSIONS.iss.escalation.red).toMatch(/call the flight surgeons now/i)
+    expect(MISSIONS.mars.escalation.red).toMatch(/^start the onboard protocol first/i)
+    expect(new Set(MISSION_LIST.map((mission) => mission.escalation.red)).size).toBe(3)
+  })
+
   it('only allows resupply on the ISS', () => {
     expect(MISSION_LIST.filter((mission) => mission.resupply).map((m) => m.id)).toEqual(['iss'])
   })
