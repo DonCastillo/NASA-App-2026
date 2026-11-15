@@ -43,6 +43,26 @@ describe('missions content', () => {
     expect(MISSIONS.mars.commsDelay).toEqual({ kind: 'growing', maxSeconds: 1200 })
   })
 
+  it('sets a daily radiation rate that rises farther from Earth', () => {
+    // ISS total ≈ 150 µSv/day of neutrons ÷ 30% (radi-n2 article) ≈ 500 µSv/day
+    expect(MISSIONS.iss.radiationPerDayMicroSv).toBe(500)
+    expect(MISSIONS.artemis.radiationPerDayMicroSv).toBeGreaterThan(
+      MISSIONS.iss.radiationPerDayMicroSv,
+    )
+    expect(MISSIONS.mars.radiationPerDayMicroSv).toBeGreaterThan(
+      MISSIONS.artemis.radiationPerDayMicroSv,
+    )
+  })
+
+  it('sizes each dose budget so a normal mission ends below red (80%)', () => {
+    for (const mission of MISSION_LIST) {
+      const fullMissionMilliSv = (mission.radiationPerDayMicroSv * mission.defaultLengthDays) / 1000
+      const percentOfBudget = (fullMissionMilliSv / mission.doseBudgetMilliSv) * 100
+      expect(percentOfBudget, mission.id).toBeGreaterThan(0)
+      expect(percentOfBudget, mission.id).toBeLessThan(80)
+    }
+  })
+
   it('only allows resupply on the ISS', () => {
     expect(MISSION_LIST.filter((mission) => mission.resupply).map((m) => m.id)).toEqual(['iss'])
   })

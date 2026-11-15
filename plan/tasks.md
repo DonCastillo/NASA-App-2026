@@ -86,7 +86,7 @@ Rules that keep it simple:
 ### 1.3 `src/data/missions.ts`
 - [x] ISS, Artemis lunar, Mars transit with default length (180 / 30 / 210 days)
 - [x] Comms delay: fixed for ISS and Artemis; a function of mission day for Mars transit (~0 → ~20 min)
-- [ ] Radiation daily rate and built-in dose budget per mission
+- [x] Radiation daily rate and built-in dose budget per mission
 - [ ] Escalation wording per status per mission ([Escalation by mission](body-systems.md#escalation-by-mission))
 
 ### 1.4 `src/data/` supporting content
