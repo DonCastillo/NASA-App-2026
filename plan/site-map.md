@@ -23,6 +23,21 @@ The pages and overlays of the app, what each one shows, and how they connect. Co
 
 Routes use hash routing (`/#/system/heart`) so the app works on GitHub Pages or Netlify without server config.
 
+### System slugs
+
+`:id` in `/system/:id` is the system's slug. The same slug is used as the system `id` in `systems.ts`, in check-in links (`/check-in?system=eyes`) and in saved data, so it must stay short, one word, and never change once data exists.
+
+| System | Slug | URL |
+|---|---|---|
+| Heart & circulation | `heart` | `/#/system/heart` |
+| Eyes & brain (SANS) | `eyes` | `/#/system/eyes` |
+| Bones & muscles | `bones` | `/#/system/bones` |
+| Immune system | `immune` | `/#/system/immune` |
+| Metabolism & nutrition | `metabolism` | `/#/system/metabolism` |
+| Mind & sleep | `mind` | `/#/system/mind` |
+| Balance & orientation | `balance` | `/#/system/balance` |
+| Radiation exposure | `radiation` | `/#/system/radiation` |
+
 ## Navigation
 
 ```
