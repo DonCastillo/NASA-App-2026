@@ -76,7 +76,7 @@ Rules that keep it simple:
 - [x] `Profile`, `Baselines`, `Reading`, `CheckIn`, `MissionEvent`, `CountermeasureAnswer`, `Task` types
 
 ### 1.2 `src/data/systems.ts` — one system at a time
-- [ ] Add Heart & circulation fully (4 indicators, thresholds, how to measure, why in space, actions per status, sources) as the template
+- [x] Add Heart & circulation fully (4 indicators, thresholds, how to measure, why in space, actions per status, sources) as the template
 - [ ] Add Eyes & brain, Bones & muscles
 - [ ] Add Immune, Metabolism & nutrition
 - [ ] Add Mind & sleep, Balance & orientation, Radiation
