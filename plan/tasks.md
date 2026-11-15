@@ -175,9 +175,9 @@ Rules that keep it simple:
 - [x] Click / Enter opens `/system/:id`; Tab moves through pins
 
 ### 3.4 System list
-- [ ] 8 rows with status, latest change and trend arrow
-- [ ] Hovering a row highlights its pin, and the reverse
-- [ ] Rows open `/system/:id` (keyboard and screen-reader path)
+- [x] 8 rows with status, latest change and trend arrow
+- [x] Hovering a row highlights its pin, and the reverse
+- [x] Rows open `/system/:id` (keyboard and screen-reader path)
 
 ### 3.5 Home extras
 - [ ] Readiness summary: green / amber / red counts and the most urgent item
