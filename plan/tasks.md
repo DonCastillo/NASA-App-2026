@@ -81,7 +81,7 @@ Rules that keep it simple:
 - [x] Add Immune, Metabolism & nutrition
 - [x] Add Mind & sleep, Balance & orientation, Radiation
 - [x] Add the body-map pin position and label for each system
-- [ ] Check: 8 systems, 28 indicators, each with a source type (direct / proxy / added) matching [health-indicators.md](health-indicators.md)
+- [x] Check: 8 systems, 28 indicators, each with a source type (direct / proxy / added) matching [health-indicators.md](health-indicators.md)
 
 ### 1.3 `src/data/missions.ts`
 - [ ] ISS, Artemis lunar, Mars transit with default length (180 / 30 / 210 days)

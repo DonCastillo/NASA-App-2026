@@ -62,6 +62,33 @@ describe('systems content', () => {
     ])
   })
 
+  it('has 8 systems and 28 indicators, matching plan/health-indicators.md row by row', () => {
+    // Read the plan's table: | # | Indicator | Body system | Type | Source | Basis |
+    const markdown = Object.values(
+      import.meta.glob<string>('../../plan/health-indicators.md', {
+        query: '?raw',
+        import: 'default',
+        eager: true,
+      }),
+    )[0]
+    const planRows = markdown
+      .split('\n')
+      .filter((line) => /^\| \d+ \|/.test(line))
+      .map((line) => {
+        const cells = line.split('|').map((cell) => cell.trim())
+        // "Heart & circulation" → "heart", "Eyes & brain (SANS)" → "eyes", …
+        const systemId = cells[3].split(' ')[0].toLowerCase()
+        return `${systemId}:${cells[4].toLowerCase()}`
+      })
+    const dataRows = SYSTEMS.flatMap((system) =>
+      system.indicators.map((indicator) => `${system.id}:${indicator.sourceType}`),
+    )
+
+    expect(SYSTEMS).toHaveLength(8)
+    expect(dataRows).toHaveLength(28)
+    expect(dataRows).toEqual(planRows)
+  })
+
   it('cites only sources that exist in plan/', () => {
     for (const system of SYSTEMS) {
       for (const source of [...system.sources, ...system.indicators.flatMap((i) => i.sources)]) {
