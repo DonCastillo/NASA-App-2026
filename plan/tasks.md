@@ -19,6 +19,7 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 ## Phase 2 — Seed data (≈2 h)
 - [ ] Deterministic generator: 3 crew members × 90 days per mission profile
 - [ ] Encode article trends: bone density −1–1.5%/month; strength and aerobic fitness −10–12% by mission end; neutron dose ~150 µSv/day on ISS, scaled up for lunar/Mars; sleep disruption; gradual SANS onset in one crew member; one immune episode (cold sore/fever) for a demo alert
+- [ ] Seeded crew profiles (name, age, sex, height, preflight body mass, regular supplements/medications) and preflight baselines; built-in radiation budget per mission in `missions.ts`
 - [ ] `localStorage` persistence with a "reset demo data" action
 
 **Done when:** each crew member/mission shows a believable mix of green, amber and at least one red.
@@ -39,6 +40,8 @@ Task checklist for each phase in [roadmap.md](roadmap.md). Tick items off as the
 **Done when:** every system's panel is filled entirely from `systems.ts` with no hard-coded text in components.
 
 ## Phase 5 — Check-in flow (≈3 h)
+- [ ] Profile & mission setup screen (optional for demo): profile fields, preflight baselines (fall back to first 7 days), mission profile and start date — see [body-systems.md](body-systems.md#user-profile--context)
+- [ ] "Log event" (spacewalk, landing/docking, gravity transition), countermeasure/medication questions (triggered, routine and pre-landing — see [body-systems.md](body-systems.md#countermeasure-and-medication-questions)), and a free-text note on check-ins
 - [ ] Tier 1 daily core screen (7 items) with pre-filled values, −/+ steppers and "Same as yesterday"
 - [ ] Tap-to-answer scale buttons (severity 0–3, rating 1–5 with words/faces)
 - [ ] Follow-up rules from [body-systems.md](body-systems.md#triggers-for-follow-ups): symptom tap list, mood/sleep/temperature/amber triggers

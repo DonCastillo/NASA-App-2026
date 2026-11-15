@@ -43,7 +43,7 @@ The app's value is the mapping **body system → indicators → why it changes i
 
 ### Body-system model
 
-Summary below. The full model — what each system does, how spaceflight affects it, every indicator with unit, how to measure, frequency, green/amber/red thresholds, actions, and escalation by mission — is in [body-systems.md](body-systems.md).
+Summary below. The full model — what each system does, how spaceflight affects it, every indicator with unit, how to measure, frequency, green/amber/red thresholds, actions, and escalation by mission — is in [body-systems.md](body-systems.md). The source of each indicator is listed in [health-indicators.md](health-indicators.md).
 
 | System | Indicators (input) | Key sources in `plan/articles/` |
 |---|---|---|

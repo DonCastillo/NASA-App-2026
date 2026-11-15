@@ -2,7 +2,7 @@
 
 The content model behind the app. Each body system lists what it does, how spaceflight affects it, the indicators the crew records, thresholds for green / amber / red, and what to do at each status. Phase 1 turns this file into `src/data/systems.ts` (see [tasks.md](tasks.md)).
 
-**About the thresholds.** Spaceflight facts come from the articles in [articles/](articles/). Most numeric thresholds are general adult reference ranges or demo values chosen for the app. They are marked *illustrative* and are not medical advice.
+**About the thresholds.** Spaceflight facts come from the articles in [articles/](articles/). Most numeric thresholds are general adult reference ranges or demo values chosen for the app. They are marked *illustrative* and are not medical advice. For where each of the 28 indicators comes from (direct, proxy or added), see [health-indicators.md](health-indicators.md).
 
 **Status rules**
 - Each indicator scores green, amber or red.
@@ -269,6 +269,85 @@ The content model behind the app. Each body system lists what it does, how space
 | Red | Call flight surgeons now | Call flight surgeons; start the onboard protocol while connecting | Start the onboard protocol first; the CMO leads care; send a report and act on the reply when it arrives |
 
 Sources: risk-of-behavioral-changes-and-psychiatric-disorders, risk-of-inadequate-teamwork, risk-of-inadequate-systems-operations-support, tempus-pro, why-do-we-conduct-science-experiments-in-space
+
+## User profile & context
+
+Information collected besides the 28 indicators. It gives the indicators something to compare against and sets the mission context.
+
+### 1. Crew profile (once, before the mission)
+
+| Field | Why it's needed |
+|---|---|
+| Display name / call sign | Identifies the crew member in the crew switcher; no full legal name needed |
+| Age | Radiation cancer risk is personalized partly by age (risk-of-radiation-induced-cancers); some reference ranges differ by age |
+| Sex | Radiation risk and some reference ranges differ by sex |
+| Height | Baseline for spine lengthening (up to 3%, risk-of-spaceflight-induced-bone-changes) |
+| Preflight body mass | Body mass is scored as % change from preflight |
+| Regular supplements / medications | Pick from a list (e.g. daily B vitamin, bone medication). Only listed items get routine questions |
+
+### 2. Preflight baselines (once; indicators are compared to these)
+
+| Baseline | Used by |
+|---|---|
+| Resting blood pressure and heart rate | Trend and drift rules for indicators 1–2 |
+| Strength self-test result | Fitness self-test, "% of preflight baseline" |
+| Near-vision chart score | Near-vision self-check, "lines worse than baseline" |
+| Balance self-test time | Balance self-test, "% worse than baseline" |
+| Typical sleep hours | Sleep trend |
+
+If a baseline is missing, the app uses the average of the first 7 days of check-ins. Seeded demo crew come with baselines filled in.
+
+### 3. Mission context (set per mission)
+
+| Field | Why it's needed |
+|---|---|
+| Mission profile (ISS / Artemis lunar / Mars transit) | Escalation wording, radiation rate, resupply |
+| Mission start date | Gives the mission day, which drives the bone-loss estimate, weekly prompts and charts |
+
+The radiation dose budget is **not** entered by the user. It's a built-in demo value for each mission profile in `missions.ts`, used to score cumulative dose as % of budget. The crew switcher lists the saved profiles for the current mission, so no separate crew list is needed.
+
+### 4. Event and countermeasure logs (quick taps, as they happen)
+
+| Log | Why it's needed |
+|---|---|
+| Events: spacewalk, landing/docking, gravity transition | Opens the motion sickness, dizziness, balance and post-spacewalk dose follow-ups |
+| Countermeasures and medications | Explains readings (e.g. motion sickness after medicine, BP after caffeine) and records the countermeasures the actions recommend. Asked through the questions below |
+| Free-text note (on any check-in) | Context for the CMO or flight surgeons |
+
+### Countermeasure and medication questions
+
+One tap each, asked during the mission only when relevant, never as a daily list. On a normal day the user sees at most the supplements question.
+
+**Triggered by a reading**
+
+| Question | Answers | When asked | Typical frequency | Basis |
+|---|---|---|---|---|
+| "Did you wear thigh cuffs today?" | No · Yes, under 3 h · Yes, 3 h or more | After a headache or blurred-vision follow-up | Occasionally (symptom days) | thigh-cuff |
+| "Did you take motion sickness medicine?" | No · Yes → Before symptoms · After symptoms | After motion sickness or dizziness is answered | Rare (early mission, after landings) | risk-of-altered-sensorimotor-and-vestibular-function |
+| "Did you have caffeine in the last 6 hours?" | No · 1 drink · 2+ drinks | After an amber/red BP or heart rate reading, or poor sleep | Occasionally (a few times a month) | risk-from-inadequate-sleep-and-irregular-schedules |
+| "Did you exercise in the hour before this reading?" | No · Yes | After an amber/red BP or heart rate reading | Rare | General measurement practice |
+| "Did you take anything for pain or fever?" | No · Yes → pain reliever · fever reducer · other | After a headache, back pain or temperature ≥ 37.3 °C | Occasionally | General practice (medicine can mask a fever) |
+
+**Routine**
+
+| Question | Answers | When asked | Typical frequency | Basis |
+|---|---|---|---|---|
+| "Did you take your daily supplements?" | Yes · Missed today | Daily core, only if the profile lists supplements | Daily | b-complex |
+| "Did you take your bone medication this week?" | Yes · Missed | Weekly, only if the profile lists it | Weekly | risk-of-spaceflight-induced-bone-changes |
+| "Did you get your scheduled bright-light exposure?" | Yes · Partly · No | After a poor night's sleep | Occasionally | risk-from-inadequate-sleep-and-irregular-schedules |
+
+**Before landing (event-driven)**
+
+| Question | Answers | When asked | Typical frequency | Basis |
+|---|---|---|---|---|
+| "Have you completed fluid loading?" | Yes · Not yet | Before a landing event | Once per landing | risk-of-cardiovascular-adaptations |
+| "Are you wearing compression garments?" | Yes · Not yet | Before a landing event | Once per landing | risk-of-cardiovascular-adaptations |
+
+These answers don't change green/amber/red scoring. They appear next to the reading in charts and in the report to the CMO or flight surgeons.
+
+### Not collected
+
+Full legal name, birth date, medical history and contact details are not needed, and leaving them out reduces privacy risk. There are no accounts or logins: data stays in the browser.
 
 ## Check-in design: fast, low effort
 
