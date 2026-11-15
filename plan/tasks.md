@@ -42,11 +42,11 @@ Rules that keep it simple:
 ## Phase 0 — Setup (≈1 h)
 
 ### 0.1 Project scaffold
-- [ ] Create the Vite + React + TypeScript project; run it locally
-- [ ] Add Tailwind CSS; confirm one styled element renders
-- [ ] Add Recharts, React Router (hash router), Zustand, date-fns, lucide-react and Vitest
-- [ ] Add ESLint/Prettier defaults and an `npm test` script
-- [ ] Install `@fontsource/inter` and `@fontsource/jetbrains-mono`
+- [x] Create the Vite + React + TypeScript project; run it locally
+- [x] Add Tailwind CSS; confirm one styled element renders
+- [x] Add Recharts, React Router (hash router), Zustand, date-fns, lucide-react and Vitest
+- [x] Add linting (oxlint, from the Vite template, instead of ESLint) and Prettier, and an `npm test` script
+- [x] Install `@fontsource/inter` and `@fontsource/jetbrains-mono`
 
 ### 0.2 Folder structure
 - [ ] Create `src/types.ts`, `src/data/`, `src/lib/`, `src/state/`, `src/pages/`, `src/components/`
