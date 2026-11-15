@@ -14,6 +14,7 @@ A web app for the 2026 NASA Space Apps Challenge, *Create Health Monitoring Soft
 | [plan/site-map.md](plan/site-map.md) | Pages, routes, system slugs, overlays, header, notification bell, layouts |
 | [plan/body-systems.md](plan/body-systems.md) | 8 systems, 28 indicators, thresholds, actions, escalation, check-in design, profile, countermeasure questions |
 | [plan/health-indicators.md](plan/health-indicators.md) | Source of each indicator (direct / proxy / added) |
+| [plan/branding.md](plan/branding.md) | Brand, color tokens, typography, components, motion, logo (mission-control dark theme) |
 | [plan/articles/](plan/articles/) | NASA HRP and CSA background articles (Markdown with front matter) |
 
 `plan/messages/` holds the user's personal Space Apps messages. It is git-ignored; never commit or publish it.
@@ -29,6 +30,7 @@ Vite + React + TypeScript, Tailwind CSS, Recharts, React Router (hash routing), 
 - `src/state/` is one Zustand store; `src/pages/` and `src/components/` only render.
 - Demo crew data is generated deterministically on load and never stored. Only user-entered data goes into `localStorage`, through `src/lib/storage.ts` only.
 - System ids are the slugs in [plan/site-map.md](plan/site-map.md#system-slugs); never change them.
+- Use theme tokens from [plan/branding.md](plan/branding.md); no ad-hoc colors. Status colors (green/amber/red) only for health status, always with an icon and word.
 - Thresholds are illustrative demo values; keep the disclaimer.
 
 ## How to work with the user

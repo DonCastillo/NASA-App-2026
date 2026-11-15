@@ -46,6 +46,7 @@ Rules that keep it simple:
 - [ ] Add Tailwind CSS; confirm one styled element renders
 - [ ] Add Recharts, React Router (hash router), Zustand, date-fns, lucide-react and Vitest
 - [ ] Add ESLint/Prettier defaults and an `npm test` script
+- [ ] Install `@fontsource/inter` and `@fontsource/jetbrains-mono`
 
 ### 0.2 Folder structure
 - [ ] Create `src/types.ts`, `src/data/`, `src/lib/`, `src/state/`, `src/pages/`, `src/components/`
@@ -56,7 +57,13 @@ Rules that keep it simple:
 - [ ] Choose GitHub Pages or Netlify
 - [ ] Deploy the placeholder app; open every route on the public URL
 
-**Done when:** an empty app with 6 routes builds, tests run, and it's live at a public URL.
+### 0.4 Theme ([branding.md](branding.md))
+- [ ] Tailwind tokens: colors (`space-*`, `text`, `text-muted`, `accent`, `ok`, `warn`, `alert`, `alert-text`, `none`), fonts (Inter, JetBrains Mono), radii (8 / 12 px)
+- [ ] Base styles: `space-950` background, `text` color, Inter body, tabular-number mono class for readings
+- [ ] Global focus ring (2 px `accent`, 2 px offset) and `prefers-reduced-motion` handling
+- [ ] Logo SVG component (orbit ring + silhouette + cyan pin) and favicon
+
+**Done when:** an empty app with 6 routes builds, tests run, uses the dark theme, and it's live at a public URL.
 
 ---
 
@@ -312,7 +319,7 @@ Rules that keep it simple:
 - [ ] First System detail: "Start with 'What to do now'. Details are below."
 
 ### 7.5 Accessibility and responsive pass
-- [ ] Every status uses color + icon + text; check contrast
+- [ ] Every status uses color + icon + word; check contrast against the [branding.md](branding.md) table
 - [ ] Keyboard-only walk through every page and overlay; visible focus
 - [ ] Labels for inputs, pins and buttons
 - [ ] Test at phone, tablet and desktop widths
