@@ -241,11 +241,11 @@ Rules that keep it simple:
 - [x] Free-text note
 
 ### 5.3 Check-in page
-- [ ] One question per screen with progress bar ("3 of 7"), Back, Skip, "Same as yesterday"
-- [ ] Plausibility check for unlikely numbers (e.g. "45 °C? Please check the reading")
-- [ ] Skip saves "not recorded" (never red)
-- [ ] Draft saved if the user leaves mid-way; resume on return
-- [ ] "How do I measure this?" opens overlay C
+- [x] One question per screen with progress bar ("3 of 7"), Back, Skip, "Same as yesterday"
+- [x] Plausibility check for unlikely numbers (e.g. "45 °C? Please check the reading")
+- [x] Skip saves "not recorded" (never red)
+- [x] Draft saved if the user leaves mid-way; resume on return
+- [x] "How do I measure this?" shows the steps (inline for now; becomes overlay C in 5.5)
 
 ### 5.4 Summary screen
 - [ ] Systems whose status changed, each with its first action and a link to System detail

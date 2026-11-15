@@ -129,7 +129,14 @@ describe('app store: actions save every change', () => {
 
   it('saves drafts and settings', () => {
     const { storage, store } = newStore()
-    store.getState().saveDraft({ ...feverRecheck('demo-vega'), completedAt: undefined })
+    store.getState().saveDraft({
+      id: 'd1',
+      profileId: 'demo-vega',
+      mode: { kind: 'daily' },
+      startedAt: TODAY.toISOString(),
+      answers: { bodyTemperature: 36.8 },
+      index: 2,
+    })
     store.getState().updateSettings({ welcomeSeen: true })
     const saved = loadData(storage)
     expect(Object.keys(saved.drafts)).toEqual(['demo-vega'])

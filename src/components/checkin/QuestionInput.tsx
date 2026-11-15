@@ -34,7 +34,8 @@ type Props = {
   question: Question
   value: Answers[string]
   onChange: (value: Answers[string]) => void
-  onAnswered: () => void
+  /** One-tap inputs call this with the chosen value, so the page can move on with it */
+  onAnswered: (value: Answers[string]) => void
   /** e.g. "yesterday: 36.6" under number inputs */
   hint?: string
 }
@@ -43,7 +44,7 @@ export default function QuestionInput({ question, value, onChange, onAnswered, h
   const label = questionText(question)
   const answer = (v: Answers[string]) => {
     onChange(v)
-    onAnswered()
+    onAnswered(v)
   }
 
   switch (question.kind) {

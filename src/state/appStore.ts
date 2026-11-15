@@ -1,7 +1,7 @@
 import { createStore } from 'zustand/vanilla'
 import { DEMO_CREW } from '../data/demoCrew'
 import { MISSIONS } from '../data/missions'
-import type { CheckIn, MissionEvent, MissionProfileId, Profile } from '../types'
+import type { CheckIn, CheckInDraft, MissionEvent, MissionProfileId, Profile } from '../types'
 import {
   type KeyValueStorage,
   type Settings,
@@ -29,6 +29,8 @@ export const DEMO_IDS = DEMO_CREW.map((crew) => crew.id)
 export type AppState = {
   /** The date the app treats as today (fixed in tests) */
   today: Date
+  /** The current time, for timestamps on saved entries (a fixed clock in tests) */
+  now: () => Date
   /** Everything saved in storage */
   stored: StoredData
   selectedProfileId: string
@@ -38,7 +40,7 @@ export type AppState = {
   selectProfile: (profileId: string) => void
   selectMission: (missionId: MissionProfileId) => void
   addCheckIn: (checkIn: CheckIn) => void
-  saveDraft: (draft: CheckIn) => void
+  saveDraft: (draft: CheckInDraft) => void
   clearDraft: (profileId: string) => void
   addEvent: (event: MissionEvent) => void
   saveProfile: (profile: Profile) => void
@@ -52,12 +54,15 @@ export type AppState = {
 export type AppStoreOptions = {
   /** Where to load and save; defaults to the browser's localStorage (null = memory only) */
   storage?: KeyValueStorage | null
+  /** The clock; `today` defaults to its current time */
+  now?: () => Date
   today?: Date
 }
 
 export function createAppStore({
   storage = browserStorage(),
-  today = new Date(),
+  now = () => new Date(),
+  today = now(),
 }: AppStoreOptions = {}) {
   const stored = loadData(storage)
   console.log('Loaded stored data', stored)
@@ -78,6 +83,7 @@ export function createAppStore({
 
     return {
       today,
+      now,
       stored,
       selectedProfileId: known(stored.settings.selectedProfileId)
         ? stored.settings.selectedProfileId!

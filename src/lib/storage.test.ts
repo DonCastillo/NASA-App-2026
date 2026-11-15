@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { DEMO_CREW } from '../data/demoCrew'
-import type { CheckIn, MissionEvent, Profile } from '../types'
+import type { CheckIn, CheckInDraft, MissionEvent, Profile } from '../types'
 import { generateDemoData } from './seed'
 import {
   STORAGE_KEY,
@@ -64,6 +64,16 @@ const checkIn = (
   ],
   countermeasures: [],
   note: 'Felt fine',
+})
+
+/** An unfinished check-in (answers so far + the question the user was on) */
+const draft = (id: string, profileId: string): CheckInDraft => ({
+  id,
+  profileId,
+  mode: { kind: 'daily' },
+  startedAt: new Date(2026, 10, 15, 8).toISOString(),
+  answers: { bodyTemperature: 36.8 },
+  index: 3,
 })
 
 const event = (id: string, profileId: string): MissionEvent => ({
@@ -154,7 +164,7 @@ describe('load and save', () => {
 
 describe('update helpers', () => {
   it('adds a check-in (with answers and note) and clears that profile’s draft', () => {
-    let data = saveDraft(emptyData(), { ...checkIn('draft', me.id, 15), completedAt: undefined })
+    let data = saveDraft(emptyData(), draft('draft', me.id))
     expect(Object.keys(data.drafts)).toEqual([me.id])
     data = addCheckIn(data, checkIn('c1', me.id, 15))
     expect(data.checkIns.map((c) => c.id)).toEqual(['c1'])
@@ -170,8 +180,8 @@ describe('update helpers', () => {
   })
 
   it('saves and clears drafts per profile', () => {
-    let data = saveDraft(emptyData(), checkIn('d1', me.id, 15))
-    data = saveDraft(data, checkIn('d2', 'demo-vega', 15))
+    let data = saveDraft(emptyData(), draft('d1', me.id))
+    data = saveDraft(data, draft('d2', 'demo-vega'))
     data = clearDraft(data, me.id)
     expect(Object.keys(data.drafts)).toEqual(['demo-vega'])
   })
@@ -190,7 +200,7 @@ describe('update helpers', () => {
     data = addCheckIn(data, checkIn('c1', me.id, 15))
     data = addCheckIn(data, checkIn('c2', 'user-2', 15))
     data = addEvent(data, event('e1', me.id))
-    data = saveDraft(data, checkIn('d1', me.id, 16))
+    data = saveDraft(data, draft('d1', me.id))
     data = updateSettings(data, { selectedProfileId: me.id })
 
     data = deleteProfile(data, me.id)
@@ -206,7 +216,7 @@ describe('update helpers', () => {
     data = addCheckIn(data, checkIn('mine', me.id, 15))
     data = addCheckIn(data, checkIn('demo-add', 'demo-vega', 15, 'mars'))
     data = addEvent(data, event('demo-event', 'demo-okafor'))
-    data = saveDraft(data, checkIn('demo-draft', 'demo-lindqvist', 15))
+    data = saveDraft(data, draft('demo-draft', 'demo-lindqvist'))
 
     data = resetDemoData(data, DEMO_IDS)
     expect(data.profiles).toEqual([me])

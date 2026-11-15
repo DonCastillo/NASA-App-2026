@@ -1,4 +1,4 @@
-import type { CheckIn, MissionEvent, MissionProfileId, Profile } from '../types'
+import type { CheckIn, CheckInDraft, MissionEvent, MissionProfileId, Profile } from '../types'
 import type { DemoDataset } from './seed'
 
 // The only module that touches localStorage (plan/tasks.md 2.4, CLAUDE.md → Architecture rules).
@@ -28,7 +28,7 @@ export type StoredData = {
   checkIns: CheckIn[]
   events: MissionEvent[]
   /** One in-progress check-in per profile, resumed when the user comes back */
-  drafts: Record<string, CheckIn>
+  drafts: Record<string, CheckInDraft>
   settings: Settings
 }
 
@@ -129,7 +129,7 @@ export function addCheckIn(data: StoredData, checkIn: CheckIn): StoredData {
   }
 }
 
-export function saveDraft(data: StoredData, draft: CheckIn): StoredData {
+export function saveDraft(data: StoredData, draft: CheckInDraft): StoredData {
   return { ...data, drafts: { ...data.drafts, [draft.profileId]: draft } }
 }
 

@@ -348,6 +348,21 @@ export type CheckIn = {
   note?: string
 }
 
+/**
+ * An unfinished check-in, saved after every answer so it can be resumed (plan/tasks.md 5.3).
+ * Answers use the check-in engine's keys (src/lib/triggers.ts): indicator ids, "symptoms",
+ * "symptomList", "cm:<question id>" and "note"; null = skipped.
+ */
+export type CheckInDraft = {
+  id: string
+  profileId: string
+  mode: CheckInMode
+  startedAt: string
+  answers: Record<string, ReadingValue | string | undefined>
+  /** The question the user was on */
+  index: number
+}
+
 export type MissionEventType = 'spacewalk' | 'landing' | 'gravityTransition'
 
 /** Content for one event type in the "Log event" overlay (src/data/events.ts) */

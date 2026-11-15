@@ -14,7 +14,7 @@ function renderAt(path: string) {
 describe('routes', () => {
   it.each([
     ['/', 'Body Map'],
-    ['/check-in', 'Check-in'],
+    ['/check-in', 'Daily check-in'],
     ['/routine', 'Routine'],
     ['/setup', 'Crew & mission setup'],
     ['/about', 'About'],
@@ -38,7 +38,9 @@ describe('routes', () => {
 
   it('reads the check-in mode from the query string', () => {
     renderAt('/check-in?system=eyes')
-    expect(screen.getByText('system: eyes')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Check: Eyes & brain (SANS)' }),
+    ).toBeInTheDocument()
   })
 
   it('sends unknown addresses back to the Body Map', async () => {
