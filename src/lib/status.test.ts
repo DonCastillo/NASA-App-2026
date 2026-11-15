@@ -126,7 +126,11 @@ describe('scoreSystem', () => {
   })
 
   it('uses references for baseline-relative indicators', () => {
-    const result = scoreSystem(system('bones'), { strengthTest: 30 }, { strengthTest: 40 })
+    const result = scoreSystem(
+      system('bones'),
+      { strengthTest: 30 },
+      { references: { strengthTest: 40 } },
+    )
     expect(result.status).toBe('red')
   })
 })
@@ -137,7 +141,7 @@ describe('cross rules', () => {
     expect(result.status).toBe('red')
     expect(result.indicators.find((r) => r.indicatorId === 'headache')).toMatchObject({
       status: 'red',
-      crossReason: 'Headache with a vision change',
+      raisedBy: 'Headache with a vision change',
     })
   })
 
@@ -156,7 +160,11 @@ describe('cross rules', () => {
 
   it('looks across systems: palpitations with dizziness (balance) is red', () => {
     const all = SYSTEMS.flatMap((s) => s.indicators)
-    const result = scoreSystem(system('heart'), { palpitations: true, dizziness: 1 }, {}, all)
+    const result = scoreSystem(
+      system('heart'),
+      { palpitations: true, dizziness: 1 },
+      { allIndicators: all },
+    )
     expect(result.status).toBe('red')
   })
 })

@@ -25,8 +25,20 @@ export type References = Partial<Record<IndicatorId, number>>
 export type IndicatorResult = {
   indicatorId: IndicatorId
   status: Status
-  /** Set when a cross rule raised the status, e.g. "Headache with a vision change" */
-  crossReason?: string
+  /** Set when a cross rule or trend rule raised the status, e.g. "Headache with a vision change" */
+  raisedBy?: string
+}
+
+/** A status raised by a rule that looks beyond the latest reading (src/lib/trends.ts) */
+export type RaisedStatus = { status: Status; reason?: string }
+
+export type ScoreSystemOptions = {
+  /** Reference numbers for baseline/budget/rate-relative indicators */
+  references?: References
+  /** Every indicator in the app, so cross rules can score other systems' readings */
+  allIndicators?: Indicator[]
+  /** Statuses from trend rules (streaks, recovery, drift); they can only raise a status */
+  trends?: Partial<Record<IndicatorId, RaisedStatus>>
 }
 
 export type SystemResult = {
@@ -173,15 +185,13 @@ export const CROSS_RULES: CrossRule[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Score every indicator in a system, apply cross rules (they only ever raise a status),
- * then take the worst. A system with nothing recorded is 'none'.
- * `allIndicators` is every indicator in the app, so cross rules can score other systems' readings.
+ * Score every indicator in a system, then apply cross rules and trend results (they only ever
+ * raise a status), then take the worst. A system with nothing recorded is 'none'.
  */
 export function scoreSystem(
   system: SystemDef,
   latest: LatestValues,
-  references: References = {},
-  allIndicators: Indicator[] = system.indicators,
+  { references = {}, allIndicators = system.indicators, trends = {} }: ScoreSystemOptions = {},
 ): SystemResult {
   const byId = new Map(allIndicators.map((indicator) => [indicator.id, indicator]))
   const statusOf = (id: IndicatorId): Status => {
@@ -191,18 +201,21 @@ export function scoreSystem(
 
   const indicators: IndicatorResult[] = system.indicators.map((indicator) => {
     let status = statusOf(indicator.id)
-    let crossReason: string | undefined
-    for (const rule of CROSS_RULES) {
-      if (
-        rule.target === indicator.id &&
-        rule.applies(latest, statusOf) &&
-        RANK[rule.raiseTo] > RANK[status]
-      ) {
-        status = rule.raiseTo
-        crossReason = rule.reason
+    let raisedBy: string | undefined
+    const raise = (to: Status, reason?: string) => {
+      if (RANK[to] > RANK[status]) {
+        status = to
+        raisedBy = reason
       }
     }
-    return { indicatorId: indicator.id, status, crossReason }
+    for (const rule of CROSS_RULES) {
+      if (rule.target === indicator.id && rule.applies(latest, statusOf)) {
+        raise(rule.raiseTo, rule.reason)
+      }
+    }
+    const trend = trends[indicator.id]
+    if (trend) raise(trend.status, trend.reason)
+    return { indicatorId: indicator.id, status, raisedBy }
   })
 
   const status = worstStatus(indicators.map((result) => result.status))
@@ -225,6 +238,6 @@ export function statusReason(
   const driver = result.indicators.find((r) => r.indicatorId === result.driverId)
   const indicator = system.indicators.find((i) => i.id === result.driverId)
   if (!driver || !indicator) return ''
-  if (driver.crossReason) return driver.crossReason
+  if (driver.raisedBy) return driver.raisedBy
   return `${indicator.name}: ${formatReading(indicator, latest[indicator.id])}`
 }

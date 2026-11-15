@@ -102,11 +102,11 @@ Rules that keep it simple:
 - [x] Unit tests: sample readings for every system land in the expected color
 
 ### 1.6 `src/lib/trends.ts` — trend rules
-- [ ] "3 amber readings in a row" raises amber
-- [ ] Steady drift toward a threshold raises amber
-- [ ] "N days in a row" rules (e.g. sleep < 6 h for 3 nights, exercise < 60 min for 3 days)
-- [ ] Trend direction for the system list arrow (↑ ↗ → ↘ ↓)
-- [ ] Unit tests
+- [x] "3 amber readings in a row" raises amber → recovery rule: one green reading after 3 amber/red days stays amber until confirmed
+- [x] Steady drift toward a threshold raises amber
+- [x] "N days in a row" rules (e.g. sleep < 6 h for 3 nights, exercise < 60 min for 3 days)
+- [x] Trend direction for the system list arrow (↑ ↗ → ↘ ↓)
+- [x] Unit tests
 
 **Done when:** unit tests score sample readings into the expected colors for all 8 systems.
 
