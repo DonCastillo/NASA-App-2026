@@ -10,7 +10,7 @@ Built for the 2026 NASA Space Apps Challenge — *Create Health Monitoring Softw
 
 > Demo software for a hackathon. Thresholds and guidance are illustrative, not medical advice.
 
-**Live demo:** https://doncastillo.github.io/bodymap/ · **Code:** https://github.com/DonCastillo/bodymap
+**Live demo:** https://doncastillo.github.io/bodymap/ · **Code:** https://github.com/DonCastillo/bodymap · **Presentation:** [BodyMap Crew Health — Demo (PDF)](docs/BodyMap%20Crew%20Health%20%E2%80%94%20Demo.pdf)
 
 ## Getting started
 

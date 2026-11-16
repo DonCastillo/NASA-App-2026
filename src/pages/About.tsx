@@ -6,6 +6,7 @@ import {
   ABOUT_INTRO,
   COMMS_DELAY_TEXT,
   DISCLAIMER,
+  PROJECT_LINKS,
   SOURCE_TYPE_MEANING,
   STATUS_MEANING,
   TIER_MEANING,
@@ -72,6 +73,21 @@ export default function About() {
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold">About</h1>
         <p className="text-[15px] text-text-muted">{ABOUT_INTRO}</p>
+        <ul className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+          {PROJECT_LINKS.map((link) => (
+            <li key={link.url}>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 font-medium text-accent underline-offset-2 hover:underline"
+              >
+                {link.label}
+                <ExternalLink size={12} strokeWidth={1.5} aria-label="(opens in a new tab)" />
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <Section title="How BodyMap works">
