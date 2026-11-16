@@ -6,6 +6,8 @@ BodyMap is a self-assessment tool for astronauts on long-duration missions. An i
 
 Built for the 2026 NASA Space Apps Challenge — *Create Health Monitoring Software for Astronauts on Space Missions*. Background research: NASA Human Research Program and Canadian Space Agency sources (see [plan/resources.md](plan/resources.md) and [plan/articles/](plan/articles/)). Roadmap: [plan/roadmap.md](plan/roadmap.md).
 
+[plan/articles/](plan/articles/) holds reference copies of public NASA and CSA pages, each with its source link, used as research for the health content. They are not original writing.
+
 > Demo software for a hackathon. Thresholds and guidance are illustrative, not medical advice.
 
 **Live demo:** https://doncastillo.github.io/NASA-App-2026/
