@@ -39,7 +39,7 @@ describe('About', () => {
     ).toHaveAttribute('href', 'https://www.nasa.gov/reference/risk-of-cardiovascular-adaptations/')
     expect(screen.getByRole('link', { name: /Demo presentation \(PDF\)/ })).toHaveAttribute(
       'href',
-      expect.stringMatching(/github\.com\/DonCastillo\/bodymap\/blob\/main\/docs\/.+Demo\.pdf$/),
+      'BodyMap-Crew-Health-Demo.pdf',
     )
     expect(screen.getByRole('region', { name: 'Disclaimer' })).toHaveTextContent(
       /not medical advice/,

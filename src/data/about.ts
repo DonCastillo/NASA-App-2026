@@ -56,12 +56,10 @@ export const SOURCE_TYPE_MEANING: Record<SourceType, { label: string; text: stri
   },
 }
 
-/** Project links shown under the About intro */
+/** Project links shown under the About intro. The PDF ships with the site (public/), so the
+ *  browser opens it in its own viewer; a relative path works under any GitHub Pages sub-path. */
 export const PROJECT_LINKS: { label: string; url: string }[] = [
-  {
-    label: 'Demo presentation (PDF)',
-    url: 'https://github.com/DonCastillo/bodymap/blob/main/docs/BodyMap%20Crew%20Health%20%E2%80%94%20Demo.pdf',
-  },
+  { label: 'Demo presentation (PDF)', url: 'BodyMap-Crew-Health-Demo.pdf' },
   { label: 'Source code on GitHub', url: 'https://github.com/DonCastillo/bodymap' },
 ]
 
