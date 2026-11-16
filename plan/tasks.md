@@ -55,7 +55,7 @@ Rules that keep it simple:
 
 ### 0.3 First deploy
 - [x] Choose GitHub Pages or Netlify → GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`)
-- [x] Deploy the placeholder app; open every route on the public URL → https://doncastillo.github.io/NASA-App-2026/
+- [x] Deploy the placeholder app; open every route on the public URL → https://doncastillo.github.io/bodymap/
 
 ### 0.4 Theme ([branding.md](branding.md))
 - [x] Tailwind tokens: colors (`space-*`, `text`, `text-muted`, `accent`, `ok`, `warn`, `alert`, `alert-text`, `none`), fonts (Inter, JetBrains Mono), radii (8 / 12 px)
